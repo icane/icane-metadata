@@ -3,8 +3,10 @@ package es.icane.metadatos.model;
 import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -22,6 +24,7 @@ public class Subsection implements Serializable {
     private String topics;
     private String code;
     private Section section;
+    private List<Link> links;
     private Date created;
     private Date lastUpdated;
 
@@ -100,6 +103,16 @@ public class Subsection implements Serializable {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+    
+    @XmlElementWrapper(name = "links")
+    @XmlElement(name = "link")
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
     }
 
     @Override

@@ -126,8 +126,8 @@ public class TimeSeries implements Serializable {
         this.sources = sources;
     }
 
-    @XmlElementWrapper(name = "nodeLinks")
-    @XmlElement(name = "nodeLink")
+    @XmlElementWrapper(name = "links")
+    @XmlElement(name = "link")
     public List<Link> getLinks() {
         return links;
     }

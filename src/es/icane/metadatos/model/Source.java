@@ -94,7 +94,7 @@ public class Source implements Serializable {
 
     @Override
     public String toString() {
-        return "Source{" + "id=" + id + ", dataProvider=" + dataProvider + ", dataSet=" + dataSet + ", uri=" + uri + ", dataCompilation=" + dataCompilation + ", relevanceOrder=" + relevanceOrder + ", created=" + created + ", lastUpdated=" + lastUpdated + '}';
+        return this.dataSet.getTitle() + " - " + this.getDataCompilation();
     }
 
     @Override

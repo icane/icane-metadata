@@ -24,6 +24,7 @@ public class Section implements Serializable {
     private String topics;
     private String code;
     private List<Subsection> subsections;
+    private List<Link> links;
     private Date created;
     private Date lastUpdated;
 
@@ -109,6 +110,16 @@ public class Section implements Serializable {
 
     public void setSubsections(List<Subsection> subsections) {
         this.subsections = subsections;
+    }
+    
+    @XmlElementWrapper(name = "links")
+    @XmlElement(name = "link")
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
     }
 
     @Override

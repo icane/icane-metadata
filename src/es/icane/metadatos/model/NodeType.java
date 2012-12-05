@@ -15,11 +15,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType
 public class NodeType implements Serializable {
     //
+
     private static final String SERIES = "time-series";
     private static final String THEME = "theme";
     private static final String FOLDER = "folder";
     private static final String DATA_SET = "data-set";
     private static final String DOCUMENT = "document";
+    private static final String NON_OLAP_NATIVE = "non-olap-native";
     //
     private Integer id;
     private String title;
@@ -95,6 +97,10 @@ public class NodeType implements Serializable {
 
     public boolean isDataSet() {
         return DATA_SET.equals(uriTag);
+    }
+
+    public boolean isNonOlapNative() {
+        return NON_OLAP_NATIVE.equals(uriTag);
     }
 
     @Override

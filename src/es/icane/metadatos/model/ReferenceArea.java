@@ -20,6 +20,7 @@ public class ReferenceArea implements Serializable {
     private Integer id;
     private String title;
     private List<Link> links;
+    private String uriTag;
     private Date created;
     private Date lastUpdated;
 
@@ -59,8 +60,8 @@ public class ReferenceArea implements Serializable {
         this.lastUpdated = lastUpdated;
     }
 
-    @XmlElementWrapper(name = "referenceAreaLinks")
-    @XmlElement(name = "referenceAreaLink")
+    @XmlElementWrapper(name = "links")
+    @XmlElement(name = "link")
     public List<Link> getLinks() {
         return links;
     }
@@ -69,9 +70,17 @@ public class ReferenceArea implements Serializable {
         this.links = links;
     }
 
+    public String getUriTag() {
+        return uriTag;
+    }
+
+    public void setUriTag(String uriTag) {
+        this.uriTag = uriTag;
+    }
+    
     @Override
     public String toString() {
-        return "ReferenceArea{" + "id=" + id + ", title=" + title + ", links=" + links + ", created=" + created + ", lastUpdated=" + lastUpdated + '}';
+        return title;
     }
 
     @Override

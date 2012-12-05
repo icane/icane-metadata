@@ -77,7 +77,7 @@ public class DataProvider implements Serializable {
     @Override
     public String toString() {
         if (acronym != null && !acronym.isEmpty()) {
-            return title + '(' + acronym + ')';
+            return title + " (" + acronym + ')';
         }
         return title;
     }
