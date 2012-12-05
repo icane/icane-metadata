@@ -18,6 +18,7 @@ public class Periodicity implements Serializable {
     private Integer id;
     private String title;
     private String cldFrequencyUri;
+    private String uriTag;
     private Date created;
     private Date lastUpdated;
 
@@ -69,6 +70,14 @@ public class Periodicity implements Serializable {
     @Override
     public String toString() {
         return title;
+    }
+
+    public String getUriTag() {
+        return uriTag;
+    }
+
+    public void setUriTag(String uriTag) {
+        this.uriTag = uriTag;
     }
 
     @Override
