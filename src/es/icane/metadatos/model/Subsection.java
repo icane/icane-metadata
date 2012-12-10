@@ -21,6 +21,7 @@ public class Subsection implements Serializable {
     private String title;
     private String acronym;
     private String uriTag;
+    private String uri;
     private String topics;
     private String code;
     private Section section;
@@ -113,6 +114,14 @@ public class Subsection implements Serializable {
 
     public void setLinks(List<Link> links) {
         this.links = links;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     @Override

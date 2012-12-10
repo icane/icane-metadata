@@ -342,6 +342,18 @@ public class MetadataClient {
         };
         return webResource.path("section").path(section).path("subsections").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
     }
+    
+    /**
+     * Get a list of all the subsections of a given section.
+     * 
+     * @param section the section
+     * @return a list of its subsections
+     */
+    public List<Subsection> getSubsections(Section section) {
+        GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
+        };
+        return webResource.path("section").path(section.getUriTag()).path("subsections").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+    }
 
     /**
      * Get a map with all the subsections of a given section, keyed by uriTag.
@@ -393,6 +405,19 @@ public class MetadataClient {
             return webResource.path("category").path(uriTag).accept(MediaType.APPLICATION_XML_TYPE).get(Category.class);
         } catch (UniformInterfaceException e) {
             throw new CategoryNotFoundException();
+        }
+    }
+    
+    /**
+     * Retrieve a subsection by its numeric id.
+     * @param subsectionId the numeric id of the subsection
+     * @return 
+     */
+    public Subsection getSubsection(int subsectionId) throws SubsectionNotFoundException {
+        try {
+            return webResource.path("subsection").path(String.valueOf(subsectionId)).accept(MediaType.APPLICATION_XML_TYPE).get(Subsection.class);
+        } catch (UniformInterfaceException e) {
+            throw new SubsectionNotFoundException();
         }
     }
 
