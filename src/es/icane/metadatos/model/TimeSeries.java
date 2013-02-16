@@ -3,7 +3,9 @@ package es.icane.metadatos.model;
 import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -35,9 +37,11 @@ public class TimeSeries implements Serializable {
     private List<Source> sources;
     private List<Link> links;
     private ReferenceArea referenceArea;
-    private Integer parent;
+    private Integer parentId;
     private NodeType nodeType;
     private List<TimeSeries> children;
+    private List<ApiUri> apiUris;
+    private Map<String, String> apiUriMap;
 
     public String getCode() {
         return code;
@@ -115,7 +119,7 @@ public class TimeSeries implements Serializable {
     public void setPeriodicity(Periodicity periodicity) {
         this.periodicity = periodicity;
     }
-    
+
     @XmlElementWrapper(name = "sources")
     @XmlElement(name = "source")
     public List<Source> getSources() {
@@ -192,12 +196,12 @@ public class TimeSeries implements Serializable {
         this.documentation = documentation;
     }
 
-    public Integer getParent() {
-        return parent;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setParent(Integer parent) {
-        this.parent = parent;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     @XmlElement(required = true)
@@ -227,6 +231,29 @@ public class TimeSeries implements Serializable {
         this.nodeType = nodeType;
     }
 
+    @XmlElementWrapper(name = "apiUris")
+    @XmlElement(name = "apiUri")
+    public List<ApiUri> getApiUris() {
+        return apiUris;
+    }
+
+    public void setApiUris(List<ApiUri> apiUris) {
+        this.apiUris = apiUris;
+        this.apiUriMap = new HashMap<String, String>();
+        if (apiUris != null) {
+            for (ApiUri apiUri : apiUris) {
+                this.apiUriMap.put(apiUri.getFormat(), apiUri.getUri());
+            }
+        }
+    }
+    
+    public String getApiUri(String format) {
+        if (this.apiUriMap == null) {
+            return null;
+        }
+        return this.apiUriMap.get(format);
+    }
+
     @Override
     public String toString() {
         return this.title;
@@ -241,22 +268,28 @@ public class TimeSeries implements Serializable {
             return false;
         }
         final TimeSeries other = (TimeSeries) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (this.id != other.id
+                && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
+        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.
+                equals(other.uriTag)) {
             return false;
         }
-        if (this.subsection != other.subsection && (this.subsection == null || !this.subsection.equals(other.subsection))) {
+        if (this.subsection != other.subsection && (this.subsection == null
+                || !this.subsection.equals(other.subsection))) {
             return false;
         }
-        if (this.category != other.category && (this.category == null || !this.category.equals(other.category))) {
+        if (this.category != other.category && (this.category == null
+                || !this.category.equals(other.category))) {
             return false;
         }
-        if (this.dataSet != other.dataSet && (this.dataSet == null || !this.dataSet.equals(other.dataSet))) {
+        if (this.dataSet != other.dataSet && (this.dataSet == null
+                || !this.dataSet.equals(other.dataSet))) {
             return false;
         }
-        if (this.nodeType != other.nodeType && (this.nodeType == null || !this.nodeType.equals(other.nodeType))) {
+        if (this.nodeType != other.nodeType && (this.nodeType == null
+                || !this.nodeType.equals(other.nodeType))) {
             return false;
         }
         return true;
@@ -271,16 +304,19 @@ public class TimeSeries implements Serializable {
     public void setChildren(List<TimeSeries> children) {
         this.children = children;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 31 * hash + (this.uriTag != null ? this.uriTag.hashCode() : 0);
-        hash = 31 * hash + (this.subsection != null ? this.subsection.hashCode() : 0);
-        hash = 31 * hash + (this.category != null ? this.category.hashCode() : 0);
+        hash = 31 * hash + (this.subsection != null ? this.subsection.hashCode()
+                            : 0);
+        hash = 31 * hash
+                + (this.category != null ? this.category.hashCode() : 0);
         hash = 31 * hash + (this.dataSet != null ? this.dataSet.hashCode() : 0);
-        hash = 31 * hash + (this.nodeType != null ? this.nodeType.hashCode() : 0);
+        hash = 31 * hash
+                + (this.nodeType != null ? this.nodeType.hashCode() : 0);
         return hash;
     }
 }
