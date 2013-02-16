@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Source implements Serializable {
 
     private Integer id;
+    private String label;
     private DataProvider dataProvider;
     private DataSet dataSet;
     private String uri;
@@ -92,6 +93,13 @@ public class Source implements Serializable {
         this.uri = uri;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
     @Override
     public String toString() {
         return this.dataSet.getTitle() + " - " + this.getDataCompilation();
