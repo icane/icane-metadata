@@ -41,7 +41,6 @@ public class TimeSeries implements Serializable {
     private NodeType nodeType;
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
-    private Map<String, String> apiUriMap;
 
     public String getCode() {
         return code;
@@ -239,19 +238,6 @@ public class TimeSeries implements Serializable {
 
     public void setApiUris(List<ApiUri> apiUris) {
         this.apiUris = apiUris;
-        this.apiUriMap = new HashMap<String, String>();
-        if (apiUris != null) {
-            for (ApiUri apiUri : apiUris) {
-                this.apiUriMap.put(apiUri.getFormat(), apiUri.getUri());
-            }
-        }
-    }
-    
-    public String getApiUri(String format) {
-        if (this.apiUriMap == null) {
-            return null;
-        }
-        return this.apiUriMap.get(format);
     }
 
     @Override
