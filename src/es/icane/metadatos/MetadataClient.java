@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import es.icane.metadatos.model.*;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class MetadataClient {
     private WebResource webResource;
     private long connectionTimeout;
     private final String baseUrl;
+    // Constants
+    private final MediaType defaultMediaType = MediaType.APPLICATION_XML_TYPE;
 
     /**
      * Constructor.
@@ -92,7 +95,7 @@ public class MetadataClient {
      */
     public TimeSeries getTimeSeries(String category, String section, String subsection, String idOrUriTag) throws SeriesNotFoundException {
         try {
-            return webResource.path(category).path(section).path(subsection).path(idOrUriTag).accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path(category).path(section).path(subsection).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -110,7 +113,7 @@ public class MetadataClient {
      */
     public TimeSeries getTimeSeries(Category category, Section section, Subsection subsection, String idOrUriTag) throws SeriesNotFoundException {
         try {
-            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path(idOrUriTag).accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -128,7 +131,7 @@ public class MetadataClient {
      */
     public TimeSeries getTimeSeries(String category, String section, String subsection, String dataSet, String idOrUriTag) throws SeriesNotFoundException {
         try {
-            return webResource.path(category).path(section).path(subsection).path(dataSet).path(idOrUriTag).accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path(category).path(section).path(subsection).path(dataSet).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -146,7 +149,7 @@ public class MetadataClient {
      */
     public TimeSeries getTimeSeries(Category category, Section section, Subsection subsection, DataSet dataSet, String idOrUriTag) throws SeriesNotFoundException {
         try {
-            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path(dataSet.getUriTag()).path(idOrUriTag).accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path(dataSet.getUriTag()).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -161,34 +164,19 @@ public class MetadataClient {
      * @return the TimeSeries object with that id
      * @throws SeriesNotFoundException 
      */
-    @Deprecated
     public TimeSeries getTimeSeries(int timeSeriesId) throws SeriesNotFoundException {
         try {
-            return webResource.path("time-series").path(String.valueOf(timeSeriesId)).accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path("time-series").path(String.valueOf(timeSeriesId)).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
-    }
-
-    /**
-     * Retrieves all the TimeSeries in the database.
-     * 
-     * This method will potentially generate a lot of traffic.
-     * 
-     * @return a List of all the series in the database
-     */
-    @Deprecated
-    public List<TimeSeries> getAllTimeSeries() {
-        GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
-        };
-        return webResource.path("time-series").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
     }
 
     public List<TimeSeries> getTimeSeriesBySectionAndCategory(String category, String section) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(category).path(section).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(category).path(section).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -198,7 +186,7 @@ public class MetadataClient {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(category.getUriTag()).path(section.getUriTag()).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(category.getUriTag()).path(section.getUriTag()).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -208,7 +196,7 @@ public class MetadataClient {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(section).path(subsection).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(section).path(subsection).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -217,11 +205,11 @@ public class MetadataClient {
     public List<TimeSeries> getTimeSeriesList(Section section, Subsection subsection) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
-        try {
-            return webResource.path(section.getUriTag()).path(subsection.getUriTag()).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
-        } catch (UniformInterfaceException e) {
-            throw new SeriesNotFoundException(e);
+        List<TimeSeries> timeSeriesList = new ArrayList<TimeSeries>();
+        for (Category category : getCategories()) {
+            timeSeriesList.addAll(getTimeSeriesList(category, section, subsection));
         }
+        return timeSeriesList;
     }
 
     /**
@@ -236,12 +224,12 @@ public class MetadataClient {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(category).path(section).path(subsection).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(category).path(section).path(subsection).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
     }
-    
+
     /**
      * Get a List of all the time series belonging to a given section, subsection and category.
      * @param category the category
@@ -254,12 +242,12 @@ public class MetadataClient {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path("time-series-list").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
     }
-    
+
     /**
      * Get the parent of a given TimeSeries
      * @param timeSeries the TimeSeries whose parent to retrieve
@@ -268,7 +256,7 @@ public class MetadataClient {
      */
     public TimeSeries getParent(TimeSeries timeSeries) throws SeriesNotFoundException {
         try {
-            return webResource.path(timeSeries.getCategory().getUriTag()).path(timeSeries.getSubsection().getSection().getUriTag()).path(timeSeries.getSubsection().getUriTag()).path(timeSeries.getUriTag()).path("parent").accept(MediaType.APPLICATION_XML_TYPE).get(TimeSeries.class);
+            return webResource.path(timeSeries.getCategory().getUriTag()).path(timeSeries.getSubsection().getSection().getUriTag()).path(timeSeries.getSubsection().getUriTag()).path(timeSeries.getUriTag()).path("parent").accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -284,7 +272,7 @@ public class MetadataClient {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(timeSeries.getCategory().getUriTag()).path(timeSeries.getSubsection().getSection().getUriTag()).path(timeSeries.getSubsection().getUriTag()).path(timeSeries.getUriTag()).path("parents").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+            return webResource.path(timeSeries.getCategory().getUriTag()).path(timeSeries.getSubsection().getSection().getUriTag()).path(timeSeries.getSubsection().getUriTag()).path(timeSeries.getUriTag()).path("parents").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -298,7 +286,7 @@ public class MetadataClient {
     public List<Section> getSections() {
         GenericType<List<Section>> genericType = new GenericType<List<Section>>() {
         };
-        return webResource.path("sections").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("sections").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -322,7 +310,7 @@ public class MetadataClient {
      */
     public Section getSection(String uriTag) throws SectionNotFoundException {
         try {
-            return webResource.path("section").path(uriTag).accept(MediaType.APPLICATION_XML_TYPE).get(Section.class);
+            return webResource.path("section").path(uriTag).accept(defaultMediaType).get(Section.class);
         } catch (UniformInterfaceException e) {
             throw new SectionNotFoundException();
         }
@@ -340,9 +328,9 @@ public class MetadataClient {
     public List<Subsection> getSubsections(String section) {
         GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
         };
-        return webResource.path("section").path(section).path("subsections").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
     }
-    
+
     /**
      * Get a list of all the subsections of a given section.
      * 
@@ -352,7 +340,7 @@ public class MetadataClient {
     public List<Subsection> getSubsections(Section section) {
         GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
         };
-        return webResource.path("section").path(section.getUriTag()).path("subsections").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("section").path(section.getUriTag()).path("subsections").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -379,7 +367,7 @@ public class MetadataClient {
     public List<Category> getCategories() {
         GenericType<List<Category>> genericType = new GenericType<List<Category>>() {
         };
-        return webResource.path("categories").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("categories").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -402,12 +390,12 @@ public class MetadataClient {
      */
     public Category getCategory(String uriTag) throws CategoryNotFoundException {
         try {
-            return webResource.path("category").path(uriTag).accept(MediaType.APPLICATION_XML_TYPE).get(Category.class);
+            return webResource.path("category").path(uriTag).accept(defaultMediaType).get(Category.class);
         } catch (UniformInterfaceException e) {
             throw new CategoryNotFoundException();
         }
     }
-    
+
     /**
      * Retrieve a subsection by its numeric id.
      * @param subsectionId the numeric id of the subsection
@@ -415,7 +403,7 @@ public class MetadataClient {
      */
     public Subsection getSubsection(int subsectionId) throws SubsectionNotFoundException {
         try {
-            return webResource.path("subsection").path(String.valueOf(subsectionId)).accept(MediaType.APPLICATION_XML_TYPE).get(Subsection.class);
+            return webResource.path("subsection").path(String.valueOf(subsectionId)).accept(defaultMediaType).get(Subsection.class);
         } catch (UniformInterfaceException e) {
             throw new SubsectionNotFoundException();
         }
@@ -431,7 +419,7 @@ public class MetadataClient {
     public List<ReferenceArea> getReferenceAreas() {
         GenericType<List<ReferenceArea>> genericType = new GenericType<List<ReferenceArea>>() {
         };
-        return webResource.path("reference-areas").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("reference-areas").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -454,7 +442,7 @@ public class MetadataClient {
      */
     public Category getReferenceArea(String uriTag) throws ReferenceAreaNotFoundException {
         try {
-            return webResource.path("reference-area").path(uriTag).accept(MediaType.APPLICATION_XML_TYPE).get(Category.class);
+            return webResource.path("reference-area").path(uriTag).accept(defaultMediaType).get(Category.class);
         } catch (UniformInterfaceException e) {
             throw new ReferenceAreaNotFoundException();
         }
@@ -470,7 +458,7 @@ public class MetadataClient {
     public List<DataSet> getDataSets() {
         GenericType<List<DataSet>> genericType = new GenericType<List<DataSet>>() {
         };
-        return webResource.path("data-sets").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("data-sets").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -493,7 +481,7 @@ public class MetadataClient {
      */
     public DataSet getDataSet(String uriTag) throws DataSetNotFoundException {
         try {
-            return webResource.path("data-set").path(uriTag).accept(MediaType.APPLICATION_XML_TYPE).get(DataSet.class);
+            return webResource.path("data-set").path(uriTag).accept(defaultMediaType).get(DataSet.class);
         } catch (UniformInterfaceException e) {
             throw new DataSetNotFoundException();
         }
@@ -509,7 +497,7 @@ public class MetadataClient {
     public List<Periodicity> getPeriodicities() {
         GenericType<List<Periodicity>> genericType = new GenericType<List<Periodicity>>() {
         };
-        return webResource.path("periodicities").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("periodicities").accept(defaultMediaType).get(genericType);
     }
 
     /*
@@ -522,7 +510,7 @@ public class MetadataClient {
     public List<Source> getSources() {
         GenericType<List<Source>> genericType = new GenericType<List<Source>>() {
         };
-        return webResource.path("sources").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("sources").accept(defaultMediaType).get(genericType);
     }
 
     /*
@@ -535,6 +523,6 @@ public class MetadataClient {
     public List<DataProvider> getDataProviders() {
         GenericType<List<DataProvider>> genericType = new GenericType<List<DataProvider>>() {
         };
-        return webResource.path("data-providers").accept(MediaType.APPLICATION_XML_TYPE).get(genericType);
+        return webResource.path("data-providers").accept(defaultMediaType).get(genericType);
     }
 }
