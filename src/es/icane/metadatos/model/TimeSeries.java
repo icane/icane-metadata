@@ -155,6 +155,7 @@ public class TimeSeries implements Serializable {
         this.active = active;
     }
 
+    @XmlElement(name = "finalPeriodDescription")
     public String getFinalPeriod() {
         return finalPeriod;
     }
@@ -163,6 +164,7 @@ public class TimeSeries implements Serializable {
         this.finalPeriod = finalPeriod;
     }
 
+    @XmlElement(name = "initialPeriodDescription")
     public String getInitialPeriod() {
         return initialPeriod;
     }
