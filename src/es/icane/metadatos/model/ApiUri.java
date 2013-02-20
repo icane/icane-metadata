@@ -1,7 +1,7 @@
 package es.icane.metadatos.model;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlValue;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
-public class ApiUri {
+public class ApiUri implements Serializable {
     private String format;
     private String uri;
 
