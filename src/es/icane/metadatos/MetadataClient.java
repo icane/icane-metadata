@@ -6,12 +6,14 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 import es.icane.metadatos.model.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Metadata Client is used for accessing ICANE's Web Service methods.
@@ -96,6 +98,27 @@ public class MetadataClient {
     public TimeSeries getTimeSeries(String category, String section, String subsection, String idOrUriTag) throws SeriesNotFoundException {
         try {
             return webResource.path(category).path(section).path(subsection).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
+        } catch (UniformInterfaceException e) {
+            throw new SeriesNotFoundException(e);
+        }
+    }
+    
+     /**
+     * Retrieve a TimeSeries object by its section, subsection and category, including inactive series.
+     * 
+     * @param category the TimeSeries category's uriTag
+     * @param section the TimeSeries section's uriTag
+     * @param subsection the TimeSeries subsection's uriTag
+     * @param idOrUriTag either the String value of the TimeSeries numeric id
+     * @param inactive if set to true, inactive series will be retrieved too
+     * @return the TimeSeries object
+     * @throws SeriesNotFoundException 
+     */
+    public TimeSeries getTimeSeries(String category, String section, String subsection, String idOrUriTag, Boolean inactive) throws SeriesNotFoundException {
+        try {
+            MultivaluedMap queryParams = new MultivaluedMapImpl();
+            queryParams.add("inactive", inactive.toString());
+            return webResource.path(category).path(section).path(subsection).path(idOrUriTag).queryParams(queryParams).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }

@@ -26,9 +26,16 @@ public class TimeSeries implements Serializable {
     private int lft, rgt;
     private boolean active;
     private String uri;
+    private String metadataUri;
     private Date dataUpdate;
     private String documentation;
+    private String methodology;
     private String topics;
+    private String description;
+    private String theme;
+    private String language;
+    private String publisher;
+    private String license;
     private Subsection subsection;
     private Category category;
     private DataSet dataSet;
@@ -41,6 +48,7 @@ public class TimeSeries implements Serializable {
     private NodeType nodeType;
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
+    private List<Measure> measures;
 
     public String getCode() {
         return code;
@@ -307,4 +315,123 @@ public class TimeSeries implements Serializable {
                 + (this.nodeType != null ? this.nodeType.hashCode() : 0);
         return hash;
     }
+
+    /**
+     * @return the methodology
+     */
+    @XmlElement
+    public String getMethodology() {
+        return methodology;
+    }
+
+    /**
+     * @param methodology the methodology to set
+     */
+    public void setMethodology(String methodology) {
+        this.methodology = methodology;
+    }
+
+    /**
+     * @return the description
+     */
+    @XmlElement
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the theme
+     */
+    @XmlElement
+    public String getTheme() {
+        return theme;
+    }
+
+    /**
+     * @param theme the theme to set
+     */
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    /**
+     * @return the language
+     */
+    @XmlElement
+    public String getLanguage() {
+        return language;
+    }
+
+    /**
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    /**
+     * @return the publisher
+     */
+    @XmlElement
+    public String getPublisher() {
+        return publisher;
+    }
+
+    /**
+     * @param publisher the publisher to set
+     */
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    /**
+     * @return the license
+     */
+    @XmlElement
+    public String getLicense() {
+        return license;
+    }
+
+    /**
+     * @param license the license to set
+     */
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    /**
+     * @return the metadataUri
+     */
+    @XmlElement
+    public String getMetadataUri() {
+        return metadataUri;
+    }
+
+    /**
+     * @param metadataUri the metadataUri to set
+     */
+    public void setMetadataUri(String metadataUri) {
+        this.metadataUri = metadataUri;
+    }
+
+    /**
+     * @return the measures
+     */
+    @XmlElementWrapper(name = "measures")
+    @XmlElement(name = "measures")
+    public List<Measure> getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(List<Measure> measures) {
+        this.measures = measures;
+    }
+
 }
