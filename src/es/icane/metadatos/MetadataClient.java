@@ -17,10 +17,10 @@ import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Metadata Client is used for accessing ICANE's Web Service methods.
- * 
+ *
  * In a production environment, only uriTags should be used in all methods
  * (instead of numeric id's).
- * 
+ *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 public class MetadataClient {
@@ -35,7 +35,7 @@ public class MetadataClient {
 
     /**
      * Constructor.
-     * 
+     *
      * @param baseUrl base URL for the Web Service
      */
     public MetadataClient(String baseUrl) {
@@ -58,7 +58,7 @@ public class MetadataClient {
      * Returns this client's connection timeout, in milliseconds.
      *
      * The client will wait this long before timing out when connecting to the Web Service.
-     * 
+     *
      * @return this client's connection timeout, in milliseconds
      */
     public long getConnectionTimeout() {
@@ -69,9 +69,9 @@ public class MetadataClient {
      * Sets the connection timeout for this client.
      *
      * The client will wait this long before timing out when connecting to the Web Service.
-     * 
+     *
      * @param connectionTimeout the new connection timeout, in milliseconds
-     * @return 
+     * @return
      */
     public MetadataClient setConnectionTimeout(long connectionTimeout) {
         if (connectionTimeout < 0) {
@@ -87,13 +87,13 @@ public class MetadataClient {
      */
     /**
      * Retrieve a TimeSeries object by its section, subsection and category.
-     * 
+     *
      * @param category the TimeSeries category's uriTag
      * @param section the TimeSeries section's uriTag
      * @param subsection the TimeSeries subsection's uriTag
      * @param idOrUriTag either the String value of the TimeSeries numeric id
      * @return the TimeSeries object
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(String category, String section, String subsection, String idOrUriTag) throws SeriesNotFoundException {
         try {
@@ -102,17 +102,17 @@ public class MetadataClient {
             throw new SeriesNotFoundException(e);
         }
     }
-    
+
      /**
      * Retrieve a TimeSeries object by its section, subsection and category, including inactive series.
-     * 
+     *
      * @param category the TimeSeries category's uriTag
      * @param section the TimeSeries section's uriTag
      * @param subsection the TimeSeries subsection's uriTag
      * @param idOrUriTag either the String value of the TimeSeries numeric id
      * @param inactive if set to true, inactive series will be retrieved too
      * @return the TimeSeries object
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(String category, String section, String subsection, String idOrUriTag, Boolean inactive) throws SeriesNotFoundException {
         try {
@@ -126,13 +126,13 @@ public class MetadataClient {
 
     /**
      * Retrieve a TimeSeries object by its section, subsection and category.
-     * 
+     *
      * @param category the TimeSeries category
      * @param section the TimeSeries section
-     * @param subsection the TimeSeries subsection 
+     * @param subsection the TimeSeries subsection
      * @param idOrUriTag either the String value of the TimeSeries numeric id
      * @return the TimeSeries object
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(Category category, Section section, Subsection subsection, String idOrUriTag) throws SeriesNotFoundException {
         try {
@@ -150,7 +150,7 @@ public class MetadataClient {
      * @param dataSet the TimeSeries dataSet's uriTag
      * @param idOrUriTag either the String value of the TimeSeries numeric id
      * @return
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(String category, String section, String subsection, String dataSet, String idOrUriTag) throws SeriesNotFoundException {
         try {
@@ -168,7 +168,7 @@ public class MetadataClient {
      * @param dataSet the TimeSeries dataSet
      * @param idOrUriTag either the String value of the TimeSeries numeric id
      * @return
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(Category category, Section section, Subsection subsection, DataSet dataSet, String idOrUriTag) throws SeriesNotFoundException {
         try {
@@ -180,16 +180,31 @@ public class MetadataClient {
 
     /**
      * Returns a TimeSeries, given its numeric id.
-     * 
+     *
      * This method is not guaranteed to work in a production environment.
-     * 
+     *
      * @param timeSeriesId the numeric id of the TimeSeries
      * @return the TimeSeries object with that id
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getTimeSeries(int timeSeriesId) throws SeriesNotFoundException {
         try {
             return webResource.path("time-series").path(String.valueOf(timeSeriesId)).accept(defaultMediaType).get(TimeSeries.class);
+        } catch (UniformInterfaceException e) {
+            throw new SeriesNotFoundException(e);
+        }
+    }
+
+    /**
+     * Returns a TimeSeries, given its URI tag.
+     *
+     * @param uriTag the URI tag of the TimeSeries
+     * @return the TimeSeries object with that URI tag
+     * @throws SeriesNotFoundException
+     */
+    public TimeSeries getTimeSeries(String uriTag) throws SeriesNotFoundException {
+        try {
+            return webResource.path("time-series").path(uriTag).accept(defaultMediaType).get(TimeSeries.class);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
@@ -241,7 +256,7 @@ public class MetadataClient {
      * @param section the section's uriTag
      * @param subsection the subsection's uriTag
      * @return a List with all the time series matching the criteria
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public List<TimeSeries> getTimeSeriesByCategory(String category, String section, String subsection) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
@@ -259,7 +274,7 @@ public class MetadataClient {
      * @param section the section
      * @param subsection the subsection
      * @return a List with all the time series matching the criteria
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public List<TimeSeries> getTimeSeriesList(Category category, Section section, Subsection subsection) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
@@ -275,7 +290,7 @@ public class MetadataClient {
      * Get the parent of a given TimeSeries
      * @param timeSeries the TimeSeries whose parent to retrieve
      * @return its parent TimeSeries
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public TimeSeries getParent(TimeSeries timeSeries) throws SeriesNotFoundException {
         try {
@@ -289,7 +304,7 @@ public class MetadataClient {
      * Get all the ancestors of a given TimeSeries
      * @param timeSeries the TimeSeries whose ancestors to retrieve
      * @return a List with all its ancestors
-     * @throws SeriesNotFoundException 
+     * @throws SeriesNotFoundException
      */
     public List<TimeSeries> getAncestors(TimeSeries timeSeries) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
@@ -329,7 +344,7 @@ public class MetadataClient {
      * Retrieves a Section by its URI tag.
      * @param uriTag the Section's URI tag to search for
      * @return the corresponding Section
-     * @throws SectionNotFoundException 
+     * @throws SectionNotFoundException
      */
     public Section getSection(String uriTag) throws SectionNotFoundException {
         try {
@@ -339,12 +354,12 @@ public class MetadataClient {
         }
     }
 
-    /*  
+    /*
      * Subsection methods
      */
     /**
      * Get a list of all the subsections of a given section.
-     * 
+     *
      * @param section the section's uriTag
      * @return a list of its subsections
      */
@@ -356,7 +371,7 @@ public class MetadataClient {
 
     /**
      * Get a list of all the subsections of a given section.
-     * 
+     *
      * @param section the section
      * @return a list of its subsections
      */
@@ -409,7 +424,7 @@ public class MetadataClient {
     /**
      * Retrieve a category by its uriTag.
      * @param uriTag the uriTag of the Category
-     * @return 
+     * @return
      */
     public Category getCategory(String uriTag) throws CategoryNotFoundException {
         try {
@@ -422,7 +437,7 @@ public class MetadataClient {
     /**
      * Retrieve a subsection by its numeric id.
      * @param subsectionId the numeric id of the subsection
-     * @return 
+     * @return
      */
     public Subsection getSubsection(int subsectionId) throws SubsectionNotFoundException {
         try {
@@ -461,7 +476,7 @@ public class MetadataClient {
     /**
      * Retrieve a ReferenceArea by its uriTag.
      * @param uriTag the ReferenceArea's uriTag
-     * @return 
+     * @return
      */
     public Category getReferenceArea(String uriTag) throws ReferenceAreaNotFoundException {
         try {
@@ -500,7 +515,7 @@ public class MetadataClient {
     /**
      * Retrieve a DataSet by its uriTag.
      * @param uriTag the DataSet's uriTag
-     * @return 
+     * @return
      */
     public DataSet getDataSet(String uriTag) throws DataSetNotFoundException {
         try {
