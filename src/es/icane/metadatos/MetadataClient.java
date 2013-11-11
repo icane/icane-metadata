@@ -251,7 +251,7 @@ public class MetadataClient {
     }
 
     /**
-     * Get a List of all the time series belonging to a given section, subsection and category.
+     * Get a List of all the time series belonging to a given category.
      * @param category the category's uriTag
      * @return a List with all the time series matching the criteria
      * @throws SeriesNotFoundException
