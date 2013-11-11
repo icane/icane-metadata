@@ -253,16 +253,14 @@ public class MetadataClient {
     /**
      * Get a List of all the time series belonging to a given section, subsection and category.
      * @param category the category's uriTag
-     * @param section the section's uriTag
-     * @param subsection the subsection's uriTag
      * @return a List with all the time series matching the criteria
      * @throws SeriesNotFoundException
      */
-    public List<TimeSeries> getTimeSeriesByCategory(String category, String section, String subsection) throws SeriesNotFoundException {
+    public List<TimeSeries> getTimeSeriesByCategory(String category) throws SeriesNotFoundException {
         GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
         };
         try {
-            return webResource.path(category).path(section).path(subsection).path("time-series-list").accept(defaultMediaType).get(genericType);
+            return webResource.path(category).path("time-series-list").accept(defaultMediaType).get(genericType);
         } catch (UniformInterfaceException e) {
             throw new SeriesNotFoundException(e);
         }
