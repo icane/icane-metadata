@@ -5,22 +5,21 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-/**
- * 
- * @author emm13775
- */
+@XmlType
 public class Measure implements Serializable {
 
     private Integer id;
-    private String uriTag;
-    private String description;
-    private String unitOfMeasure;
+    private String code;
+    private String title;
+    private String unit;
+    private boolean defaultMeasure = false;
     private Date created;
     private Date lastUpdated;
 
-    @XmlAttribute
+    @XmlAttribute(required = true)
     public Integer getId() {
         return id;
     }
@@ -48,27 +47,46 @@ public class Measure implements Serializable {
         this.lastUpdated = lastUpdated;
     }
 
-    @XmlElement(required = true)
-    public String getUriTag() {
-        return uriTag;
+    public String getCode() {
+        return code;
     }
 
-    public void setUriTag(String uriTag) {
-        this.uriTag = uriTag;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    @Override
-    public String toString() {
-        return unitOfMeasure;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public boolean isDefaultMeasure() {
+        return defaultMeasure;
+    }
+
+    public void setDefaultMeasure(boolean defaultMeasure) {
+        this.defaultMeasure = defaultMeasure;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 23 * hash + (this.uriTag != null ? this.uriTag.hashCode() : 0);
-        hash = 23 * hash + (this.description != null ? this.description.hashCode() : 0);
-        hash = 23 * hash + (this.unitOfMeasure != null ? this.unitOfMeasure.hashCode() : 0);
+        hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 37 * hash + (this.code != null ? this.code.hashCode() : 0);
+        hash = 37 * hash + (this.title != null ? this.title.hashCode() : 0);
+        hash = 37 * hash + (this.unit != null ? this.unit.hashCode() : 0);
+        hash = 37 * hash + (this.defaultMeasure ? 1 : 0);
         return hash;
     }
 
@@ -81,20 +99,32 @@ public class Measure implements Serializable {
             return false;
         }
         final Measure other = (Measure) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (this.id != other.id &&
+                (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
+        if ((this.code == null) ? (other.code != null)
+                : !this.code.equals(other.code)) {
             return false;
         }
-        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+        if ((this.title == null) ? (other.title != null)
+                : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.unitOfMeasure == null) ? (other.unitOfMeasure != null) : !this.unitOfMeasure.equals(other.unitOfMeasure)) {
+        if ((this.unit == null) ? (other.unit != null)
+                : !this.unit.equals(other.unit)) {
+            return false;
+        }
+        if (this.defaultMeasure != other.defaultMeasure) {
             return false;
         }
         return true;
     }
 
-   
+    @Override
+    public String toString() {
+        return title;
+    }
+
+
 }
