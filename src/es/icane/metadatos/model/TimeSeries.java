@@ -425,7 +425,7 @@ public class TimeSeries implements Serializable {
      * @return the measures
      */
     @XmlElementWrapper(name = "measures")
-    @XmlElement(name = "measures")
+    @XmlElement(name = "measure")
     public List<Measure> getMeasures() {
         return measures;
     }
