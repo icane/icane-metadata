@@ -49,6 +49,7 @@ public class TimeSeries implements Serializable {
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
     private List<Measure> measures;
+    private String referenceResources;
     private String mapScope;
 
     public String getCode() {
@@ -442,5 +443,14 @@ public class TimeSeries implements Serializable {
 
     public void setMapScope(String mapScope) {
         this.mapScope = mapScope;
+    }
+
+    @XmlElement
+    public String getReferenceResources() {
+        return referenceResources;
+    }
+
+    public void setReferenceResources(String referenceResources) {
+        this.referenceResources = referenceResources;
     }
 }
