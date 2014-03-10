@@ -16,11 +16,9 @@ public class Measure implements Serializable {
     private String title;
     private String unit;
     private boolean defaultMeasure = false;
-    private String mapType = MAP_TYPE_CHOROPLETH;
+    private String mapType = null;
     private Date created;
     private Date lastUpdated;
-    //
-    private final static String MAP_TYPE_CHOROPLETH = "choropleth";
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -130,15 +128,15 @@ public class Measure implements Serializable {
     }
 
     public String getMapType() {
-        if (mapType == null || mapType.isEmpty()) {
-            mapType = MAP_TYPE_CHOROPLETH;
+        if (mapType != null && mapType.isEmpty()) {
+            mapType = null;
         }
         return mapType;
     }
 
     public void setMapType(String mapType) {
-        if (mapType == null || mapType.isEmpty()) {
-            this.mapType = MAP_TYPE_CHOROPLETH;
+        if (mapType != null && mapType.isEmpty()) {
+            this.mapType = null;
         } else {
             this.mapType = mapType;
         }
