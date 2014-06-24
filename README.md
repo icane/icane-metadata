@@ -10,7 +10,7 @@ The repository can be opened using NetBeans 7 (and up). It can also be built usi
 ant dist
 ```
 
-The resulting JAR will be created inside a ```dist``` directory.
+The resulting JAR will be created inside a ```dist``` directory, which will also contain a ```lib``` subdirectory with additional, required JAR libraries.
 
 Javadoc can also be compiled by running:
 
@@ -20,6 +20,7 @@ ant javadoc
 
 Usage
 -----
+The ```jersey-core``` and ```jersey-client``` (version 1.17 and up, included in the repository) libraries must be present in the classpath for the client to work.
 
 ```
 String baseUrl = "http://icane.es/metadata/api";

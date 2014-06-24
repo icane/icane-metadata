@@ -10,7 +10,7 @@ Este repositorio se puede abrir como projecto de NetBeans 7 (y superiores). Tamb
 ant dist
 ```
 
-El JAR resultante se creará en un directorio llamado ```dist```.
+El JAR resultante se creará en un directorio llamado ```dist```, que también contendrá un directorio ```lib``` con librerías adicionales requeridas.
 
 También se puede compilar la documentación en formato Javadoc.
 
@@ -20,7 +20,7 @@ ant javadoc
 
 Uso
 ---
-
+Las librerías ```jersey-core``` y ```jersey-client``` (versión 1.17 o superior, incluidas en el repositorio) deberán estar presentes en el classpath para que funcione el cliente.
 ```
 String baseUrl = "http://icane.es/metadata/api";
 MetadataClient metadataClient = new MetadataClient(baseUrl);
