@@ -143,42 +143,6 @@ public class MetadataClient {
     }
 
     /**
-     * Retreive a TimeSeries object by its section, subsection, category and dataSet
-     * @param category the TimeSeries category's uriTag
-     * @param section the TimeSeries section's uriTag
-     * @param subsection the TimeSeries subsection's uriTag
-     * @param dataSet the TimeSeries dataSet's uriTag
-     * @param idOrUriTag either the String value of the TimeSeries numeric id
-     * @return
-     * @throws SeriesNotFoundException
-     */
-    public TimeSeries getTimeSeries(String category, String section, String subsection, String dataSet, String idOrUriTag) throws SeriesNotFoundException {
-        try {
-            return webResource.path(category).path(section).path(subsection).path(dataSet).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
-        } catch (UniformInterfaceException e) {
-            throw new SeriesNotFoundException(e);
-        }
-    }
-
-    /**
-     * Retreive a TimeSeries object by its section, subsection, category and dataSet
-     * @param category the TimeSeries category
-     * @param section the TimeSeries section
-     * @param subsection the TimeSeries subsection
-     * @param dataSet the TimeSeries dataSet
-     * @param idOrUriTag either the String value of the TimeSeries numeric id
-     * @return
-     * @throws SeriesNotFoundException
-     */
-    public TimeSeries getTimeSeries(Category category, Section section, Subsection subsection, DataSet dataSet, String idOrUriTag) throws SeriesNotFoundException {
-        try {
-            return webResource.path(category.getUriTag()).path(section.getUriTag()).path(subsection.getUriTag()).path(dataSet.getUriTag()).path(idOrUriTag).accept(defaultMediaType).get(TimeSeries.class);
-        } catch (UniformInterfaceException e) {
-            throw new SeriesNotFoundException(e);
-        }
-    }
-
-    /**
      * Returns a TimeSeries, given its numeric id.
      *
      * This method is not guaranteed to work in a production environment.
@@ -301,6 +265,39 @@ public class MetadataClient {
             throw new SeriesNotFoundException(e);
         }
     }
+    
+    /**
+     * Get a List of all the time series belonging to a given dataset.
+     * @param dataSet the dataset
+     * @return a List with all the time series matching the criteria
+     * @throws SeriesNotFoundException
+     */
+    public List<TimeSeries> getTimeSeriesList(DataSet dataSet) throws SeriesNotFoundException {
+        GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
+        };
+        try {
+            return webResource.path("data-set").path(dataSet.getUriTag()).path("time-series-list").accept(defaultMediaType).get(genericType);
+        } catch (UniformInterfaceException e) {
+            throw new SeriesNotFoundException(e);
+        }
+    }
+
+    /**
+     * Get a List of all the time series belonging to a given dataset (by its uriTag).
+     * @param dataSet the subsection's dataset
+     * @return a List with all the time series matching the criteria
+     * @throws SeriesNotFoundException
+     */
+    public List<TimeSeries> getTimeSeriesList(String dataSet) throws SeriesNotFoundException {
+        GenericType<List<TimeSeries>> genericType = new GenericType<List<TimeSeries>>() {
+        };
+        try {
+            return webResource.path("data-set").path(dataSet).path("time-series-list").accept(defaultMediaType).get(genericType);
+        } catch (UniformInterfaceException e) {
+            throw new SeriesNotFoundException(e);
+        }
+    }
+    
 
     /**
      * Get the parent of a given TimeSeries

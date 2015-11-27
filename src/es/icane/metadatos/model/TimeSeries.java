@@ -29,27 +29,27 @@ public class TimeSeries implements Serializable {
     private String metadataUri;
     private Date dataUpdate;
     private String documentation;
-    private String methodology;
-    private String topics;
     private String description;
     private String theme;
     private String language;
     private String publisher;
     private String license;
+    private Date nextUpdate;
+    private boolean deprecated;
+    private boolean municipalGrouping;
+    private String base;
     private Subsection subsection;
     private Category category;
     private DataSet dataSet;
     private Periodicity periodicity;
     private String initialPeriod, finalPeriod;
     private List<Source> sources;
-    private List<Link> links;
     private ReferenceArea referenceArea;
     private Integer parentId;
     private NodeType nodeType;
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
     private List<Measure> measures;
-    private String referenceResources;
     private String mapScope;
 
     public String getCode() {
@@ -139,16 +139,6 @@ public class TimeSeries implements Serializable {
         this.sources = sources;
     }
 
-    @XmlElementWrapper(name = "links")
-    @XmlElement(name = "link")
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
     public ReferenceArea getReferenceArea() {
         return referenceArea;
     }
@@ -189,14 +179,6 @@ public class TimeSeries implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTopics() {
-        return topics;
-    }
-
-    public void setTopics(String topics) {
-        this.topics = topics;
     }
 
     public String getDocumentation() {
@@ -319,21 +301,6 @@ public class TimeSeries implements Serializable {
     }
 
     /**
-     * @return the methodology
-     */
-    @XmlElement
-    public String getMethodology() {
-        return methodology;
-    }
-
-    /**
-     * @param methodology the methodology to set
-     */
-    public void setMethodology(String methodology) {
-        this.methodology = methodology;
-    }
-
-    /**
      * @return the description
      */
     @XmlElement
@@ -445,12 +412,40 @@ public class TimeSeries implements Serializable {
         this.mapScope = mapScope;
     }
 
-    @XmlElement
-    public String getReferenceResources() {
-        return referenceResources;
-    }
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
+	public Date getNextUpdate() {
+		return nextUpdate;
+	}
 
-    public void setReferenceResources(String referenceResources) {
-        this.referenceResources = referenceResources;
-    }
+	public void setNextUpdate(Date nextUpdate) {
+		this.nextUpdate = nextUpdate;
+	}
+
+	@XmlElement
+	public boolean isDeprecated() {
+		return deprecated;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		this.deprecated = deprecated;
+	}
+
+	@XmlElement
+	public boolean isMunicipalGrouping() {
+		return municipalGrouping;
+	}
+
+	public void setMunicipalGrouping(boolean municipalGrouping) {
+		this.municipalGrouping = municipalGrouping;
+	}
+	
+	@XmlElement
+	public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+	
 }
