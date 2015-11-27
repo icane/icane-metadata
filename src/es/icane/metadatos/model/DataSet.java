@@ -23,12 +23,8 @@ public class DataSet implements Serializable {
     private String title;
     private String acronym;
     private String uriTag;
-    private String methodology;
-    private String topics;
-    private Subsection subsection;
-
-	private List<Link> links;
-    private List<Reference> references;
+   
+	
     private Date created;
     private Date lastUpdated;
 
@@ -85,65 +81,12 @@ public class DataSet implements Serializable {
         this.acronym = acronym;
     }
     
-    @XmlElementWrapper(name = "links")
-    @XmlElement(name = "link")
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-    
-    public String getTopics() {
-        return topics;
-    }
-
-    public void setTopics(String topics) {
-        this.topics = topics;
-    }
-    
-    /**
-     * @return the methodology
-     */
-    @XmlElement
-    public String getMethodology() {
-        return methodology;
-    }
-
-    /**
-     * @param methodology the methodology to set
-     */
-    public void setMethodology(String methodology) {
-        this.methodology = methodology;
-    }
+   
 
     @Override
     public String toString() {
         return title + " (" + acronym + ')';
     }
-    
-    /**
-     * @return the references
-     */
-    @XmlElementWrapper(name = "references")
-    @XmlElement(name = "references")
-	public List<Reference> getReferences() {
-		return references;
-	}
-
-	public void setReferences(List<Reference> references) {
-		this.references = references;
-	}
-	
-	 
-    public Subsection getSubsection() {
-		return subsection;
-	}
-
-	public void setSubsection(Subsection subsection) {
-		this.subsection = subsection;
-	}
 
     @Override
     public boolean equals(Object obj) {

@@ -1,16 +1,16 @@
 package es.icane.metadatos.model;
 
-import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import es.icane.metadatos.adapters.DateAdapter;
 
 /**
  *
@@ -22,13 +22,18 @@ public class TimeSeries implements Serializable {
     private Integer id;
     private String code;
     private String uriTag;
+    private String uriTagEs;
     private String title;
-    private int lft, rgt;
+    private int lft, rgt, depth;
     private boolean active;
     private String uri;
     private String metadataUri;
     private Date dataUpdate;
     private String documentation;
+    private String methodology;
+    private String mapScope;
+    private String topics;
+    private String automatizedTopics;
     private String description;
     private String theme;
     private String language;
@@ -41,16 +46,24 @@ public class TimeSeries implements Serializable {
     private Subsection subsection;
     private Category category;
     private DataSet dataSet;
+    private DataProvider dataProvider;
+    private String sourceUri;
+    private String dataCompilation;
+    private String sourceData;
     private Periodicity periodicity;
     private String initialPeriod, finalPeriod;
-    private List<Source> sources;
+    private String sources;
     private ReferenceArea referenceArea;
+    private TimePeriod initialPeriodComposite;
+    private TimePeriod finalPeriodComposite;
     private Integer parentId;
     private NodeType nodeType;
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
     private List<Measure> measures;
-    private String mapScope;
+    private List<Link> links;
+    private List<Reference> references;
+    
 
     public String getCode() {
         return code;
@@ -128,17 +141,6 @@ public class TimeSeries implements Serializable {
     public void setPeriodicity(Periodicity periodicity) {
         this.periodicity = periodicity;
     }
-
-    @XmlElementWrapper(name = "sources")
-    @XmlElement(name = "source")
-    public List<Source> getSources() {
-        return sources;
-    }
-
-    public void setSources(List<Source> sources) {
-        this.sources = sources;
-    }
-
     public ReferenceArea getReferenceArea() {
         return referenceArea;
     }
@@ -447,5 +449,136 @@ public class TimeSeries implements Serializable {
 	public void setBase(String base) {
 		this.base = base;
 	}
+	
+	 @XmlElementWrapper(name = "links")
+	    @XmlElement(name = "link")
+	    public List<Link> getLinks() {
+	        return links;
+	    }
+
+	    public void setLinks(List<Link> links) {
+	        this.links = links;
+	    }
+	    
+	    public String getTopics() {
+	        return topics;
+	    }
+
+	    public void setTopics(String topics) {
+	        this.topics = topics;
+	    }
+	    
+	    /**
+	     * @return the methodology
+	     */
+	    @XmlElement
+	    public String getMethodology() {
+	        return methodology;
+	    }
+
+	    /**
+	     * @param methodology the methodology to set
+	     */
+	    public void setMethodology(String methodology) {
+	        this.methodology = methodology;
+	    }
+	    
+	    /**
+	     * @return the references
+	     */
+	    @XmlElementWrapper(name = "references")
+	    @XmlElement(name = "references")
+		public List<Reference> getReferences() {
+			return references;
+		}
+
+		public void setReferences(List<Reference> references) {
+			this.references = references;
+		}
+
+		public String getAutomatizedTopics() {
+			return automatizedTopics;
+		}
+
+		public void setAutomatizedTopics(String automatizedTopics) {
+			this.automatizedTopics = automatizedTopics;
+		}
+
+		public DataProvider getDataProvider() {
+			return dataProvider;
+		}
+
+		public void setDataProvider(DataProvider dataProvider) {
+			this.dataProvider = dataProvider;
+		}
+
+		public String getSourceUri() {
+			return sourceUri;
+		}
+
+		public void setSourceUri(String sourceUri) {
+			this.sourceUri = sourceUri;
+		}
+
+		public String getDataCompilation() {
+			return dataCompilation;
+		}
+
+		public void setDataCompilation(String dataCompilation) {
+			this.dataCompilation = dataCompilation;
+		}
+
+		public String getSourceData() {
+			return sourceData;
+		}
+
+		public void setSourceData(String sourceData) {
+			this.sourceData = sourceData;
+		}
+
+		public void setSources(String sources) {
+			this.sources = sources;
+		}
+
+		public String getUriTagEs() {
+			return uriTagEs;
+		}
+
+		public void setUriTagEs(String uriTagEs) {
+			this.uriTagEs = uriTagEs;
+		}
+
+		public int getDepth() {
+			return depth;
+		}
+
+		public void setDepth(int depth) {
+			this.depth = depth;
+		}
+
+		@XmlElement(name = "initialPeriod")
+		public TimePeriod getInitialPeriodComposite() {
+			return initialPeriodComposite;
+		}
+		
+
+		public void setInitialPeriodComposite(TimePeriod initialPeriodComposite) {
+			this.initialPeriodComposite = initialPeriodComposite;
+		}
+
+		@XmlElement(name = "finalPeriod")
+		public TimePeriod getFinalPeriodComposite() {
+			return finalPeriodComposite;
+		}
+
+		public void setFinalPeriodComposite(TimePeriod finalPeriodComposite) {
+			this.finalPeriodComposite = finalPeriodComposite;
+		}
+
+		public String getSources() {
+			return sources;
+		}
+		
+		
 	
 }

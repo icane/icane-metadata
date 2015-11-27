@@ -552,16 +552,29 @@ public class MetadataClient {
     }
 
     /*
-     * Source methods
+     * TimePeriod methods
      */
     /**
      * Retrieve a list of all the sources.
      * @return a List with Source objects
      */
-    public List<Source> getSources() {
-        GenericType<List<Source>> genericType = new GenericType<List<Source>>() {
+    public List<TimePeriod> getTimePeriods() {
+        GenericType<List<TimePeriod>> genericType = new GenericType<List<TimePeriod>>() {
         };
-        return webResource.path("sources").accept(defaultMediaType).get(genericType);
+        return webResource.path("time-periods").accept(defaultMediaType).get(genericType);
+    }
+    
+    /*
+     * NodeType methods
+     */
+    /**
+     * Retrieve a list of all the sources.
+     * @return a List with Source objects
+     */
+    public List<NodeType> getNodeTypes() {
+        GenericType<List<NodeType>> genericType = new GenericType<List<NodeType>>() {
+        };
+        return webResource.path("note-types").accept(defaultMediaType).get(genericType);
     }
 
     /*
