@@ -20,7 +20,7 @@ public class Reference implements Serializable {
 	    private Date lastUpdated;
 	    private ResourceType resourceType;
 	    
-	    @XmlAttribute
+	    @XmlAttribute(required = true)
 		public Integer getId() {
 			return id;
 		}

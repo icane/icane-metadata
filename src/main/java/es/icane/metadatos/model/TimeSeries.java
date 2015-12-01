@@ -487,7 +487,7 @@ public class TimeSeries implements Serializable {
 	     * @return the references
 	     */
 	    @XmlElementWrapper(name = "references")
-	    @XmlElement(name = "references")
+	    @XmlElement(name = "reference")
 		public List<Reference> getReferences() {
 			return references;
 		}

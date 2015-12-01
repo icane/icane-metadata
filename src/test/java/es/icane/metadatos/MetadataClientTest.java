@@ -127,5 +127,47 @@ public class MetadataClientTest {
 		assertEquals("UritagEs must be correct", "defunciones-edad-media", timeSeries.getUriTagEs());
 
 	}
+	
+	@Test
+	public void getTimeSeriesReferencesShouldReturnAList() {
+
+		// MyClass is tested
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		MetadataClient metadataClient = new MetadataClient(baseUrl);
+
+		TimeSeries timeSeries = null;
+		try {
+			timeSeries = metadataClient.getTimeSeries("quarterly-accounting-cantabria-base-2010-current-prices");
+		} catch (SeriesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// assert statements
+		assertTrue("References must not be empty", timeSeries.getReferences().size() >= 1);
+		assertEquals("Resource type of reference is publication", "Publicación", timeSeries.getReferences().get(0).getResourceType().toString());
+		
+	}
+	
+	@Test
+	public void getTimeSeriesBaseShouldReturnStringValue() {
+
+		// MyClass is tested
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		MetadataClient metadataClient = new MetadataClient(baseUrl);
+
+		TimeSeries timeSeries = null;
+		try {
+			timeSeries = metadataClient.getTimeSeries("quarterly-accounting-cantabria-base-2010-current-prices");
+		} catch (SeriesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// assert statements
+		
+		assertEquals("Base must be 2010", "2010", timeSeries.getBase());
+		
+	}
 
 }
