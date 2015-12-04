@@ -132,7 +132,7 @@ public class MetadataClientTest {
 	public void getTimeSeriesReferencesShouldReturnAList() {
 
 		// MyClass is tested
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+        String baseUrl = "http://www.icane.es/metadata/api";
 		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		TimeSeries timeSeries = null;
@@ -149,11 +149,11 @@ public class MetadataClientTest {
 		
 	}
 	
-	@Test
+/*	@Test
 	public void getTimeSeriesBaseShouldReturnStringValue() {
 
 		// MyClass is tested
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		String baseUrl = "http://www.icane.es/metadata/api";
 		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		TimeSeries timeSeries = null;
@@ -169,5 +169,5 @@ public class MetadataClientTest {
 		assertEquals("Base must be 2010", "2010", timeSeries.getBase());
 		
 	}
-
+*/
 }
