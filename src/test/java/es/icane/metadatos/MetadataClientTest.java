@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import es.icane.metadatos.model.DataProvider;
@@ -16,12 +17,16 @@ import es.icane.metadatos.model.TimeSeries;
 
 public class MetadataClientTest {
 
+	private static MetadataClient metadataClient;
+
+	@BeforeClass
+	public static void setUp() {
+		String baseUrl = "http://www.icane.es/metadata/api";
+		metadataClient = new MetadataClient(baseUrl);
+	}
+
 	@Test
 	public void getNodeTypesShouldReturnTenElementsList() {
-
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		List<NodeType> nodeTypes = metadataClient.getNodeTypes();
 
@@ -34,10 +39,6 @@ public class MetadataClientTest {
 	@Test
 	public void getTimePeriodsShouldReturnList() {
 
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
-
 		List<TimePeriod> timePeriods = metadataClient.getTimePeriods();
 
 
@@ -49,10 +50,6 @@ public class MetadataClientTest {
 	@Test
 	public void getDataProvidersShouldReturnList() {
 
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
-
 		List<DataProvider> dataProviders = metadataClient.getDataProviders();
 
 		// assert statements
@@ -62,10 +59,6 @@ public class MetadataClientTest {
 
 	@Test
 	public void getDataSetsShouldReturnList() {
-
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		List<DataSet> dataSets = metadataClient.getDataSets();
 
@@ -77,10 +70,6 @@ public class MetadataClientTest {
 	@Test
 	public void getPeriodicitiesShouldReturnList() {
 
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
-
 		List<Periodicity> periodicities = metadataClient.getPeriodicities();
 
 		// assert statements
@@ -91,9 +80,6 @@ public class MetadataClientTest {
 	@Test
 	public void getPeriodicityShouldReturnElement() {
 
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		Periodicity periodicity = null;
 		try {
@@ -109,10 +95,6 @@ public class MetadataClientTest {
 
 	@Test
 	public void getUriTagEsShouldReturnACorrectUriTag() {
-
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		TimeSeries timeSeries = null;
 		try {
@@ -131,10 +113,6 @@ public class MetadataClientTest {
 	@Test
 	public void getTimeSeriesReferencesShouldReturnAList() {
 
-		// MyClass is tested
-        String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
-
 		TimeSeries timeSeries = null;
 		try {
 			timeSeries = metadataClient.getTimeSeries("quarterly-accounting-cantabria-base-2010-current-prices");
@@ -149,12 +127,8 @@ public class MetadataClientTest {
 		
 	}
 	
-/*	@Test
+	@Test
 	public void getTimeSeriesBaseShouldReturnStringValue() {
-
-		// MyClass is tested
-		String baseUrl = "http://www.icane.es/metadata/api";
-		MetadataClient metadataClient = new MetadataClient(baseUrl);
 
 		TimeSeries timeSeries = null;
 		try {
@@ -164,10 +138,25 @@ public class MetadataClientTest {
 			e.printStackTrace();
 		}
 
-		// assert statements
-		
+		// assert statement
 		assertEquals("Base must be 2010", "2010", timeSeries.getBase());
 		
 	}
-*/
+
+	@Test
+	public void getTimeSeriesInitialPeriodShouldReturnTimePeriodObject() {
+
+		TimeSeries timeSeries = null;
+		try {
+			timeSeries = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+		} catch (SeriesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// assert statement
+		assertEquals("Initial time period id must be 259", 259, (int) timeSeries.getInitialPeriodComposite().getId());
+
+	}
+
 }

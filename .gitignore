@@ -18,6 +18,7 @@ nbproject/private
 /bin/
 .classpath
 .project
+.idea
 /build/
 /bin/
 target/
