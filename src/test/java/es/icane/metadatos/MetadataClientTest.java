@@ -146,16 +146,20 @@ public class MetadataClientTest {
 	@Test
 	public void getTimeSeriesInitialPeriodShouldReturnTimePeriodObject() {
 
-		TimeSeries timeSeries = null;
+		TimeSeries timeSeries1 = null;
+		TimeSeries timeSeries2 = null;
+
 		try {
-			timeSeries = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+			timeSeries1 = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+			timeSeries2 = metadataClient.getTimeSeries("primary-care-social-services");
 		} catch (SeriesNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// assert statement
-		assertEquals("Initial time period id must be 259", 259, (int) timeSeries.getInitialPeriodComposite().getId());
+		assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
+		assertEquals("Initial time period id must be 575", 575, (int) timeSeries2.getFinalPeriodComposite().getId());
 
 	}
 
