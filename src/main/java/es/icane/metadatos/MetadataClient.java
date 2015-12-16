@@ -617,10 +617,11 @@ public class MetadataClient {
 
     /**
      * Update TimeSeries data from json
-     * @param jsonData a String with the data to update. Ex: "{"id":5930,"code":"json-put-test"}"
+     * @param timeSeries a TimeSeries object with the data to update. Ex: "{"id":5930,"code":"json-put-test"}"
      * @return a TimeSeries object
      */
-    public TimeSeries updateTimeSeries(String jsonData) {
-        return webResource.path("time-series").accept(defaultMediaType).header("Content-Type", "application/json").put(TimeSeries.class, jsonData);
+    public TimeSeries updateTimeSeries(TimeSeries timeSeries) {
+        //return webResource.path("time-series").accept(defaultMediaType).header("Content-Type", "application/json").put(TimeSeries.class, jsonData);
+		return webResource.path("time-series").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(TimeSeries.class, timeSeries);
     }
 }

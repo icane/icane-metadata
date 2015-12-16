@@ -169,19 +169,21 @@ public class MetadataClientTest {
         String jsonData = "{\"id\":5930,\n" +
                 "\"code\":\"put-test-json\"\n" +
                 "}";
+		TimeSeries timeSeries = new TimeSeries();
+		timeSeries.setId(5930);
+		timeSeries.setCode("put-test-object");
+        metadataClient.updateTimeSeries(timeSeries);
 
-        metadataClient.updateTimeSeries(jsonData);
-
-        TimeSeries timeSeries = null;
+        TimeSeries retrievedTimeSeries = null;
         try {
-            timeSeries = metadataClient.getTimeSeries("industrial-production-index-base-2010");
+            retrievedTimeSeries = metadataClient.getTimeSeries("industrial-production-index-base-2010");
 
         } catch (SeriesNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // assert statement
-        assertEquals("Description shold be equal to put-test", "put-test-json",  timeSeries.getCode());
+        assertEquals("Description should be equal to put-test-object", "put-test-object",  retrievedTimeSeries.getCode());
 
 
     }
