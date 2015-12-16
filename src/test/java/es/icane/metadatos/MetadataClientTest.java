@@ -21,7 +21,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://www.icane.es/metadata/api";
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -162,5 +162,28 @@ public class MetadataClientTest {
 		assertEquals("Initial time period id must be 575", 575, (int) timeSeries2.getFinalPeriodComposite().getId());
 
 	}
+
+    @Test
+    public void updateTimeSeriesUsingJSONShouldReturnOk() {
+
+        String jsonData = "{\"id\":5930,\n" +
+                "\"code\":\"put-test-json\"\n" +
+                "}";
+
+        metadataClient.updateTimeSeries(jsonData);
+
+        TimeSeries timeSeries = null;
+        try {
+            timeSeries = metadataClient.getTimeSeries("industrial-production-index-base-2010");
+
+        } catch (SeriesNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // assert statement
+        assertEquals("Description shold be equal to put-test", "put-test-json",  timeSeries.getCode());
+
+
+    }
 
 }

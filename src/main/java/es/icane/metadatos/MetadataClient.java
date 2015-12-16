@@ -615,8 +615,12 @@ public class MetadataClient {
 		return webResource.path("data-providers").accept(defaultMediaType).get(genericType);
 	}
 
-
-    public void updateTimeSeries(String jsonData) {
-        webResource.path("time-series").accept(defaultMediaType).put(TimeSeries.class, jsonData);
+    /**
+     * Update TimeSeries data from json
+     * @param jsonData a String with the data to update. Ex: "{"id":5930,"code":"json-put-test"}"
+     * @return a TimeSeries object
+     */
+    public TimeSeries updateTimeSeries(String jsonData) {
+        return webResource.path("time-series").accept(defaultMediaType).header("Content-Type", "application/json").put(TimeSeries.class, jsonData);
     }
 }
