@@ -5,15 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import es.icane.metadatos.model.*;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import es.icane.metadatos.model.DataProvider;
-import es.icane.metadatos.model.DataSet;
-import es.icane.metadatos.model.NodeType;
-import es.icane.metadatos.model.Periodicity;
-import es.icane.metadatos.model.TimePeriod;
-import es.icane.metadatos.model.TimeSeries;
 
 public class MetadataClientTest {
 
@@ -123,7 +118,8 @@ public class MetadataClientTest {
 
 		// assert statements
 		assertTrue("References must not be empty", timeSeries.getReferences().size() >= 1);
-		assertEquals("Resource type of reference is publication", "Publicación", timeSeries.getReferences().get(0).getResourceType().toString());
+		assertEquals("Resource type of reference is publication", "Publicación",
+                timeSeries.getReferences().get(0).getResourceType().toString());
 		
 	}
 	
@@ -164,14 +160,11 @@ public class MetadataClientTest {
 	}
 
     @Test
-    public void updateTimeSeriesUsingJSONShouldReturnOk() {
+    public void updateTimeSeriesWithSimpleDataShouldReturnOk() {
 
-        String jsonData = "{\"id\":5930,\n" +
-                "\"code\":\"put-test-json\"\n" +
-                "}";
 		TimeSeries timeSeries = new TimeSeries();
 		timeSeries.setId(5930);
-		timeSeries.setCode("put-test-object");
+		timeSeries.setCode("put-test-xml-object");
         metadataClient.updateTimeSeries(timeSeries);
 
         TimeSeries retrievedTimeSeries = null;
@@ -183,9 +176,61 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
         // assert statement
-        assertEquals("Description should be equal to put-test-object", "put-test-object",  retrievedTimeSeries.getCode());
+        assertEquals("Description should be equal to put-test-object",
+                "put-test-xml-object",  retrievedTimeSeries.getCode());
 
 
+    }
+
+    @After
+    public void restoreCode() {
+        TimeSeries timeSeries = new TimeSeries();
+        timeSeries.setId(5930);
+        timeSeries.setCode("none");
+        metadataClient.updateTimeSeries(timeSeries);
+    }
+
+    @Test
+    public void updateTimeSeriesWithComplexDataShouldReturnOk() {
+        Subsection subsection = null;
+        try {
+           subsection = metadataClient.getSubsection(10);
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        TimeSeries timeSeries = new TimeSeries();
+        timeSeries.setId(5930);
+        timeSeries.setSubsection(subsection);
+        metadataClient.updateTimeSeries(timeSeries);
+
+        TimeSeries retrievedTimeSeries = null;
+        try {
+            retrievedTimeSeries = metadataClient.getTimeSeries("industrial-production-index-base-2010");
+
+        } catch (SeriesNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // assert statement
+        assertEquals("New subsection uri-tag should be equal to primary-sector",
+                "primary-sector",  retrievedTimeSeries.getSubsection().getUriTag());
+
+
+    }
+
+    @After
+    public void restoreSubsection() {
+        Subsection subsection = null;
+        try {
+            subsection = metadataClient.getSubsection(11);
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+        TimeSeries timeSeries = new TimeSeries();
+        timeSeries.setId(5930);
+        timeSeries.setSubsection(subsection);
+        metadataClient.updateTimeSeries(timeSeries);
     }
 
 }

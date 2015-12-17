@@ -23,6 +23,8 @@ public class Subsection implements Serializable {
     private String uriTag;
     private String uri;
     private String topics;
+    private String automatizedTopics;
+
     private String code;
     private Section section;
     private List<Link> links;
@@ -122,6 +124,14 @@ public class Subsection implements Serializable {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getAutomatizedTopics() {
+        return automatizedTopics;
+    }
+
+    public void setAutomatizedTopics(String automatizedTopics) {
+        this.automatizedTopics = automatizedTopics;
     }
 
     @Override

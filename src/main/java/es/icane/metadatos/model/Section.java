@@ -23,6 +23,7 @@ public class Section implements Serializable {
     private String uriTag;
     private String uri;
     private String topics;
+    private String automatizedTopics;
     private String code;
     private List<Subsection> subsections;
     private List<Link> links;
@@ -125,6 +126,14 @@ public class Section implements Serializable {
 
     public String getUri() {
         return uri;
+    }
+
+    public String getAutomatizedTopics() {
+        return automatizedTopics;
+    }
+
+    public void setAutomatizedTopics(String automatizedTopics) {
+        this.automatizedTopics = automatizedTopics;
     }
 
     public void setUri(String uri) {

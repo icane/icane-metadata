@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import es.icane.metadatos.adapters.DateAdapter;
@@ -17,6 +14,7 @@ import es.icane.metadatos.adapters.DateAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement
 public class TimeSeries implements Serializable {
 
     private Integer id;
@@ -40,6 +38,8 @@ public class TimeSeries implements Serializable {
     private String publisher;
     private String license;
     private Date nextUpdate;
+    private Date dateCreated;
+    private Date lastUpdated;
     private boolean deprecated;
     private boolean municipalGrouping;
     private String base;
@@ -578,7 +578,20 @@ public class TimeSeries implements Serializable {
 		public String getSources() {
 			return sources;
 		}
-		
-		
-	
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 }

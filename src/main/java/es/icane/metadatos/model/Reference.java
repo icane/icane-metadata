@@ -55,7 +55,7 @@ public class Reference implements Serializable {
 			this.created = created;
 		}
 		
-		@XmlElement(name = "dateCreated")
+		@XmlElement(name = "lastUpdated")
 	    @XmlJavaTypeAdapter(value = DateAdapter.class)
 		public Date getLastUpdated() {
 			return lastUpdated;
