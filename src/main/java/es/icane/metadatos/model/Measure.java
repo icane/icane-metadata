@@ -1,24 +1,47 @@
 package es.icane.metadatos.model;
 
 import es.icane.metadatos.adapters.DateAdapter;
+import es.icane.metadatos.adapters.TimeSeriesAdapter;
+
 import java.io.Serializable;
 import java.util.Date;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlType
+@XmlRootElement(name="measure")
 public class Measure implements Serializable {
 
     private Integer id;
     private String code;
     private String title;
     private String unit;
+    private UnitOfMeasure unitOfMeasure;
+    private String node;
+    private String nodeUriTag;
     private boolean defaultMeasure = false;
+    private Integer ordinal;
     private String mapType = null;
     private Date created;
     private Date lastUpdated;
+
+
+    public Measure() {
+
+    }
+    public Measure(String code, String title, UnitOfMeasure unitOfMeasure, String nodeUriTag, boolean defaultMeasure, Integer ordinal, String mapType, Date created, Date lastUpdated) {
+        this.code = code;
+        this.title = title;
+        this.unitOfMeasure = unitOfMeasure;
+        this.nodeUriTag = nodeUriTag;
+        this.defaultMeasure = defaultMeasure;
+        this.ordinal = ordinal;
+        this.mapType = mapType;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
+
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -27,6 +50,22 @@ public class Measure implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNodeUriTag() {
+        return nodeUriTag;
+    }
+
+    public void setNodeUriTag(String nodeUriTag) {
+        this.nodeUriTag = nodeUriTag;
+    }
+
+    public UnitOfMeasure getUnitOfMeasure() {
+        return unitOfMeasure;
+    }
+
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
     @XmlElement(name = "dateCreated")
@@ -120,6 +159,23 @@ public class Measure implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getNode() {
+        return node;
+    }
+
+    public void setNode(String node) {
+        this.node = node;
+        this.nodeUriTag = node;
+    }
+
+    public Integer getOrdinal() {
+        return ordinal;
+    }
+
+    public void setOrdinal(Integer ordinal) {
+        this.ordinal = ordinal;
     }
 
     @Override

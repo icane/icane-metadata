@@ -14,7 +14,7 @@ import es.icane.metadatos.adapters.DateAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
-@XmlRootElement
+@XmlRootElement(name="timeSeries")
 public class TimeSeries implements Serializable {
 
     private Integer id;
@@ -109,14 +109,6 @@ public class TimeSeries implements Serializable {
         this.dataUpdate = dataUpdate;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     @XmlElement(required = true)
     public Subsection getSubsection() {
         return subsection;
@@ -155,24 +147,6 @@ public class TimeSeries implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    @XmlElement(name = "finalPeriodDescription")
-    public String getFinalPeriod() {
-        return finalPeriod;
-    }
-
-    public void setFinalPeriod(String finalPeriod) {
-        this.finalPeriod = finalPeriod;
-    }
-
-    @XmlElement(name = "initialPeriodDescription")
-    public String getInitialPeriod() {
-        return initialPeriod;
-    }
-
-    public void setInitialPeriod(String initialPeriod) {
-        this.initialPeriod = initialPeriod;
     }
 
     public String getTitle() {
@@ -226,16 +200,6 @@ public class TimeSeries implements Serializable {
         this.nodeType = nodeType;
     }
 
-    @XmlElementWrapper(name = "apiUris")
-    @XmlElement(name = "apiUri")
-    public List<ApiUri> getApiUris() {
-        return apiUris;
-    }
-
-    public void setApiUris(List<ApiUri> apiUris) {
-        this.apiUris = apiUris;
-    }
-
     @Override
     public String toString() {
         return this.title;
@@ -275,16 +239,6 @@ public class TimeSeries implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @XmlElementWrapper(name = "children")
-    @XmlElement(name = "timeSeries")
-    public List<TimeSeries> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<TimeSeries> children) {
-        this.children = children;
     }
 
     @Override
@@ -375,21 +329,6 @@ public class TimeSeries implements Serializable {
      */
     public void setLicense(String license) {
         this.license = license;
-    }
-
-    /**
-     * @return the metadataUri
-     */
-    @XmlElement
-    public String getMetadataUri() {
-        return metadataUri;
-    }
-
-    /**
-     * @param metadataUri the metadataUri to set
-     */
-    public void setMetadataUri(String metadataUri) {
-        this.metadataUri = metadataUri;
     }
 
     /**
@@ -536,9 +475,7 @@ public class TimeSeries implements Serializable {
 			this.sourceData = sourceData;
 		}
 
-		public void setSources(String sources) {
-			this.sources = sources;
-		}
+
 
 		public String getUriTagEs() {
 			return uriTagEs;
@@ -575,9 +512,6 @@ public class TimeSeries implements Serializable {
 			this.finalPeriodComposite = finalPeriodComposite;
 		}
 
-		public String getSources() {
-			return sources;
-		}
 
     public Date getDateCreated() {
         return dateCreated;
@@ -594,4 +528,79 @@ public class TimeSeries implements Serializable {
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    /**
+     * @return the metadataUri
+     */
+    @XmlElement
+
+    public String getMetadataUri() {
+        return metadataUri;
+    }
+
+    /**
+     * @param metadataUri the metadataUri to set
+     */
+    public void setMetadataUri(String metadataUri) {
+        this.metadataUri = metadataUri;
+    }
+
+    @XmlElement(name = "finalPeriodDescription")
+
+    public String getFinalPeriod() {
+        return finalPeriod;
+    }
+
+    public void setFinalPeriod(String finalPeriod) {
+        this.finalPeriod = finalPeriod;
+    }
+
+    @XmlElement(name = "initialPeriodDescription")
+    public String getInitialPeriod() {
+        return initialPeriod;
+    }
+
+    public void setInitialPeriod(String initialPeriod) {
+        this.initialPeriod = initialPeriod;
+    }
+
+    @XmlElementWrapper(name = "apiUris")
+    @XmlElement(name = "apiUri")
+
+    public List<ApiUri> getApiUris() {
+        return apiUris;
+    }
+
+    public void setApiUris(List<ApiUri> apiUris) {
+        this.apiUris = apiUris;
+    }
+
+
+    public String getSources() {
+        return sources;
+    }
+
+    public void setSources(String sources) {
+        this.sources = sources;
+    }
+
+    @XmlElementWrapper(name = "children")
+    @XmlElement(name = "timeSeries")
+    public List<TimeSeries> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TimeSeries> children) {
+        this.children = children;
+    }
+
 }

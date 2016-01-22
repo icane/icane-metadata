@@ -4,12 +4,14 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import es.icane.metadatos.adapters.DateAdapter;
 
 @XmlType
+@XmlRootElement(name="unitOfMeasure")
 public class UnitOfMeasure {
 
 	 private Integer id;

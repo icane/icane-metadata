@@ -17,16 +17,8 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-import es.icane.metadatos.model.Category;
-import es.icane.metadatos.model.DataProvider;
-import es.icane.metadatos.model.DataSet;
-import es.icane.metadatos.model.NodeType;
-import es.icane.metadatos.model.Periodicity;
-import es.icane.metadatos.model.ReferenceArea;
-import es.icane.metadatos.model.Section;
-import es.icane.metadatos.model.Subsection;
-import es.icane.metadatos.model.TimePeriod;
-import es.icane.metadatos.model.TimeSeries;
+import es.icane.metadatos.dto.TimeSeriesDTO;
+import es.icane.metadatos.model.*;
 
 /**
  * Metadata Client is used for accessing ICANE's Web Service methods.
@@ -41,6 +33,7 @@ public class MetadataClient {
     private final String baseUrl;
     // Constants
     private final MediaType defaultMediaType = MediaType.APPLICATION_XML_TYPE;
+
     private Client jerseyClient;
     private ClientConfig clientConfig;
     private WebResource webResource;
@@ -684,8 +677,226 @@ public class MetadataClient {
      * @return a TimeSeries object
      */
     public TimeSeries updateTimeSeries(TimeSeries timeSeries) {
+        TimeSeriesDTO timeSeriesDTO = new TimeSeriesDTO(timeSeries);
         ClientResponse cr = webResource.path("time-series").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, timeSeries);
+                put(ClientResponse.class, timeSeriesDTO);
         return cr.getEntity(TimeSeries.class);
+    }
+
+    /**
+     * Retrieve a Measure by its id.
+     *
+     * @param id the Measure's id
+     * @return
+     */
+    public Measure getMeasure(int id) throws MeasureNotFoundException {
+        try {
+            return webResource.path("measure").path(String.valueOf(id)).accept(defaultMediaType).get(Measure.class);
+        } catch (UniformInterfaceException e) {
+            throw new MeasureNotFoundException();
+        }
+    }
+
+
+    /**
+     * Update Measure data from model object
+     *
+     * @param measure a Measure object with the data to update.
+     * @return a Measure object
+     */
+
+    public Measure updateMeasure(Measure measure) {
+
+        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, measure);
+        return cr.getEntity(Measure.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public Measure createMeasure(Measure measure) {
+        //TimeSeriesDTO timeSeriesDTO = new MeasureDTO(timeSeries);
+        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, measure);
+        return cr.getEntity(Measure.class);
+    }
+
+    /**
+     * Delete Measure data from model object
+     *
+     * @param id the Measure's id
+     * @return a Measure object
+     */
+
+    public void deleteMeasure(int id) throws MeasureNotFoundException {
+
+        try {
+           webResource.path("measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Measure.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
+    /**
+     * Retrieve a UnitOfMeasure by its id.
+     *
+     * @param id the UnitOfMeasure's id
+     * @return
+     */
+    public UnitOfMeasure getUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
+        try {
+            return webResource.path("unit-of-measure").path(String.valueOf(id)).accept(defaultMediaType).get(UnitOfMeasure.class);
+        } catch (UniformInterfaceException e) {
+            throw new UnitOfMeasureNotFoundException();
+        }
+    }
+
+    /**
+     * Retrieve a Reference by its id.
+     *
+     * @param id the Reference's id
+     * @return
+     */
+    public Reference getReference(int id) throws ReferenceNotFoundException {
+        try {
+            return webResource.path("reference").path(String.valueOf(id)).accept(defaultMediaType).get(Reference.class);
+        } catch (UniformInterfaceException e) {
+            throw new ReferenceNotFoundException();
+        }
+    }
+
+
+    /**
+     * Update Reference data from model object
+     *
+     * @param reference a Reference object with the data to update.
+     * @return a Reference object
+     */
+
+    public Reference updateReference(Reference reference) {
+
+        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, reference);
+        return cr.getEntity(Reference.class);
+    }
+
+    /**
+     * Create Reference data from model object
+     *
+     * @param reference a Reference object with the data to create.
+     * @return a Reference object
+     */
+
+    public Reference createReference(Reference reference) {
+        //TimeSeriesDTO timeSeriesDTO = new ReferenceDTO(timeSeries);
+        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, reference);
+        return cr.getEntity(Reference.class);
+    }
+
+    /**
+     * Delete Reference data from model object
+     *
+     * @param id the Reference's id
+     * @return a Reference object
+     */
+
+    public void deleteReference(int id) throws ReferenceNotFoundException {
+
+        try {
+            webResource.path("reference").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Reference.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
+    /**
+     * Retrieve a Link by its id.
+     *
+     * @param id the Link's id
+     * @return
+     */
+    public Link getLink(int id) throws LinkNotFoundException {
+        try {
+            return webResource.path("link").path(String.valueOf(id)).accept(defaultMediaType).get(Link.class);
+        } catch (UniformInterfaceException e) {
+            throw new LinkNotFoundException();
+        }
+    }
+
+
+    /**
+     * Update Link data from model object
+     *
+     * @param link a Link object with the data to update.
+     * @return a Link object
+     */
+
+    public Link updateLink(Link link) {
+
+        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, link);
+        return cr.getEntity(Link.class);
+    }
+
+    /**
+     * Create Link data from model object
+     *
+     * @param link a Link object with the data to create.
+     * @return a Link object
+     */
+
+    public Link createLink(Link link) {
+        //TimeSeriesDTO timeSeriesDTO = new LinkDTO(timeSeries);
+        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, link);
+        return cr.getEntity(Link.class);
+    }
+
+    /**
+     * Delete Link data from model object
+     *
+     * @param id the Link's id
+     * @return a Link object
+     */
+
+    public void deleteLink(int id) throws LinkNotFoundException {
+
+        try {
+            webResource.path("link").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Link.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
+    /**
+     * Retrieve a LinkType by its id.
+     *
+     * @param id the LinkType's id
+     * @return
+     */
+    public LinkType getLinkType(int id) throws LinkTypeNotFoundException {
+        try {
+            return webResource.path("link-type").path(String.valueOf(id)).accept(defaultMediaType).get(LinkType.class);
+        } catch (UniformInterfaceException e) {
+            throw new LinkTypeNotFoundException();
+        }
     }
 }

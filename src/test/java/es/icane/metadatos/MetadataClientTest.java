@@ -1,8 +1,10 @@
 package es.icane.metadatos;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
 import java.util.List;
 
 import es.icane.metadatos.model.*;
@@ -16,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		String baseUrl = "http://localhost:8080/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -232,5 +234,418 @@ public class MetadataClientTest {
         timeSeries.setSubsection(subsection);
         metadataClient.updateTimeSeries(timeSeries);
     }
+
+    @Test
+    public void updateTimeSeriesWithItselfShouldReturnOk() {
+        List<String>  uriTags = asList("real-economic-destination-index-base-2010",
+                                        "bankruptcy-statistics-procedure-existence",
+                                         "industrial-production-index-base-2010");
+
+        TimeSeries timeSeries = null;
+        for (String uriTag : uriTags) {
+            try {
+                timeSeries = metadataClient.getTimeSeries(uriTag);
+
+
+            } catch (SeriesNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            metadataClient.updateTimeSeries(timeSeries);
+
+            TimeSeries retrievedTimeSeries = null;
+            try {
+                retrievedTimeSeries = metadataClient.getTimeSeries(uriTag);
+
+            } catch (SeriesNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            // assert statement
+            assertEquals("Time series uriTags should be equal",
+                    timeSeries.getUriTag(), retrievedTimeSeries.getUriTag());
+        }
+
+    }
+
+    @Test
+    public void updateMeasureShouldReturnOk() {
+        Measure measure = null;
+        Measure updatedMeasure = null;
+        TimeSeries timeSeries = null;
+        try {
+            measure = metadataClient.getMeasure(1);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            timeSeries = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        measure.setNode(timeSeries.getUriTag());
+        measure.setTitle("prueba");
+        metadataClient.updateMeasure(measure);
+
+        try {
+            updatedMeasure = metadataClient.getMeasure(1);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("Associated Time series uriTags should be equal",
+                timeSeries.getUriTag(), updatedMeasure.getNode());
+        assertEquals("Title should be equal to prueba",
+                updatedMeasure.getTitle(), "prueba");
+
+    }
+
+    @After
+    public void restoreMeasure() {
+        TimeSeries timeSeries = null;
+        Measure measure = null;
+        try {
+            timeSeries = metadataClient.getTimeSeries(2901);
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            measure = metadataClient.getMeasure(1);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+        measure.setNode(timeSeries.getUriTag());
+        measure.setTitle("Parados");
+        metadataClient.updateMeasure(measure);
+    }
+
+    @Test
+    public void updateMeasureWithItselfShouldReturnOk() {
+        Measure measure = null;
+        Measure updatedMeasure = null;
+
+        try {
+            measure = metadataClient.getMeasure(1);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateMeasure(measure);
+
+        try {
+            updatedMeasure = metadataClient.getMeasure(1);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assertEquals("Title should be the same ",
+                updatedMeasure.getTitle(), measure.getTitle());
+        assertEquals("Node should be the same ",
+                updatedMeasure.getNode(), measure.getNode());
+
+    }
+
+    @Test
+    public void createAndDeleteMeasureShouldReturnOk() {
+        UnitOfMeasure unitOfMeasure = null;
+        Measure createdMeasure = null;
+        Measure retrievedMeasure = null;
+        try {
+            unitOfMeasure = metadataClient.getUnitOfMeasure(1);
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Measure measure = new Measure("código", "Medida de prueba", unitOfMeasure, "real-economic-destination-index-base-2010", false, 1, null, new Date(), new Date());
+        createdMeasure = metadataClient.createMeasure(measure);
+        try {
+            retrievedMeasure = metadataClient.getMeasure(createdMeasure.getId());
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Title should be the same ",
+                createdMeasure.getTitle(), retrievedMeasure.getTitle());
+        assertEquals("Node should be the same ",
+                createdMeasure.getNode(), retrievedMeasure.getNode());
+        assertEquals("UnitOfMeasure should be the same ",
+                createdMeasure.getUnitOfMeasure().getId(), retrievedMeasure.getUnitOfMeasure().getId());
+
+        try {
+            metadataClient.deleteMeasure(createdMeasure.getId());
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Test
+    public void updateReferenceWithItselfShouldReturnOk() {
+        Reference reference = null;
+        Reference updatedReference = null;
+
+        try {
+            reference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+        reference.setNodeUriTag(reference.getNode());
+        metadataClient.updateReference(reference);
+
+        try {
+            updatedReference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assertEquals("Title should be the same ",
+                updatedReference.getTitle(), reference.getTitle());
+        assertEquals("Node should be the same ",
+                updatedReference.getNode(), reference.getNode());
+
+    }
+
+    @Test
+    public void updateReferenceShouldReturnOk() {
+        Reference reference = null;
+        Reference updatedReference = null;
+        TimeSeries timeSeries = null;
+        try {
+            reference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            timeSeries = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        reference.setNodeUriTag(timeSeries.getUriTag());
+        reference.setResourceType(ResourceType.OPENDATA);
+        metadataClient.updateReference(reference);
+
+        try {
+            updatedReference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("Associated Time series uriTags should be equal",
+                timeSeries.getUriTag(), updatedReference.getNode());
+        assertEquals("ResourceType should be equal to opendata",
+                updatedReference.getResourceType().toString(), "Correspondencia en portal de datos abiertos");
+
+    }
+
+    @After
+    public void restoreReference() {
+        TimeSeries timeSeries = null;
+        Reference reference = null;
+        try {
+            timeSeries = metadataClient.getTimeSeries(163);
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            reference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+        reference.setNodeUriTag(timeSeries.getUriTag());
+        reference.setResourceType(ResourceType.PUBLICATION);
+        metadataClient.updateReference(reference);
+    }
+
+    @Test
+    public void createAndDeleteReferenceShouldReturnOk() {
+
+        Reference createdReference = null;
+        Reference retrievedReference = null;
+        TimeSeries node = null;
+        try {
+            node = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Reference reference = new Reference("título de prueba", "http://datos.icane.es", node, ResourceType.STATISTICAL_OPERATION, new Date(), new Date());
+        createdReference = metadataClient.createReference(reference);
+        try {
+            retrievedReference = metadataClient.getReference(createdReference.getId());
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Title should be the same ",
+                createdReference.getTitle(), retrievedReference.getTitle());
+        assertEquals("Node should be the same ",
+                createdReference.getNode(), retrievedReference.getNode());
+        assertEquals("Resource type should be the same ",
+                createdReference.getResourceType().toString(), retrievedReference.getResourceType().toString());
+
+        try {
+            metadataClient.deleteReference(createdReference.getId());
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+    @Test
+    public void updateLinkWithItselfShouldReturnOk() {
+        Link link = null;
+        Link updatedLink = null;
+
+        try {
+            link = metadataClient.getLink(472);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        link.setSectionUriTag(link.getSection());
+
+        metadataClient.updateLink(link);
+
+        try {
+            updatedLink = metadataClient.getLink(472);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assertEquals("Title should be the same ",
+                updatedLink.getTitle(), link.getTitle());
+        assertEquals("Section should be the same ",
+                updatedLink.getSection(), link.getSection());
+
+    }
+
+    @Test
+    public void updateLinkShouldReturnOk() {
+        Link link = null;
+        Link updatedLink = null;
+        TimeSeries timeSeries = null;
+        LinkType linkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(2);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            link = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            timeSeries = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        link.setNodeUriTag(timeSeries.getUriTag());
+        link.setLinkType(linkType);
+        metadataClient.updateLink(link);
+
+        try {
+            updatedLink = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+      
+        // assert statements
+        assertEquals("Associated Time series uriTags should be equal",
+                timeSeries.getUriTag(), updatedLink.getNode());
+        assertEquals("LinkType should be equal",
+                updatedLink.getLinkType(), linkType);
+
+    }
+
+    @After
+    public void restoreLink() {
+        TimeSeries timeSeries = null;
+        Link link = null;
+        LinkType linkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(6);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            timeSeries = metadataClient.getTimeSeries(112);
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            link = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        link.setNodeUriTag(timeSeries.getUriTag());
+        link.setLinkType(linkType);
+        metadataClient.updateLink(link);
+    }
+
+    @Test
+    public void createAndDeleteLinkShouldReturnOk() {
+
+        Link createdLink = null;
+        Link retrievedLink = null;
+        TimeSeries node = null;
+        LinkType linkType = null;
+        ReferenceArea referenceArea = null;
+
+        try {
+            referenceArea = metadataClient.getReferenceArea("municipal");
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            linkType = metadataClient.getLinkType(3);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            node = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Link link = new Link("Google", "http://www.google.com", linkType, new Date(), new Date(), referenceArea);
+        createdLink = metadataClient.createLink(link);
+        try {
+            retrievedLink = metadataClient.getLink(createdLink.getId());
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Title should be the same ",
+                createdLink.getTitle(), retrievedLink.getTitle());
+        assertEquals("ReferenceArea should be the same ",
+                createdLink.getReferenceArea(), retrievedLink.getReferenceArea());
+        assertEquals("Link type should be the same ",
+                createdLink.getLinkType().toString(), retrievedLink.getLinkType().toString());
+
+        try {
+            metadataClient.deleteLink(createdLink.getId());
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
