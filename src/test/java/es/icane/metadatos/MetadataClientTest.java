@@ -18,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		String baseUrl = "http://localhost:8080/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -363,7 +363,7 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
-        Measure measure = new Measure("código", "Medida de prueba", unitOfMeasure, "real-economic-destination-index-base-2010", false, 1, null, new Date(), new Date());
+        Measure measure = new Measure("códigoDePrueba", "Medida de prueba", unitOfMeasure, "real-economic-destination-index-base-2010", false, 1, null, new Date(), new Date());
         createdMeasure = metadataClient.createMeasure(measure);
         try {
             retrievedMeasure = metadataClient.getMeasure(createdMeasure.getId());
@@ -529,9 +529,9 @@ public class MetadataClientTest {
                 updatedLink.getSection(), link.getSection());
 
     }
-
+/*
     @Test
-    public void updateLinkShouldReturnOk() {
+    public void updateLinkWithNodeShouldReturnOk() {
         Link link = null;
         Link updatedLink = null;
         TimeSeries timeSeries = null;
@@ -556,6 +556,7 @@ public class MetadataClientTest {
 
         link.setNodeUriTag(timeSeries.getUriTag());
         link.setLinkType(linkType);
+        link.setTitle("INE MODIFICADO");
         metadataClient.updateLink(link);
 
         try {
@@ -595,8 +596,87 @@ public class MetadataClientTest {
         }
         link.setNodeUriTag(timeSeries.getUriTag());
         link.setLinkType(linkType);
+        link.setTitle("INE");
         metadataClient.updateLink(link);
     }
+*/
+    @Test
+    public void updateLinkWithReferenceAreaShouldReturnOk() {
+        Link link = null;
+        Link updatedLink = null;
+        ReferenceArea referenceArea = null;
+        LinkType linkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(2);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            link = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            referenceArea = metadataClient.getReferenceArea("municipal");
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        link.setNodeUriTag(null);
+        link.setReferenceAreaUriTag(referenceArea.getUriTag());
+        link.setLinkType(linkType);
+        link.setUri("http://urideprueba.com");
+        link.setTitle("INE MODIFICADO");
+        metadataClient.updateLink(link);
+
+        try {
+            updatedLink = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("Associated ReferenceArea uriTags should be equal",
+                referenceArea.getUriTag(), updatedLink.getReferenceArea());
+        assertEquals("LinkType should be equal",
+                updatedLink.getLinkType(), linkType);
+        assertEquals("Title should be equal to test string", "INE MODIFICADO",  updatedLink.getTitle());
+        assertEquals("URI should be equal to test string", "http://urideprueba.com",  updatedLink.getUri());
+
+    }
+
+/*
+    @After
+    public void restoreLinkToNode() {
+        TimeSeries timeSeries = null;
+        Link link = null;
+        LinkType linkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(6);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            timeSeries = metadataClient.getTimeSeries(112);
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            link = metadataClient.getLink(727);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        link.setReferenceAreaUriTag(null);
+        link.setNodeUriTag(timeSeries.getUriTag());
+        link.setUri("http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fp318&file=inebase&L=0");
+
+        link.setLinkType(linkType);
+        link.setTitle("INE");
+        metadataClient.updateLink(link);
+    }*/
 
     @Test
     public void createAndDeleteLinkShouldReturnOk() {

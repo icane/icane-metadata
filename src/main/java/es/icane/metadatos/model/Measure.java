@@ -1,7 +1,7 @@
 package es.icane.metadatos.model;
 
 import es.icane.metadatos.adapters.DateAdapter;
-import es.icane.metadatos.adapters.TimeSeriesAdapter;
+
 
 import java.io.Serializable;
 import java.util.Date;
