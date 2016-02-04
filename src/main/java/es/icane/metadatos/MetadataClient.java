@@ -899,4 +899,15 @@ public class MetadataClient {
             throw new LinkTypeNotFoundException();
         }
     }
+
+    /**
+     * Retrieve a list of all the Link Types.
+     *
+     * @return a List with LinkType objects
+     */
+    public List<LinkType> getLinkTypes() {
+        GenericType<List<LinkType>> genericType = new GenericType<List<LinkType>>() {
+        };
+        return webResource.path("link-types").accept(defaultMediaType).get(genericType);
+    }
 }

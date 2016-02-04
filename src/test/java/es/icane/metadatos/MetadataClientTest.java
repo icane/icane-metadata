@@ -432,6 +432,7 @@ public class MetadataClientTest {
 
         reference.setNodeUriTag(timeSeries.getUriTag());
         reference.setResourceType(ResourceType.OPENDATA);
+        reference.setTitle("TÍTULO DE PRUEBA");
         metadataClient.updateReference(reference);
 
         try {
@@ -445,7 +446,7 @@ public class MetadataClientTest {
                 timeSeries.getUriTag(), updatedReference.getNode());
         assertEquals("ResourceType should be equal to opendata",
                 updatedReference.getResourceType().toString(), "Correspondencia en portal de datos abiertos");
-
+        assertEquals("Title should be equal to test string", updatedReference.getTitle(), "TÍTULO DE PRUEBA");
     }
 
     @After
@@ -463,6 +464,7 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
         reference.setNodeUriTag(timeSeries.getUriTag());
+        reference.setTitle("Contabilidad Trimestral de Cantabria");
         reference.setResourceType(ResourceType.PUBLICATION);
         metadataClient.updateReference(reference);
     }
@@ -529,7 +531,7 @@ public class MetadataClientTest {
                 updatedLink.getSection(), link.getSection());
 
     }
-/*
+
     @Test
     public void updateLinkWithNodeShouldReturnOk() {
         Link link = null;
@@ -599,7 +601,7 @@ public class MetadataClientTest {
         link.setTitle("INE");
         metadataClient.updateLink(link);
     }
-*/
+
     @Test
     public void updateLinkWithReferenceAreaShouldReturnOk() {
         Link link = null;
@@ -647,7 +649,7 @@ public class MetadataClientTest {
 
     }
 
-/*
+
     @After
     public void restoreLinkToNode() {
         TimeSeries timeSeries = null;
@@ -676,7 +678,7 @@ public class MetadataClientTest {
         link.setLinkType(linkType);
         link.setTitle("INE");
         metadataClient.updateLink(link);
-    }*/
+    }
 
     @Test
     public void createAndDeleteLinkShouldReturnOk() {
@@ -724,6 +726,17 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Test
+    public void getLinkTypesShouldReturnEightElementsList() {
+
+        List<LinkType> linkTypes = metadataClient.getLinkTypes();
+
+
+        // assert statements
+        assertEquals("Size must be eight", 8, linkTypes.size());
 
     }
 
