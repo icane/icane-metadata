@@ -685,7 +685,6 @@ public class MetadataClientTest {
 
         Link createdLink = null;
         Link retrievedLink = null;
-        TimeSeries node = null;
         LinkType linkType = null;
         ReferenceArea referenceArea = null;
 
@@ -698,12 +697,6 @@ public class MetadataClientTest {
         try {
             linkType = metadataClient.getLinkType(3);
         } catch (LinkTypeNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            node = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
-        } catch (SeriesNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -737,6 +730,48 @@ public class MetadataClientTest {
 
         // assert statements
         assertEquals("Size must be eight", 8, linkTypes.size());
+
+    }
+
+    @Test
+    public void createAndDeleteLinkAssociatedToNodeShouldReturnOk() {
+
+        Link createdLink = null;
+        Link retrievedLink = null;
+        TimeSeries node = null;
+        LinkType linkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(3);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            node = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
+        } catch (SeriesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Link link = new Link("Google", "http://www.google.com", linkType, new Date(), new Date(), node);
+        createdLink = metadataClient.createLink(link);
+        try {
+            retrievedLink = metadataClient.getLink(createdLink.getId());
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Title should be the same ",
+                createdLink.getTitle(), retrievedLink.getTitle());
+        assertEquals("Node should be the same ",
+                createdLink.getNode(), retrievedLink.getNode());
+        assertEquals("Link type should be the same ",
+                createdLink.getLinkType().toString(), retrievedLink.getLinkType().toString());
+
+        try {
+            metadataClient.deleteLink(createdLink.getId());
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
