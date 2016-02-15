@@ -778,12 +778,12 @@ public class MetadataClientTest {
     @Test
     public void getUnitsOfMeasureShouldReturnList() {
 
-        List<UnitOfMeasure> timePeriods = metadataClient.getUnitsOfMeasure();
+        List<UnitOfMeasure> unitsOfMeasure = metadataClient.getUnitsOfMeasure();
 
 
         // assert statements
-        assertTrue("Size must be greater than 100", timePeriods.size() > 100);
-        assertEquals("First element title is Años","Años", timePeriods.get(0).getTitle());
+        assertTrue("Size must be greater than 100", unitsOfMeasure.size() > 100);
+        assertEquals("First element title is Años","Años", unitsOfMeasure.get(0).getTitle());
     }
 
 
