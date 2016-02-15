@@ -1,4 +1,4 @@
-package es.icane.metadatos;
+package es.icane.metadatos.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

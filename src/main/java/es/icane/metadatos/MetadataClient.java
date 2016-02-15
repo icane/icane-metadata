@@ -759,6 +759,23 @@ public class MetadataClient {
             throw new UnitOfMeasureNotFoundException();
         }
     }
+    
+    
+    /*
+	 * Unit of measure methods
+	 */
+
+    /**
+     * Retrieve a list of all the Units of measure.
+     *
+     * @return a List with UnitOfMeasure objects
+     */
+    public List<UnitOfMeasure> getUnitsOfMeasure() {
+        GenericType<List<UnitOfMeasure>> genericType = new GenericType<List<UnitOfMeasure>>() {
+        };
+        return webResource.path("units-of-measure").accept(defaultMediaType).get(genericType);
+    }
+
 
     /**
      * Retrieve a Reference by its id.

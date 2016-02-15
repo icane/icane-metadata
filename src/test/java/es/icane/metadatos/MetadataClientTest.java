@@ -18,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://localhost:8080/metadata/api";
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -773,6 +773,17 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void getUnitsOfMeasureShouldReturnList() {
+
+        List<UnitOfMeasure> timePeriods = metadataClient.getUnitsOfMeasure();
+
+
+        // assert statements
+        assertTrue("Size must be greater than 100", timePeriods.size() > 100);
+        assertEquals("First element title is Años","Años", timePeriods.get(0).getTitle());
     }
 
 
