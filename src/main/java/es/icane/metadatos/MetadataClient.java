@@ -697,6 +697,16 @@ public class MetadataClient {
         }
     }
 
+    /**
+     * Retrieve a list of all the measures.
+     *
+     * @return a List with Measure objects
+     */
+    public List<Measure> getMeasures() {
+        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
+        };
+        return webResource.path("measures").accept(defaultMediaType).get(genericType);
+    }
 
     /**
      * Update Measure data from model object

@@ -45,7 +45,7 @@ public class MetadataClientTest {
 	}
 
 	@Test
-	public void getDataProvidersShouldReturnList() {
+	public void getDataProviderShouldReturnList() {
 
 		List<DataProvider> dataProviders = metadataClient.getDataProviders();
 
@@ -784,6 +784,16 @@ public class MetadataClientTest {
         // assert statements
         assertTrue("Size must be greater than 100", unitsOfMeasure.size() > 100);
         assertEquals("First element title is Años","Años", unitsOfMeasure.get(0).getTitle());
+    }
+
+    @Test
+    public void getMeasuresShouldReturnList() {
+
+        List<Measure> measures = metadataClient.getMeasures();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", measures.size() > 100);
+        assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
     }
 
 
