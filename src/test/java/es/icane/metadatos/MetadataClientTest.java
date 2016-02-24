@@ -796,5 +796,100 @@ public class MetadataClientTest {
         assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
     }
 
+    @Test
+    public void getCategoryShouldReturnElement() {
+
+        Category category = null;
+        try {
+            category = metadataClient.getCategory("regional-data");
+        } catch (CategoryNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
+
+    }
+
+    @Test
+    public void getSubsectionShouldReturnElement() {
+
+        Subsection subsection = null;
+        try {
+            subsection = metadataClient.getSubsection(1);
+        } catch (SubsectionNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
+
+    }
+
+    @Test
+    public void getReferenceAreaShouldReturnElement() {
+
+        ReferenceArea referenceArea = null;
+        try {
+            referenceArea = metadataClient.getReferenceArea("regional");
+        } catch (ReferenceAreaNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
+
+    }
+
+    @Test
+    public void getDataSetShouldReturnElement() {
+
+        DataSet dataSet = null;
+        try {
+            dataSet = metadataClient.getDataSet("musical-arts");
+        } catch (DataSetNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
+
+    }
+
+    @Test
+    public void getMeasureShouldReturnElement() {
+
+        Measure measure = null;
+        try {
+            measure = metadataClient.getMeasure(777);
+        } catch (MeasureNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
+
+    }
+
+    @Test
+    public void getUnitOfMeasureShouldReturnElement() {
+
+        UnitOfMeasure unitOfMeasure = null;
+        try {
+            unitOfMeasure = metadataClient.getUnitOfMeasure(125);
+        } catch (UnitOfMeasureNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
+
+    }
 
 }
