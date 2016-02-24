@@ -32,4 +32,5 @@ local.properties
 *.tmp
 *.bak
 *.swp
+*.iml
 
