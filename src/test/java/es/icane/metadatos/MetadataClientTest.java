@@ -892,4 +892,52 @@ public class MetadataClientTest {
 
     }
 
+    @Test
+    public void getLinkShouldReturnElement() {
+
+        Link link = null;
+        try {
+            link = metadataClient.getLink(473);
+        } catch (LinkNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
+
+    }
+
+    @Test
+    public void getLinkTypeShouldReturnElement() {
+
+        LinkType linkType = null;
+        try {
+            linkType = metadataClient.getLinkType(1);
+        } catch (LinkTypeNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=1 title must be HTTP", "HTTP", linkType.getTitle());
+
+    }
+
+    @Test
+    public void getReferenceShouldReturnElement() {
+
+        Reference reference = null;
+        try {
+            reference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id=9 title must be Contabilidad Trimestral de Cantabria", "Contabilidad Trimestral de Cantabria", reference.getTitle());
+
+    }
+
 }
