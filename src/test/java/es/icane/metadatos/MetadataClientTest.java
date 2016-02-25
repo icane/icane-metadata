@@ -824,7 +824,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
+        assertEquals("id = 1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
 
     }
 
@@ -872,7 +872,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
+        assertEquals("id = 777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
 
     }
 
@@ -888,7 +888,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
+        assertEquals("id = 125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
 
     }
 
@@ -904,7 +904,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
+        assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
 
     }
 
@@ -920,7 +920,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=1 title must be HTTP", "HTTP", linkType.getTitle());
+        assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
 
     }
 
@@ -936,8 +936,69 @@ public class MetadataClientTest {
         }
 
         // assert statements
-        assertEquals("id=9 title must be Contabilidad Trimestral de Cantabria", "Contabilidad Trimestral de Cantabria", reference.getTitle());
+        assertEquals("id = 9 title must be Contabilidad Trimestral de Cantabria", "Contabilidad Trimestral de Cantabria", reference.getTitle());
 
     }
+
+    @Test
+    public void getSectionShouldReturnElement() {
+
+        Section section = null;
+        try {
+            section = metadataClient.getSection("economy");
+        } catch (SectionNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("economy title must be Economía", "Economía", section.getTitle());
+
+    }
+
+    @Test
+    public void getSectionsShouldReturnList() {
+
+        List<Section> sections = metadataClient.getSections();
+
+        // assert statements
+        assertTrue("Size must be greater than 2", sections.size() > 2);
+        assertEquals("Maximum size must be 5", 5, sections.size());
+        assertEquals("First element has title Población", "Población", sections.get(0).getTitle());
+    }
+
+    @Test
+    public void getCategoriesShouldReturnList() {
+
+        List<Category> categories = metadataClient.getCategories();
+
+        // assert statements
+        assertEquals("Size must be 4", 4, categories.size());
+        assertEquals("First element has title Datos regionales", "Datos regionales", categories.get(0).getTitle());
+    }
+
+    @Test
+    public void getReferenceAreasShouldReturnList() {
+
+        List<ReferenceArea> referenceAreas = metadataClient.getReferenceAreas();
+
+        // assert statements
+        assertTrue("Size must be greater than 5", referenceAreas.size() > 5);
+        assertEquals("Maximum size must be 6", 6, referenceAreas.size());
+        assertEquals("Second element has title Regional", "Regional", referenceAreas.get(1).getTitle());
+    }
+
+    @Test
+    public void getDataProvidersShouldReturnList() {
+
+        List<DataProvider> dataProviders = metadataClient.getDataProviders();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", dataProviders.size() > 100);
+        assertEquals("4th element has title Aeropuerto de Santander", "Aeropuerto de Santander", dataProviders.get(4).getTitle());
+        assertEquals("4th element has id = 4", 5, dataProviders.get(4).getId().intValue());
+
+    }
+
 
 }
