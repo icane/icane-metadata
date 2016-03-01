@@ -31,6 +31,26 @@ public class Subsection implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public Subsection () {
+
+    }
+
+    public Subsection (Integer id, String title, String acronym, String uriTag, String uri, String topics,
+                       String automatizedTopics, String code, Section section, Date created, Date lastUpdated) {
+        this.id = id;
+        this.title = title;
+        this.acronym = acronym;
+        this.uriTag = uriTag;
+        this.uri = uri;
+        this.topics = topics;
+        this.automatizedTopics = automatizedTopics;
+        this.code = code;
+        this.section = section;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+
+    }
+
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;

@@ -989,16 +989,69 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getDataProvidersShouldReturnList() {
+    public void getSubsectionsShouldReturnList() {
 
-        List<DataProvider> dataProviders = metadataClient.getDataProviders();
+        List<Subsection> subsections = metadataClient.getSubsections("economy");
 
         // assert statements
-        assertTrue("Size must be greater than 100", dataProviders.size() > 100);
-        assertEquals("4th element has title Aeropuerto de Santander", "Aeropuerto de Santander", dataProviders.get(4).getTitle());
-        assertEquals("4th element has id = 4", 5, dataProviders.get(4).getId().intValue());
+        assertTrue("Size must be greater than 100", subsections.size() > 10);
+        assertEquals("First element has title Cuentas Económicas", "Cuentas Económicas", subsections.get(0).getTitle());
+        assertEquals("First element has id = 6", 6, subsections.get(0).getId().intValue());
 
     }
 
+    @Test
+    public void createAndDeleteUnitOfMeasureShouldReturnOk() {
+        UnitOfMeasure createdUnitOfMeasure = null;
+        UnitOfMeasure retrievedUnitOfMeasure = null;
+
+        UnitOfMeasure unitOfMeasure = new UnitOfMeasure(new Date(), new Date(), "symbol", "Unidad de medida de prueba");
+        createdUnitOfMeasure = metadataClient.createUnitOfMeasure(unitOfMeasure);
+
+        try {
+            retrievedUnitOfMeasure = metadataClient.getUnitOfMeasure(createdUnitOfMeasure.getId());
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assertEquals("Title should be the same ",
+                createdUnitOfMeasure.getTitle(), retrievedUnitOfMeasure.getTitle());
+        assertEquals("Node should be the same ",
+                createdUnitOfMeasure.getId(), retrievedUnitOfMeasure.getId());
+
+        try {
+            metadataClient.deleteUnitOfMeasure(createdUnitOfMeasure.getId());
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateUnitOfMeasureWithItselfShouldReturnOk() {
+        UnitOfMeasure unitOfMeasure = null;
+        UnitOfMeasure updatedUnitOfMeasure = null;
+
+        try {
+            unitOfMeasure = metadataClient.getUnitOfMeasure(1);
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateUnitOfMeasure(unitOfMeasure);
+
+        try {
+            updatedUnitOfMeasure = metadataClient.getUnitOfMeasure(1);
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("Title should be the same ",
+                updatedUnitOfMeasure.getTitle(), unitOfMeasure.getTitle());
+        assertEquals("Node should be the same ",
+                updatedUnitOfMeasure.getId(), unitOfMeasure.getId());
+
+    }
 
 }

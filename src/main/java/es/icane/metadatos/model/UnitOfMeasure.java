@@ -18,9 +18,20 @@ public class UnitOfMeasure {
 	 
 	    private String title;
 	    private String symbol;
-	 
 	    private Date created;
 	    private Date lastUpdated;
+
+	 public UnitOfMeasure(){
+
+	 }
+
+	 public UnitOfMeasure(Date created, Date lastUpdated, String symbol, String title){
+		 this.created = created;
+		 this.lastUpdated = lastUpdated;
+		 this.symbol = symbol;
+		 this.title = title;
+
+	 }
 
 	    @XmlAttribute(required = true)
 	    public Integer getId() {
