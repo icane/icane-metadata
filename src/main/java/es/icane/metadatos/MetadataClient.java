@@ -417,10 +417,10 @@ public class MetadataClient {
      * @param section the section's uriTag
      * @return a list of its subsections
      */
-    public List<Subsection> getSubsections(String section) {
+    public List<Subsection> getSubsections(String subSection) {
         GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
         };
-        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
+        return webResource.path("section").path(subSection).path("subsections").accept(defaultMediaType).get(genericType);
     }
 
     /**
