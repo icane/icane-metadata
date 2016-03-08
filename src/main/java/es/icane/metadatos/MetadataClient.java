@@ -947,7 +947,7 @@ public class MetadataClient {
 
     public UnitOfMeasure createUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         //TimeSeriesDTO timeSeriesDTO = new UnitOfMeasureDTO(timeSeries);
-        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
                 post(ClientResponse.class, unitOfMeasure);
         return cr.getEntity(UnitOfMeasure.class);
     }
@@ -962,7 +962,7 @@ public class MetadataClient {
     public void deleteUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
 
         try {
-            webResource.path("unitOfMeasure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+            webResource.path("unit-of-measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
                     delete(UnitOfMeasure.class);
         }
         catch (UniformInterfaceException e ) {
@@ -980,7 +980,7 @@ public class MetadataClient {
 
     public UnitOfMeasure updateUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
 
-        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
                 put(ClientResponse.class, unitOfMeasure);
         return cr.getEntity(UnitOfMeasure.class);
     }
