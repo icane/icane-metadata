@@ -45,7 +45,7 @@ public class MetadataClientTest {
 	}
 
 	@Test
-	public void getDataProvidersShouldReturnList() {
+	public void getDataProviderShouldReturnList() {
 
 		List<DataProvider> dataProviders = metadataClient.getDataProviders();
 
@@ -786,5 +786,272 @@ public class MetadataClientTest {
         assertEquals("First element title is Años","Años", unitsOfMeasure.get(0).getTitle());
     }
 
+    @Test
+    public void getMeasuresShouldReturnList() {
+
+        List<Measure> measures = metadataClient.getMeasures();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", measures.size() > 100);
+        assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
+    }
+
+    @Test
+    public void getCategoryShouldReturnElement() {
+
+        Category category = null;
+        try {
+            category = metadataClient.getCategory("regional-data");
+        } catch (CategoryNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
+
+    }
+
+    @Test
+    public void getSubsectionShouldReturnElement() {
+
+        Subsection subsection = null;
+        try {
+            subsection = metadataClient.getSubsection(1);
+        } catch (SubsectionNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
+
+    }
+
+    @Test
+    public void getReferenceAreaShouldReturnElement() {
+
+        ReferenceArea referenceArea = null;
+        try {
+            referenceArea = metadataClient.getReferenceArea("regional");
+        } catch (ReferenceAreaNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
+
+    }
+
+    @Test
+    public void getDataSetShouldReturnElement() {
+
+        DataSet dataSet = null;
+        try {
+            dataSet = metadataClient.getDataSet("musical-arts");
+        } catch (DataSetNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
+
+    }
+
+    @Test
+    public void getMeasureShouldReturnElement() {
+
+        Measure measure = null;
+        try {
+            measure = metadataClient.getMeasure(777);
+        } catch (MeasureNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
+
+    }
+
+    @Test
+    public void getUnitOfMeasureShouldReturnElement() {
+
+        UnitOfMeasure unitOfMeasure = null;
+        try {
+            unitOfMeasure = metadataClient.getUnitOfMeasure(125);
+        } catch (UnitOfMeasureNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
+
+    }
+
+    @Test
+    public void getLinkShouldReturnElement() {
+
+        Link link = null;
+        try {
+            link = metadataClient.getLink(473);
+        } catch (LinkNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
+
+    }
+
+    @Test
+    public void getLinkTypeShouldReturnElement() {
+
+        LinkType linkType = null;
+        try {
+            linkType = metadataClient.getLinkType(1);
+        } catch (LinkTypeNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
+
+    }
+
+    @Test
+    public void getReferenceShouldReturnElement() {
+
+        Reference reference = null;
+        try {
+            reference = metadataClient.getReference(9);
+        } catch (ReferenceNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("id = 9 title must be Contabilidad Trimestral de Cantabria", "Contabilidad Trimestral de Cantabria", reference.getTitle());
+
+    }
+
+    @Test
+    public void getSectionShouldReturnElement() {
+
+        Section section = null;
+        try {
+            section = metadataClient.getSection("economy");
+        } catch (SectionNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("economy title must be Economía", "Economía", section.getTitle());
+
+    }
+
+    @Test
+    public void getSectionsShouldReturnList() {
+
+        List<Section> sections = metadataClient.getSections();
+
+        // assert statements
+        assertTrue("Size must be greater than 2", sections.size() > 2);
+        assertEquals("Maximum size must be 5", 5, sections.size());
+        assertEquals("First element has title Población", "Población", sections.get(0).getTitle());
+    }
+
+    @Test
+    public void getCategoriesShouldReturnList() {
+
+        List<Category> categories = metadataClient.getCategories();
+
+        // assert statements
+        assertEquals("Size must be 4", 4, categories.size());
+        assertEquals("First element has title Datos regionales", "Datos regionales", categories.get(0).getTitle());
+    }
+
+    @Test
+    public void getReferenceAreasShouldReturnList() {
+
+        List<ReferenceArea> referenceAreas = metadataClient.getReferenceAreas();
+
+        // assert statements
+        assertTrue("Size must be greater than 5", referenceAreas.size() > 5);
+        assertEquals("Maximum size must be 6", 6, referenceAreas.size());
+        assertEquals("Second element has title Regional", "Regional", referenceAreas.get(1).getTitle());
+    }
+
+    @Test
+    public void getSubsectionsShouldReturnList() {
+
+        List<Subsection> subsections = metadataClient.getSubsections("economy");
+
+        // assert statements
+        assertTrue("Size must be greater than 100", subsections.size() > 10);
+        assertEquals("First element has title Cuentas Económicas", "Cuentas Económicas", subsections.get(0).getTitle());
+        assertEquals("First element has id = 6", 6, subsections.get(0).getId().intValue());
+
+    }
+
+    @Test
+    public void createAndDeleteUnitOfMeasureShouldReturnOk() {
+        UnitOfMeasure createdUnitOfMeasure = null;
+        UnitOfMeasure retrievedUnitOfMeasure = null;
+
+        UnitOfMeasure unitOfMeasure = new UnitOfMeasure(new Date(), new Date(), "symbol", "Unidad de medida de prueba");
+        createdUnitOfMeasure = metadataClient.createUnitOfMeasure(unitOfMeasure);
+
+        try {
+            retrievedUnitOfMeasure = metadataClient.getUnitOfMeasure(createdUnitOfMeasure.getId());
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assertEquals("Title should be the same ",
+                createdUnitOfMeasure.getTitle(), retrievedUnitOfMeasure.getTitle());
+        assertEquals("Node should be the same ",
+                createdUnitOfMeasure.getId(), retrievedUnitOfMeasure.getId());
+
+        try {
+            metadataClient.deleteUnitOfMeasure(createdUnitOfMeasure.getId());
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateUnitOfMeasureWithItselfShouldReturnOk() {
+        UnitOfMeasure unitOfMeasure = null;
+        UnitOfMeasure updatedUnitOfMeasure = null;
+
+        try {
+            unitOfMeasure = metadataClient.getUnitOfMeasure(1);
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateUnitOfMeasure(unitOfMeasure);
+
+        try {
+            updatedUnitOfMeasure = metadataClient.getUnitOfMeasure(1);
+        } catch (UnitOfMeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assertEquals("Title should be the same ",
+                updatedUnitOfMeasure.getTitle(), unitOfMeasure.getTitle());
+        assertEquals("Node should be the same ",
+                updatedUnitOfMeasure.getId(), unitOfMeasure.getId());
+
+    }
 
 }

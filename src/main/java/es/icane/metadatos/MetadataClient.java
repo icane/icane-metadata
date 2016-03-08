@@ -697,6 +697,16 @@ public class MetadataClient {
         }
     }
 
+    /**
+     * Retrieve a list of all the measures.
+     *
+     * @return a List with Measure objects
+     */
+    public List<Measure> getMeasures() {
+        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
+        };
+        return webResource.path("measures").accept(defaultMediaType).get(genericType);
+    }
 
     /**
      * Update Measure data from model object
@@ -927,4 +937,98 @@ public class MetadataClient {
         };
         return webResource.path("link-types").accept(defaultMediaType).get(genericType);
     }
+
+    /**
+     * Create UnitOfMeasure data from model object
+     *
+     * @param unitOfMeasure a UnitOfMeasure object with the data to create.
+     * @return a UnitOfMeasure object
+     */
+
+    public UnitOfMeasure createUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        //TimeSeriesDTO timeSeriesDTO = new UnitOfMeasureDTO(timeSeries);
+        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, unitOfMeasure);
+        return cr.getEntity(UnitOfMeasure.class);
+    }
+
+    /**
+     * Delete UnitOfMeasure data from model object
+     *
+     * @param id the UnitOfMeasure's id
+     * @return a UnitOfMeasure object
+     */
+
+    public void deleteUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
+
+        try {
+            webResource.path("unitOfMeasure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(UnitOfMeasure.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Update UnitOfMeasure data from model object
+     *
+     * @param unitOfMeasure a UnitOfMeasure object with the data to update.
+     * @return a UnitOfMeasure object
+     */
+
+    public UnitOfMeasure updateUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+
+        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, unitOfMeasure);
+        return cr.getEntity(UnitOfMeasure.class);
+    }
+
+    /**
+     * Create Subsection data from model object
+     *
+     * @param subsection a Subsection object with the data to create.
+     * @return a Subsection object
+     */
+
+    public Subsection createSubsection(Subsection subsection) {
+        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, subsection);
+        return cr.getEntity(Subsection.class);
+    }
+
+    /**
+     * Delete Subsection data from model object
+     *
+     * @param id the Subsection's id
+     * @return a Subsection object
+     */
+
+    public void deleteSubsection(int id) throws SubsectionNotFoundException {
+
+        try {
+            webResource.path("subsection").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Subsection.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Update Subsection data from model object
+     *
+     * @param subsection a Subsection object with the data to update.
+     * @return a Subsection object
+     */
+
+    public Subsection updateSubsection(Subsection subsection) {
+
+        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, subsection);
+        return cr.getEntity(Subsection.class);
+    }
+
 }
