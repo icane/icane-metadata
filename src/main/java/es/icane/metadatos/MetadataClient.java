@@ -417,10 +417,10 @@ public class MetadataClient {
      * @param section the section's uriTag
      * @return a list of its subsections
      */
-    public List<Subsection> getSubsections(String section) {
+    public List<Subsection> getSubsections(String subSection) {
         GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
         };
-        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
+        return webResource.path("section").path(subSection).path("subsections").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -947,7 +947,7 @@ public class MetadataClient {
 
     public UnitOfMeasure createUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         //TimeSeriesDTO timeSeriesDTO = new UnitOfMeasureDTO(timeSeries);
-        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
                 post(ClientResponse.class, unitOfMeasure);
         return cr.getEntity(UnitOfMeasure.class);
     }
@@ -962,7 +962,7 @@ public class MetadataClient {
     public void deleteUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
 
         try {
-            webResource.path("unitOfMeasure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+            webResource.path("unit-of-measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
                     delete(UnitOfMeasure.class);
         }
         catch (UniformInterfaceException e ) {
@@ -980,7 +980,7 @@ public class MetadataClient {
 
     public UnitOfMeasure updateUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
 
-        ClientResponse cr = webResource.path("unitOfMeasure").type(defaultMediaType).accept(defaultMediaType).
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
                 put(ClientResponse.class, unitOfMeasure);
         return cr.getEntity(UnitOfMeasure.class);
     }
