@@ -4,10 +4,7 @@ import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -15,6 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="subsection")
 public class Subsection implements Serializable {
 
     private Integer id;
@@ -35,15 +33,14 @@ public class Subsection implements Serializable {
 
     }
 
-    public Subsection (String title, String acronym, String uriTag, String uri, String topics,
-                       String automatizedTopics, String code, Section section, Date created, Date lastUpdated) {
+    public Subsection (String title, String acronym, String uriTag, String topics, String code, Section section, Date created, Date lastUpdated) {
         //this.id = id;
         this.title = title;
         this.acronym = acronym;
         this.uriTag = uriTag;
-        this.uri = uri;
+
         this.topics = topics;
-        this.automatizedTopics = automatizedTopics;
+
         this.code = code;
         this.section = section;
         this.created = created;

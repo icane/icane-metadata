@@ -18,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		String baseUrl = "http://localhost:8080/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -1109,10 +1109,19 @@ public class MetadataClientTest {
 
     @Test
     public void createAndDeleteSubsectionShouldReturnOk() {
+
         Subsection createdSubsection;
         Subsection retrievedSubsection = null;
+        Section section = null;
 
-        Subsection subsection = new Subsection();
+        try {
+            section = metadataClient.getSection("economy");
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        Subsection subsection = new Subsection("Subsección de prueba", "PRUEBA", "prueba", "tema, prueba, subsección", "código", section, new Date(), new Date());
         createdSubsection = metadataClient.createSubsection(subsection);
 
         try {
