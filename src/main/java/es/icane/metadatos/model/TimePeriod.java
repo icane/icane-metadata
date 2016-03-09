@@ -95,11 +95,8 @@ public class TimePeriod implements Serializable {
 	        if ((this.startMonth == null) ? (other.startMonth != null) : !this.startMonth.equals(other.startMonth)) {
 	            return false;
 	        }
-	        if ((this.timeFormat == null) ? (other.timeFormat != null) : !this.timeFormat.equals(other.timeFormat)) {
-	            return false;
-	        }
-	        return true;
-	    }
+		 return (this.timeFormat == null) ? other.timeFormat == null : this.timeFormat.equals(other.timeFormat);
+	 }
 
 	    @Override
 	    public int hashCode() {

@@ -101,13 +101,9 @@ public class UnitOfMeasure {
 	                : !this.title.equals(other.title)) {
 	            return false;
 	        }
-	        if ((this.symbol == null) ? (other.symbol != null)
-	                : !this.symbol.equals(other.symbol)) {
-	            return false;
-	        }
-	        
-	        return true;
-	    }
+			return (this.symbol == null) ? other.symbol == null : this.symbol.equals(other.symbol);
+
+		}
 	    
 	    
 

@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class ReferenceNotFoundException extends Exception {
+class ReferenceNotFoundException extends Exception {
 
     public ReferenceNotFoundException(Throwable cause) {
         super(cause);

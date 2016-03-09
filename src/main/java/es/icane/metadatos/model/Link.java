@@ -263,10 +263,7 @@ public class Link implements Serializable {
         if ((this.rdfUri == null) ? (other.rdfUri != null) : !this.rdfUri.equals(other.rdfUri)) {
             return false;
         }
-        if ((this.uri == null) ? (other.uri != null) : !this.uri.equals(other.uri)) {
-            return false;
-        }
-        return true;
+        return (this.uri == null) ? other.uri == null : this.uri.equals(other.uri);
     }
 
     @Override

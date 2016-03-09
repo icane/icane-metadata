@@ -112,10 +112,7 @@ public class NodeType implements Serializable {
             return false;
         }
         final NodeType other = (NodeType) obj;
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

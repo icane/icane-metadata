@@ -101,11 +101,8 @@ public class LinkType implements Serializable {
         if ((this.rdfShortUri == null) ? (other.rdfShortUri != null) : !this.rdfShortUri.equals(other.rdfShortUri)) {
             return false;
         }
-        if ((this.rdfUri == null) ? (other.rdfUri != null) : !this.rdfUri.equals(other.rdfUri)) {
-            return false;
-        }
+        return (this.rdfUri == null) ? other.rdfUri == null : this.rdfUri.equals(other.rdfUri);
 
-        return true;
     }
 
     @Override

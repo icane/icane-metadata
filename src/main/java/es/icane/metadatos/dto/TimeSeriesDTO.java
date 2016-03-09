@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 /**
- * Created by emm13775 on 23/12/15.
+ * Created by emm13775 on 23/12/2015.
  */
 
 @XmlType
@@ -445,10 +445,7 @@ public TimeSeriesDTO(TimeSeries timeSeries){
                 || !this.dataSet.equals(other.dataSet))) {
             return false;
         }
-        if (this.nodeType != other.nodeType && (this.nodeType == null
-                || !this.nodeType.equals(other.nodeType))) {
-            return false;
-        }
-        return true;
+        return !(this.nodeType != other.nodeType && (this.nodeType == null
+                || !this.nodeType.equals(other.nodeType)));
     }
 }

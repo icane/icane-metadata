@@ -87,7 +87,8 @@ public class MetadataClientTest {
 		}
 
 		// assert statements
-		assertEquals("Annual title must be Anual", "Anual", periodicity.getTitle());
+        assert periodicity != null;
+        assertEquals("Annual title must be Anual", "Anual", periodicity.getTitle());
 	}
 
 	@Test
@@ -103,7 +104,8 @@ public class MetadataClientTest {
 
 
 		// assert statements
-		assertEquals("UritagEs must be correct", "defunciones-edad-media", timeSeries.getUriTagEs());
+        assert timeSeries != null;
+        assertEquals("UritagEs must be correct", "defunciones-edad-media", timeSeries.getUriTagEs());
 
 	}
 	
@@ -119,7 +121,8 @@ public class MetadataClientTest {
 		}
 
 		// assert statements
-		assertTrue("References must not be empty", timeSeries.getReferences().size() >= 1);
+        assert timeSeries != null;
+        assertTrue("References must not be empty", timeSeries.getReferences().size() >= 1);
 		assertEquals("Resource type of reference is publication", "Publicación",
                 timeSeries.getReferences().get(0).getResourceType().toString());
 		
@@ -137,7 +140,8 @@ public class MetadataClientTest {
 		}
 
 		// assert statement
-		assertEquals("Base must be 2010", "2010", timeSeries.getBase());
+        assert timeSeries != null;
+        assertEquals("Base must be 2010", "2010", timeSeries.getBase());
 		
 	}
 
@@ -156,8 +160,10 @@ public class MetadataClientTest {
 		}
 
 		// assert statement
-		assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
-		assertEquals("Initial time period id must be 575", 575, (int) timeSeries2.getFinalPeriodComposite().getId());
+        assert timeSeries1 != null;
+        assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
+        assert timeSeries2 != null;
+        assertEquals("Initial time period id must be 575", 575, (int) timeSeries2.getFinalPeriodComposite().getId());
 
 	}
 
@@ -178,6 +184,7 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
         // assert statement
+        assert retrievedTimeSeries != null;
         assertEquals("Description should be equal to put-test-object",
                 "put-test-xml-object",  retrievedTimeSeries.getCode());
 
@@ -215,6 +222,7 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
         // assert statement
+        assert retrievedTimeSeries != null;
         assertEquals("New subsection uri-tag should be equal to primary-sector",
                 "primary-sector",  retrievedTimeSeries.getSubsection().getUriTag());
 
@@ -265,6 +273,8 @@ public class MetadataClientTest {
 
 
             // assert statement
+            assert retrievedTimeSeries != null;
+            assert timeSeries != null;
             assertEquals("Time series uriTags should be equal",
                     timeSeries.getUriTag(), retrievedTimeSeries.getUriTag());
         }
@@ -287,6 +297,8 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
+        assert timeSeries != null;
+        assert measure != null;
         measure.setNode(timeSeries.getUriTag());
         measure.setTitle("prueba");
         metadataClient.updateMeasure(measure);
@@ -298,6 +310,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert updatedMeasure != null;
         assertEquals("Associated Time series uriTags should be equal",
                 timeSeries.getUriTag(), updatedMeasure.getNode());
         assertEquals("Title should be equal to prueba",
@@ -319,6 +332,8 @@ public class MetadataClientTest {
         } catch (MeasureNotFoundException e) {
             e.printStackTrace();
         }
+        assert timeSeries != null;
+        assert measure != null;
         measure.setNode(timeSeries.getUriTag());
         measure.setTitle("Parados");
         metadataClient.updateMeasure(measure);
@@ -345,6 +360,8 @@ public class MetadataClientTest {
 
         // assert statements
 
+        assert measure != null;
+        assert updatedMeasure != null;
         assertEquals("Title should be the same ",
                 updatedMeasure.getTitle(), measure.getTitle());
         assertEquals("Node should be the same ",
@@ -355,7 +372,7 @@ public class MetadataClientTest {
     @Test
     public void createAndDeleteMeasureShouldReturnOk() {
         UnitOfMeasure unitOfMeasure = null;
-        Measure createdMeasure = null;
+        Measure createdMeasure;
         Measure retrievedMeasure = null;
         try {
             unitOfMeasure = metadataClient.getUnitOfMeasure(1);
@@ -370,6 +387,7 @@ public class MetadataClientTest {
         } catch (MeasureNotFoundException e) {
             e.printStackTrace();
         }
+        assert retrievedMeasure != null;
         assertEquals("Title should be the same ",
                 createdMeasure.getTitle(), retrievedMeasure.getTitle());
         assertEquals("Node should be the same ",
@@ -396,6 +414,7 @@ public class MetadataClientTest {
         } catch (ReferenceNotFoundException e) {
             e.printStackTrace();
         }
+        assert reference != null;
         reference.setNodeUriTag(reference.getNode());
         metadataClient.updateReference(reference);
 
@@ -407,6 +426,7 @@ public class MetadataClientTest {
 
         // assert statements
 
+        assert updatedReference != null;
         assertEquals("Title should be the same ",
                 updatedReference.getTitle(), reference.getTitle());
         assertEquals("Node should be the same ",
@@ -430,6 +450,8 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
+        assert timeSeries != null;
+        assert reference != null;
         reference.setNodeUriTag(timeSeries.getUriTag());
         reference.setResourceType(ResourceType.OPENDATA);
         reference.setTitle("TÍTULO DE PRUEBA");
@@ -442,6 +464,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert updatedReference != null;
         assertEquals("Associated Time series uriTags should be equal",
                 timeSeries.getUriTag(), updatedReference.getNode());
         assertEquals("ResourceType should be equal to opendata",
@@ -463,6 +486,8 @@ public class MetadataClientTest {
         } catch (ReferenceNotFoundException e) {
             e.printStackTrace();
         }
+        assert timeSeries != null;
+        assert reference != null;
         reference.setNodeUriTag(timeSeries.getUriTag());
         reference.setTitle("Contabilidad Trimestral de Cantabria");
         reference.setResourceType(ResourceType.PUBLICATION);
@@ -472,7 +497,7 @@ public class MetadataClientTest {
     @Test
     public void createAndDeleteReferenceShouldReturnOk() {
 
-        Reference createdReference = null;
+        Reference createdReference;
         Reference retrievedReference = null;
         TimeSeries node = null;
         try {
@@ -488,6 +513,7 @@ public class MetadataClientTest {
         } catch (ReferenceNotFoundException e) {
             e.printStackTrace();
         }
+        assert retrievedReference != null;
         assertEquals("Title should be the same ",
                 createdReference.getTitle(), retrievedReference.getTitle());
         assertEquals("Node should be the same ",
@@ -513,6 +539,7 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+        assert link != null;
         link.setSectionUriTag(link.getSection());
 
         metadataClient.updateLink(link);
@@ -525,6 +552,7 @@ public class MetadataClientTest {
 
         // assert statements
 
+        assert updatedLink != null;
         assertEquals("Title should be the same ",
                 updatedLink.getTitle(), link.getTitle());
         assertEquals("Section should be the same ",
@@ -556,6 +584,8 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
+        assert timeSeries != null;
+        assert link != null;
         link.setNodeUriTag(timeSeries.getUriTag());
         link.setLinkType(linkType);
         link.setTitle("INE MODIFICADO");
@@ -568,6 +598,7 @@ public class MetadataClientTest {
         }
       
         // assert statements
+        assert updatedLink != null;
         assertEquals("Associated Time series uriTags should be equal",
                 timeSeries.getUriTag(), updatedLink.getNode());
         assertEquals("LinkType should be equal",
@@ -596,6 +627,8 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+        assert timeSeries != null;
+        assert link != null;
         link.setNodeUriTag(timeSeries.getUriTag());
         link.setLinkType(linkType);
         link.setTitle("INE");
@@ -626,7 +659,9 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
+        assert link != null;
         link.setNodeUriTag(null);
+        assert referenceArea != null;
         link.setReferenceAreaUriTag(referenceArea.getUriTag());
         link.setLinkType(linkType);
         link.setUri("http://urideprueba.com");
@@ -640,6 +675,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert updatedLink != null;
         assertEquals("Associated ReferenceArea uriTags should be equal",
                 referenceArea.getUriTag(), updatedLink.getReferenceArea());
         assertEquals("LinkType should be equal",
@@ -671,7 +707,9 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+        assert link != null;
         link.setReferenceAreaUriTag(null);
+        assert timeSeries != null;
         link.setNodeUriTag(timeSeries.getUriTag());
         link.setUri("http://www.ine.es/jaxi/menu.do?type=pcaxis&path=%2Ft20%2Fp318&file=inebase&L=0");
 
@@ -683,7 +721,7 @@ public class MetadataClientTest {
     @Test
     public void createAndDeleteLinkShouldReturnOk() {
 
-        Link createdLink = null;
+        Link createdLink;
         Link retrievedLink = null;
         LinkType linkType = null;
         ReferenceArea referenceArea = null;
@@ -707,6 +745,7 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+        assert retrievedLink != null;
         assertEquals("Title should be the same ",
                 createdLink.getTitle(), retrievedLink.getTitle());
         assertEquals("ReferenceArea should be the same ",
@@ -736,7 +775,7 @@ public class MetadataClientTest {
     @Test
     public void createAndDeleteLinkAssociatedToNodeShouldReturnOk() {
 
-        Link createdLink = null;
+        Link createdLink;
         Link retrievedLink = null;
         TimeSeries node = null;
         LinkType linkType = null;
@@ -760,6 +799,7 @@ public class MetadataClientTest {
         } catch (LinkNotFoundException e) {
             e.printStackTrace();
         }
+        assert retrievedLink != null;
         assertEquals("Title should be the same ",
                 createdLink.getTitle(), retrievedLink.getTitle());
         assertEquals("Node should be the same ",
@@ -808,6 +848,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert category != null;
         assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
 
     }
@@ -824,6 +865,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert subsection != null;
         assertEquals("id = 1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
 
     }
@@ -840,6 +882,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert referenceArea != null;
         assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
 
     }
@@ -856,6 +899,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert dataSet != null;
         assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
 
     }
@@ -872,6 +916,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert measure != null;
         assertEquals("id = 777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
 
     }
@@ -888,6 +933,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert unitOfMeasure != null;
         assertEquals("id = 125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
 
     }
@@ -904,6 +950,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert link != null;
         assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
 
     }
@@ -920,6 +967,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert linkType != null;
         assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
 
     }
@@ -936,6 +984,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert reference != null;
         assertEquals("id = 9 title must be Contabilidad Trimestral de Cantabria", "Contabilidad Trimestral de Cantabria", reference.getTitle());
 
     }
@@ -952,6 +1001,7 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert section != null;
         assertEquals("economy title must be Economía", "Economía", section.getTitle());
 
     }
@@ -1002,7 +1052,7 @@ public class MetadataClientTest {
 
     @Test
     public void createAndDeleteUnitOfMeasureShouldReturnOk() {
-        UnitOfMeasure createdUnitOfMeasure = null;
+        UnitOfMeasure createdUnitOfMeasure;
         UnitOfMeasure retrievedUnitOfMeasure = null;
 
         UnitOfMeasure unitOfMeasure = new UnitOfMeasure(new Date(), new Date(), "symbol", "Unidad de medida de prueba");
@@ -1015,6 +1065,7 @@ public class MetadataClientTest {
         }
 
         //assert statements
+        assert retrievedUnitOfMeasure != null;
         assertEquals("Title should be the same ",
                 createdUnitOfMeasure.getTitle(), retrievedUnitOfMeasure.getTitle());
         assertEquals("Node should be the same ",
@@ -1047,11 +1098,72 @@ public class MetadataClientTest {
         }
 
         // assert statements
+        assert updatedUnitOfMeasure != null;
+        assert unitOfMeasure != null;
         assertEquals("Title should be the same ",
                 updatedUnitOfMeasure.getTitle(), unitOfMeasure.getTitle());
         assertEquals("Node should be the same ",
                 updatedUnitOfMeasure.getId(), unitOfMeasure.getId());
 
     }
+
+    @Test
+    public void createAndDeleteSubsectionShouldReturnOk() {
+        Subsection createdSubsection;
+        Subsection retrievedSubsection = null;
+
+        Subsection subsection = new Subsection();
+        createdSubsection = metadataClient.createSubsection(subsection);
+
+        try {
+            retrievedSubsection = metadataClient.getSubsection(createdSubsection.getId());
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedSubsection != null;
+        assertEquals("Title should be the same ",
+                createdSubsection.getTitle(), retrievedSubsection.getTitle());
+        assertEquals("Node should be the same ",
+                createdSubsection.getId(), retrievedSubsection.getId());
+
+        try {
+            metadataClient.deleteSubsection(createdSubsection.getId());
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateSubsectionWithItselfShouldReturnOk() {
+        Subsection subsection = null;
+        Subsection updatedSubsection = null;
+
+        try {
+            subsection = metadataClient.getSubsection(1);
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateSubsection(subsection);
+
+        try {
+            updatedSubsection = metadataClient.getSubsection(1);
+        } catch (SubsectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert updatedSubsection != null;
+        assert subsection != null;
+        assertEquals("Title should be the same ",
+                updatedSubsection.getTitle(), subsection.getTitle());
+        assertEquals("Node should be the same ",
+                updatedSubsection.getId(), subsection.getId());
+
+    }
+
+
 
 }

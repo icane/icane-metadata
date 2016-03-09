@@ -155,10 +155,7 @@ public class Measure implements Serializable {
                 : !this.unit.equals(other.unit)) {
             return false;
         }
-        if (this.defaultMeasure != other.defaultMeasure) {
-            return false;
-        }
-        return true;
+        return this.defaultMeasure == other.defaultMeasure;
     }
 
     public String getNode() {

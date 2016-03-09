@@ -4,11 +4,11 @@ import es.icane.metadatos.adapters.DateAdapter;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+//import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -103,10 +103,7 @@ public class DataSet implements Serializable {
         if ((this.acronym == null) ? (other.acronym != null) : !this.acronym.equals(other.acronym)) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

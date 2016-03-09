@@ -5,7 +5,7 @@ package es.icane.metadatos;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 
-public class MeasureNotFoundException extends Exception {
+class MeasureNotFoundException extends Exception {
 
 	public MeasureNotFoundException(Throwable cause) {
 		super(cause);

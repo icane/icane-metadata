@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class SeriesNotFoundException extends Exception {
+class SeriesNotFoundException extends Exception {
 
     public SeriesNotFoundException(Throwable cause) {
         super(cause);

@@ -9,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.sun.jersey.api.client.*;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
+//import com.sun.jersey.api.client.Client;
+//import com.sun.jersey.api.client.GenericType;
+//import com.sun.jersey.api.client.UniformInterfaceException;
+//import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -28,13 +28,13 @@ import es.icane.metadatos.model.*;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
+@SuppressWarnings("ALL")
 public class MetadataClient {
 
     private final String baseUrl;
     // Constants
     private final MediaType defaultMediaType = MediaType.APPLICATION_XML_TYPE;
 
-    private Client jerseyClient;
     private ClientConfig clientConfig;
     private WebResource webResource;
     private long connectionTimeout;
@@ -48,7 +48,7 @@ public class MetadataClient {
         this.baseUrl = baseUrl;
         clientConfig = new DefaultClientConfig();
         clientConfig.getProperties().put(ClientConfig.PROPERTY_CONNECT_TIMEOUT, 10000);
-        jerseyClient = Client.create(clientConfig);
+        Client jerseyClient = Client.create(clientConfig);
         webResource = jerseyClient.resource(baseUrl);
     }
 

@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class LinkNotFoundException extends Exception {
+class LinkNotFoundException extends Exception {
 
     public LinkNotFoundException(Throwable cause) {
         super(cause);

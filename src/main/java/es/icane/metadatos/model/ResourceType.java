@@ -13,7 +13,7 @@ public enum ResourceType {
 		APPLICATION("Aplicación o sistema software asociado"),
 		GENERIC("Recurso de información genérico");
 
-		String description;
+		final String description;
 		
 		ResourceType(String description) {
 			this.description = description;

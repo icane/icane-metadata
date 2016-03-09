@@ -35,9 +35,9 @@ public class Subsection implements Serializable {
 
     }
 
-    public Subsection (Integer id, String title, String acronym, String uriTag, String uri, String topics,
+    public Subsection (String title, String acronym, String uriTag, String uri, String topics,
                        String automatizedTopics, String code, Section section, Date created, Date lastUpdated) {
-        this.id = id;
+        //this.id = id;
         this.title = title;
         this.acronym = acronym;
         this.uriTag = uriTag;
@@ -174,10 +174,7 @@ public class Subsection implements Serializable {
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

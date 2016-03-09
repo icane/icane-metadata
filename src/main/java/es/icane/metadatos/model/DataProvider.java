@@ -97,10 +97,7 @@ public class DataProvider implements Serializable {
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.acronym == null) ? (other.acronym != null) : !this.acronym.equals(other.acronym)) {
-            return false;
-        }
-        return true;
+        return (this.acronym == null) ? other.acronym == null : this.acronym.equals(other.acronym);
     }
 
     @Override

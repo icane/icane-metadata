@@ -234,11 +234,8 @@ public class TimeSeries implements Serializable {
                 || !this.dataSet.equals(other.dataSet))) {
             return false;
         }
-        if (this.nodeType != other.nodeType && (this.nodeType == null
-                || !this.nodeType.equals(other.nodeType))) {
-            return false;
-        }
-        return true;
+        return !(this.nodeType != other.nodeType && (this.nodeType == null
+                || !this.nodeType.equals(other.nodeType)));
     }
 
     @Override

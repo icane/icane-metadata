@@ -123,11 +123,8 @@ public class Reference implements Serializable {
 	        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
 	            return false;
 	        }
-	        if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
-	            return false;
-	        }
-	        return true;
-	    }
+			return (this.title == null) ? other.title == null : this.title.equals(other.title);
+		}
 
 	    @Override
 	    public int hashCode() {
