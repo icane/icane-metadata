@@ -1031,4 +1031,49 @@ public class MetadataClient {
         return cr.getEntity(Subsection.class);
     }
 
+    /**
+     * Create Section data from model object
+     *
+     * @param section a Section object with the data to create.
+     * @return a Section object
+     */
+
+    public Section createSection(Section section) {
+        ClientResponse cr = webResource.path("section").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, section);
+        return cr.getEntity(Section.class);
+    }
+
+    /**
+     * Update Section data from model object
+     *
+     * @param section a Section object with the data to update.
+     * @return a Section object
+     */
+
+    public Section updateSection(Section section) {
+
+        ClientResponse cr = webResource.path("section").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, section);
+        return cr.getEntity(Section.class);
+    }
+
+    /**
+     * Delete Section data from model object
+     *
+     * @param id the Section's id
+     * @return a Section object
+     */
+
+    public void deleteSection(int id) throws SectionNotFoundException {
+
+        try {
+            webResource.path("section").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Section.class);
+        } catch (UniformInterfaceException e) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
 }

@@ -18,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://localhost:8080/metadata/api";
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -1173,6 +1173,33 @@ public class MetadataClientTest {
 
     }
 
+    @Test
+    public void updateSectionWithItselfShouldReturnOk() {
+        Section section = null;
+        Section updatedSection = null;
 
+        try {
+            section = metadataClient.getSection("economy");
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateSection(section);
+
+        try {
+            updatedSection = metadataClient.getSection("economy");
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert updatedSection != null;
+        assert section != null;
+        assertEquals("Title should be the same ",
+                updatedSection.getTitle(), section.getTitle());
+        assertEquals("Node should be the same ",
+                updatedSection.getId(), section.getId());
+
+    }
 
 }
