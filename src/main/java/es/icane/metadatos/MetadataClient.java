@@ -1076,4 +1076,98 @@ public class MetadataClient {
 
     }
 
+    /**
+     * Create DataSet data from model object
+     *
+     * @param dataSet a DataSet object with the data to create.
+     * @return a DataSet object
+     */
+
+    public DataSet createDataSet(DataSet dataSet) {
+        ClientResponse cr = webResource.path("data-set").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, dataSet);
+        return cr.getEntity(DataSet.class);
+    }
+
+    /**
+     * Delete DataSet data from model object
+     *
+     * @param id the DataSet's id
+     * @return a DataSet object
+     */
+
+    public void deleteDataSet(int id) throws DataSetNotFoundException {
+
+        try {
+            webResource.path("data-set").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(DataSet.class);
+        } catch (UniformInterfaceException e) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Create DataProvider data from model object
+     *
+     * @param dataProvider a DataProvider object with the data to create.
+     * @return a DataProvider object
+     */
+
+    public DataProvider createDataProvider(DataProvider dataProvider) {
+        ClientResponse cr = webResource.path("data-provider").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, dataProvider);
+        return cr.getEntity(DataProvider.class);
+    }
+
+    /**
+     * Delete DataProvider data from model object
+     *
+     * @param id the DataProvider's id
+     * @return a DataProvider object
+     */
+
+    public void deleteDataProvider(int id) throws DataProviderNotFoundException {
+
+        try {
+            webResource.path("data-provider").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(DataProvider.class);
+        } catch (UniformInterfaceException e) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Create Category data from model object
+     *
+     * @param category a Category object with the data to create.
+     * @return a Category object
+     */
+
+    public Category createCategory(Category category) {
+        ClientResponse cr = webResource.path("category").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, category);
+        return cr.getEntity(Category.class);
+    }
+
+    /**
+     * Delete Category data from model object
+     *
+     * @param id the Category's id
+     * @return a Category object
+     */
+
+    public void deleteCategory(int id) throws CategoryNotFoundException {
+
+        try {
+            webResource.path("category").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Category.class);
+        } catch (UniformInterfaceException e) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+
 }
