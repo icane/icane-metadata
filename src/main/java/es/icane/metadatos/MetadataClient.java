@@ -671,6 +671,20 @@ public class MetadataClient {
     }
 
     /**
+     * Retrieve a DataProvider by its uriTag.
+     *
+     * @param uriTag the DataProvider's uriTag
+     * @return
+     */
+    public DataProvider getDataProvider(String uriTag) throws DataProviderNotFoundException {
+        try {
+            return webResource.path("data-provider").path(uriTag).accept(defaultMediaType).get(DataProvider.class);
+        } catch (UniformInterfaceException e) {
+            throw new DataProviderNotFoundException();
+        }
+    }
+
+    /**
      * Update TimeSeries data from model object
      *
      * @param timeSeries a TimeSeries object with the data to update.
@@ -1108,6 +1122,20 @@ public class MetadataClient {
     }
 
     /**
+     * Update DataSet data from model object
+     *
+     * @param dataSet a DataSet object with the data to update.
+     * @return a DataSet object
+     */
+
+    public DataSet updateDataSet(DataSet dataSet) {
+
+        ClientResponse cr = webResource.path("data-set").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, dataSet);
+        return cr.getEntity(DataSet.class);
+    }
+
+    /**
      * Create DataProvider data from model object
      *
      * @param dataProvider a DataProvider object with the data to create.
@@ -1136,6 +1164,20 @@ public class MetadataClient {
             System.out.println(e.getResponse());
         }
 
+    }
+
+    /**
+     * Update DataProvider data from model object
+     *
+     * @param dataProvider a DataProvider object with the data to update.
+     * @return a DataProvider object
+     */
+
+    public DataProvider updateDataProvider(DataProvider dataProvider) {
+
+        ClientResponse cr = webResource.path("data-provider").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, dataProvider);
+        return cr.getEntity(DataProvider.class);
     }
 
     /**
@@ -1168,6 +1210,21 @@ public class MetadataClient {
         }
 
     }
+
+    /**
+     * Update Category data from model object
+     *
+     * @param category a Category object with the data to update.
+     * @return a Category object
+     */
+
+    public Category updateCategory(Category category) {
+
+        ClientResponse cr = webResource.path("category").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, category);
+        return cr.getEntity(Category.class);
+    }
+
 
 
 }

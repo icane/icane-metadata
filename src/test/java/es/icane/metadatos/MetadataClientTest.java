@@ -1120,7 +1120,6 @@ public class MetadataClientTest {
             e.printStackTrace();
         }
 
-
         Subsection subsection = new Subsection("Subsección de prueba", "PRUEBA", "prueba", "tema, prueba, subsección", "código", section, new Date(), new Date());
         createdSubsection = metadataClient.createSubsection(subsection);
 
@@ -1199,6 +1198,179 @@ public class MetadataClientTest {
                 updatedSection.getTitle(), section.getTitle());
         assertEquals("Node should be the same ",
                 updatedSection.getId(), section.getId());
+
+    }
+
+    @Test
+    public void createAndDeleteDataSetShouldReturnOk() {
+
+        DataSet createdDataSet;
+        DataSet retrievedDataSet = null;
+
+        DataSet dataSet = new DataSet("DataSet de prueba", "PRUEBA", "uri-tag-data-set-prueba", new Date(), new Date());
+        createdDataSet = metadataClient.createDataSet(dataSet);
+
+        try {
+            retrievedDataSet = metadataClient.getDataSet(createdDataSet.getTitle());
+        } catch (DataSetNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedDataSet != null;
+        assertEquals("Title should be the same ",
+                createdDataSet.getTitle(), retrievedDataSet.getTitle());
+        assertEquals("Node should be the same ",
+                createdDataSet.getId(), retrievedDataSet.getId());
+
+        try {
+            metadataClient.deleteDataSet(createdDataSet.getId());
+        } catch (DataSetNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void createAndDeleteCategoryShouldReturnOk() {
+
+        Category createdCategory;
+        Category retrievedCategory = null;
+
+        Category category = new Category("Categoría nueva", "CATEGORIA", 'C', "categoria-nueva", new Date(), new Date());
+        createdCategory = metadataClient.createCategory(category);
+
+        try {
+            retrievedCategory = metadataClient.getCategory(createdCategory.getTitle());
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedCategory != null;
+        assertEquals("Title should be the same ",
+                createdCategory.getTitle(), retrievedCategory.getTitle());
+        assertEquals("Node should be the same ",
+                createdCategory.getId(), retrievedCategory.getId());
+
+        try {
+            metadataClient.deleteCategory(createdCategory.getId());
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createAndDeleteDataProviderShouldReturnOk() {
+
+        DataProvider createdDataProvider;
+        DataProvider retrievedDataProvider = null;
+
+        DataProvider dataProvider = new DataProvider("Nuevo data provider", "NUEVO", new Date(), new Date());
+        createdDataProvider = metadataClient.createDataProvider(dataProvider);
+
+        try {
+            retrievedDataProvider = metadataClient.getDataProvider(createdDataProvider.getTitle());
+        } catch (DataProviderNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedDataProvider != null;
+        assertEquals("Title should be the same ",
+                createdDataProvider.getTitle(), retrievedDataProvider.getTitle());
+        assertEquals("Node should be the same ",
+                createdDataProvider.getId(), retrievedDataProvider.getId());
+
+        try {
+            metadataClient.deleteDataProvider(createdDataProvider.getId());
+        } catch (DataProviderNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void updateDataSetWithItselfShouldReturnOk() {
+        DataSet dataSet = null;
+        DataSet updatedDataSet = null;
+
+        try {
+            dataSet = metadataClient.getDataSet("water");
+        } catch (DataSetNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateDataSet(dataSet);
+
+        try {
+            updatedDataSet = metadataClient.getDataSet("water");
+        } catch (DataSetNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert updatedDataSet != null;
+        assert dataSet != null;
+        assertEquals("Title should be the same ",
+                updatedDataSet.getTitle(), updatedDataSet.getTitle());
+        assertEquals("Node should be the same ",
+                updatedDataSet.getId(),dataSet.getId());
+
+    }
+
+    @Test
+    public void updateCategoryWithItselfShouldReturnOk() {
+        Category category = null;
+        Category updatedCategory = null;
+
+        try {
+            category = metadataClient.getCategory("regional-data");
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateCategory(category);
+
+        try {
+            updatedCategory = metadataClient.getCategory("regional-data");
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert updatedCategory != null;
+        assert category != null;
+        assertEquals("Title should be the same ",
+                updatedCategory.getTitle(), updatedCategory.getTitle());
+        assertEquals("Node should be the same ",
+                updatedCategory.getId(),category.getId());
+
+    }
+
+    @Test
+    public void updateDataProviderWithItselfShouldReturnOk() {
+        DataProvider dataProvider = null;
+        DataProvider updatedDataProvider = null;
+
+        try {
+            dataProvider = metadataClient.getDataProvider("Instituto Cántabro de Estadística");
+        } catch (DataProviderNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateDataProvider(dataProvider);
+
+        try {
+            updatedDataProvider = metadataClient.getDataProvider("Instituto Cántabro de Estadística");
+        } catch (DataProviderNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert updatedDataProvider != null;
+        assert dataProvider != null;
+        assertEquals("Title should be the same ",
+                updatedDataProvider.getTitle(), updatedDataProvider.getTitle());
+        assertEquals("Node should be the same ",
+                updatedDataProvider.getId(),dataProvider.getId());
 
     }
 

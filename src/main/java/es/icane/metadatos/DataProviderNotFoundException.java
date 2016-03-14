@@ -3,7 +3,7 @@ package es.icane.metadatos;
 /**
  * Created by emm13775 on 23/12/2015.
  */
-public class DataProviderNotFoundException extends Exception {
+class DataProviderNotFoundException extends Exception {
 
     public DataProviderNotFoundException(Throwable cause) {
         super(cause);

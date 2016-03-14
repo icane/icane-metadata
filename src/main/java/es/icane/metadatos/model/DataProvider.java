@@ -24,6 +24,17 @@ public class DataProvider implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public DataProvider() {
+
+    }
+
+    public DataProvider(String title, String acronym, Date created, Date lastUpdated) {
+        this.title = title;
+        this.acronym = acronym;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;

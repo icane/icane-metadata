@@ -34,7 +34,7 @@ public class Subsection implements Serializable {
     }
 
     public Subsection (String title, String acronym, String uriTag, String topics, String code, Section section, Date created, Date lastUpdated) {
-        //this.id = id;
+
         this.title = title;
         this.acronym = acronym;
         this.uriTag = uriTag;

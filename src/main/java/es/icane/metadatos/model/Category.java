@@ -25,6 +25,19 @@ public class Category implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public Category() {
+
+    }
+
+    public Category(String title, String acronym, Character code, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.acronym = acronym;
+        this.code = code;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;
