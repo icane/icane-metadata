@@ -1235,11 +1235,11 @@ public class MetadataClientTest {
         Category createdCategory;
         Category retrievedCategory = null;
 
-        Category category = new Category("Categoría nueva", "CATEGORIA", 'C', "categoria-nueva", new Date(), new Date());
+        Category category = new Category("Categoría nueva", "CATEGORIA", "C", "categoria-nueva", new Date(), new Date());
         createdCategory = metadataClient.createCategory(category);
 
         try {
-            retrievedCategory = metadataClient.getCategory(createdCategory.getTitle());
+            retrievedCategory = metadataClient.getCategory(createdCategory.getUriTag());
         } catch (CategoryNotFoundException e) {
             e.printStackTrace();
         }
@@ -1264,11 +1264,11 @@ public class MetadataClientTest {
         DataProvider createdDataProvider;
         DataProvider retrievedDataProvider = null;
 
-        DataProvider dataProvider = new DataProvider("Nuevo data provider", "NUEVO", new Date(), new Date());
+        DataProvider dataProvider = new DataProvider("Nuevo data provider", "NUEVO", "http://www.google.com", new Date(), new Date());
         createdDataProvider = metadataClient.createDataProvider(dataProvider);
 
         try {
-            retrievedDataProvider = metadataClient.getDataProvider(createdDataProvider.getTitle());
+            retrievedDataProvider = metadataClient.getDataProvider(createdDataProvider.getUri());
         } catch (DataProviderNotFoundException e) {
             e.printStackTrace();
         }
@@ -1276,7 +1276,7 @@ public class MetadataClientTest {
         //assert statements
         assert retrievedDataProvider != null;
         assertEquals("Title should be the same ",
-                createdDataProvider.getTitle(), retrievedDataProvider.getTitle());
+                createdDataProvider.getTitle(), retrievedDataProvider.getUri());
         assertEquals("Node should be the same ",
                 createdDataProvider.getId(), retrievedDataProvider.getId());
 

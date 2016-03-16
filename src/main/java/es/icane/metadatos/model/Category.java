@@ -20,7 +20,7 @@ public class Category implements Serializable {
     private Integer id;
     private String title;
     private String acronym;
-    private Character code;
+    private String code;
     private String uriTag;
     private Date created;
     private Date lastUpdated;
@@ -29,7 +29,7 @@ public class Category implements Serializable {
 
     }
 
-    public Category(String title, String acronym, Character code, String uriTag, Date created, Date lastUpdated) {
+    public Category(String title, String acronym, String code, String uriTag, Date created, Date lastUpdated) {
         this.title = title;
         this.acronym = acronym;
         this.code = code;
@@ -91,11 +91,11 @@ public class Category implements Serializable {
         this.acronym = acronym;
     }
 
-    public Character getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Character code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

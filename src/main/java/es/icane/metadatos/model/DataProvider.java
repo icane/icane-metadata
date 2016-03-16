@@ -28,9 +28,10 @@ public class DataProvider implements Serializable {
 
     }
 
-    public DataProvider(String title, String acronym, Date created, Date lastUpdated) {
+    public DataProvider(String title, String acronym, String uri, Date created, Date lastUpdated) {
         this.title = title;
         this.acronym = acronym;
+        this.uri = uri;
         this.created = created;
         this.lastUpdated = lastUpdated;
     }
