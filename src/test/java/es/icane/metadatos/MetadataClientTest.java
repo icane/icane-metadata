@@ -1374,33 +1374,4 @@ public class MetadataClientTest {
 
     }
 
-    @Test
-    public void createAndDeleteSectionShouldReturnOk() {
-
-        Section createdSection;
-        Section retrievedSection = null;
-
-        Section section = new Section("Sección de prueba", "SECTION", "new-section", "c", new Date(), new Date());
-        createdSection = metadataClient.createSection(section);
-
-        try {
-            retrievedSection = metadataClient.getSection(createdSection.getUriTag());
-        } catch (SectionNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //assert statements
-        assert retrievedSection != null;
-        assertEquals("Title should be the same ",
-                createdSection.getTitle(), retrievedSection.getUriTag());
-        assertEquals("Node should be the same ",
-                createdSection.getId(), retrievedSection.getId());
-
-        try {
-            metadataClient.deleteSection(createdSection.getId());
-        } catch (SectionNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
