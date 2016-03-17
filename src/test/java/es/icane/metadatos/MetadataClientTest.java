@@ -1235,7 +1235,7 @@ public class MetadataClientTest {
         Category createdCategory;
         Category retrievedCategory = null;
 
-        Category category = new Category("Categoría nueva", "CATEGORIA", "C", "categoria-nueva", new Date(), new Date());
+        Category category = new Category("Categoría nueva", "CATEGORIA", "C", "new-category", new Date(), new Date());
         createdCategory = metadataClient.createCategory(category);
 
         try {
@@ -1372,6 +1372,35 @@ public class MetadataClientTest {
         assertEquals("Node should be the same ",
                 updatedDataProvider.getId(),dataProvider.getId());
 
+    }
+
+    @Test
+    public void createAndDeleteSectionShouldReturnOk() {
+
+        Section createdSection;
+        Section retrievedSection = null;
+
+        Section section = new Section("Sección de prueba", "SECTION", "new-section", "c", new Date(), new Date());
+        createdSection = metadataClient.createSection(section);
+
+        try {
+            retrievedSection = metadataClient.getSection(createdSection.getUriTag());
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedSection != null;
+        assertEquals("Title should be the same ",
+                createdSection.getTitle(), retrievedSection.getUriTag());
+        assertEquals("Node should be the same ",
+                createdSection.getId(), retrievedSection.getId());
+
+        try {
+            metadataClient.deleteSection(createdSection.getId());
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

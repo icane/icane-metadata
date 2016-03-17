@@ -28,6 +28,15 @@ public class Section implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public Section (String title, String acronym, String uriTag, String code, Date created, Date lastUpdated) {
+        this.title = title;
+        this.acronym = acronym;
+        this.uriTag = uriTag;
+        this.code = code;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;
