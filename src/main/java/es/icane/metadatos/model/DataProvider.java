@@ -19,6 +19,7 @@ public class DataProvider implements Serializable {
 
     private Integer id;
     private String title;
+    private String dcuoo_id;
     private String acronym;
     private String uri;
     private Date created;
@@ -28,9 +29,10 @@ public class DataProvider implements Serializable {
 
     }
 
-    public DataProvider(String title, String acronym, String uri, Date created, Date lastUpdated) {
+    public DataProvider(String title, String acronym, String dcuoo_id, String uri, Date created, Date lastUpdated) {
         this.title = title;
         this.acronym = acronym;
+        this.dcuoo_id = dcuoo_id;
         this.uri = uri;
         this.created = created;
         this.lastUpdated = lastUpdated;
@@ -86,6 +88,14 @@ public class DataProvider implements Serializable {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getDcuoo_id() {
+        return dcuoo_id;
+    }
+
+    public void setDcuoo_id(String dcuoo_id) {
+        this.dcuoo_id = dcuoo_id;
     }
 
     @Override

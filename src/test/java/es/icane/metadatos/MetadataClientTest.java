@@ -18,7 +18,7 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://marhaus.icane.es/metadata/api";
+		String baseUrl = "http://localhost:8080/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
@@ -1264,11 +1264,11 @@ public class MetadataClientTest {
         DataProvider createdDataProvider;
         DataProvider retrievedDataProvider = null;
 
-        DataProvider dataProvider = new DataProvider("Nuevo data provider", "NUEVO", "http://www.google.com", new Date(), new Date());
+        DataProvider dataProvider = new DataProvider("Nuevo data provider", "NUEVO", "A000035", "http://www.google.com", new Date(), new Date());
         createdDataProvider = metadataClient.createDataProvider(dataProvider);
 
         try {
-            retrievedDataProvider = metadataClient.getDataProvider(createdDataProvider.getUri());
+            retrievedDataProvider = metadataClient.getDataProvider(createdDataProvider.getId());
         } catch (DataProviderNotFoundException e) {
             e.printStackTrace();
         }
@@ -1276,8 +1276,8 @@ public class MetadataClientTest {
         //assert statements
         assert retrievedDataProvider != null;
         assertEquals("Title should be the same ",
-                createdDataProvider.getTitle(), retrievedDataProvider.getUri());
-        assertEquals("Node should be the same ",
+                createdDataProvider.getTitle(), retrievedDataProvider.getTitle());
+        assertEquals("Id should be the same ",
                 createdDataProvider.getId(), retrievedDataProvider.getId());
 
         try {
@@ -1351,7 +1351,7 @@ public class MetadataClientTest {
         DataProvider updatedDataProvider = null;
 
         try {
-            dataProvider = metadataClient.getDataProvider("Instituto Cántabro de Estadística");
+            dataProvider = metadataClient.getDataProvider(1);
         } catch (DataProviderNotFoundException e) {
             e.printStackTrace();
         }
@@ -1359,7 +1359,7 @@ public class MetadataClientTest {
         metadataClient.updateDataProvider(dataProvider);
 
         try {
-            updatedDataProvider = metadataClient.getDataProvider("Instituto Cántabro de Estadística");
+            updatedDataProvider = metadataClient.getDataProvider(1);
         } catch (DataProviderNotFoundException e) {
             e.printStackTrace();
         }

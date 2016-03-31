@@ -671,14 +671,14 @@ public class MetadataClient {
     }
 
     /**
-     * Retrieve a DataProvider by its uriTag.
+     * Retrieve a DataProvider by  id.
      *
-     * @param uriTag the DataProvider's uriTag
+     * @param id of the data provider
      * @return
      */
-    public DataProvider getDataProvider(String uriTag) throws DataProviderNotFoundException {
+    public DataProvider getDataProvider(int id) throws DataProviderNotFoundException {
         try {
-            return webResource.path("data-provider").path(uriTag).accept(defaultMediaType).get(DataProvider.class);
+            return webResource.path("data-provider").path(String.valueOf(id)).accept(defaultMediaType).get(DataProvider.class);
         } catch (UniformInterfaceException e) {
             throw new DataProviderNotFoundException();
         }
