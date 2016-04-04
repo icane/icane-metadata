@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class SectionNotFoundException extends Exception {
+class SectionNotFoundException extends Exception {
 
     public SectionNotFoundException(Throwable cause) {
         super(cause);

@@ -4,11 +4,12 @@ import es.icane.metadatos.adapters.DateAdapter;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+//import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -17,6 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="dataSet")
 public class DataSet implements Serializable {
 
     private Integer id;
@@ -27,6 +29,18 @@ public class DataSet implements Serializable {
 	
     private Date created;
     private Date lastUpdated;
+
+    public DataSet() {
+
+    }
+
+    public DataSet(String title, String acronym, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.acronym = acronym;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -103,10 +117,7 @@ public class DataSet implements Serializable {
         if ((this.acronym == null) ? (other.acronym != null) : !this.acronym.equals(other.acronym)) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

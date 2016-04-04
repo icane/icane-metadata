@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class DataSetNotFoundException extends Exception {
+class DataSetNotFoundException extends Exception {
 
     public DataSetNotFoundException(Throwable cause) {
         super(cause);

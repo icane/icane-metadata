@@ -4,21 +4,34 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import es.icane.metadatos.adapters.DateAdapter;
 
 @XmlType
+@XmlRootElement(name="unitOfMeasure")
 public class UnitOfMeasure {
 
 	 private Integer id;
 	 
 	    private String title;
 	    private String symbol;
-	 
 	    private Date created;
 	    private Date lastUpdated;
+
+	 public UnitOfMeasure(){
+
+	 }
+
+	 public UnitOfMeasure(Date created, Date lastUpdated, String symbol, String title){
+		 this.created = created;
+		 this.lastUpdated = lastUpdated;
+		 this.symbol = symbol;
+		 this.title = title;
+
+	 }
 
 	    @XmlAttribute(required = true)
 	    public Integer getId() {
@@ -88,13 +101,9 @@ public class UnitOfMeasure {
 	                : !this.title.equals(other.title)) {
 	            return false;
 	        }
-	        if ((this.symbol == null) ? (other.symbol != null)
-	                : !this.symbol.equals(other.symbol)) {
-	            return false;
-	        }
-	        
-	        return true;
-	    }
+			return (this.symbol == null) ? other.symbol == null : this.symbol.equals(other.symbol);
+
+		}
 	    
 	    
 

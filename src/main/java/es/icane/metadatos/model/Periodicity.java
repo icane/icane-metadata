@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -13,6 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="periodicity")
 public class Periodicity implements Serializable {
 
     private Integer id;
@@ -21,6 +23,18 @@ public class Periodicity implements Serializable {
     private String uriTag;
     private Date created;
     private Date lastUpdated;
+
+    public Periodicity(){
+
+    }
+
+    public Periodicity(String title, String cldFrequencyUri, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.cldFrequencyUri = cldFrequencyUri;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
 
     @XmlAttribute
     public Integer getId() {
@@ -92,10 +106,7 @@ public class Periodicity implements Serializable {
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
-            return false;
-        }
-        return true;
+        return (this.title == null) ? other.title == null : this.title.equals(other.title);
     }
 
     @Override

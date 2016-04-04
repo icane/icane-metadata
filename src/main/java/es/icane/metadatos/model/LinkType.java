@@ -1,44 +1,43 @@
 package es.icane.metadatos.model;
 
 import es.icane.metadatos.adapters.DateAdapter;
-import java.io.Serializable;
-import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
-@XmlRootElement(name="dataProvider")
-public class DataProvider implements Serializable {
+@XmlRootElement(name="linkType")
+public class LinkType implements Serializable {
 
     private Integer id;
     private String title;
-    private String dcuoo_id;
-    private String acronym;
-    private String uri;
+    private String rdfShortUri;
+    private String rdfUri;
     private Date created;
     private Date lastUpdated;
 
-    public DataProvider() {
+    public LinkType() {
 
     }
 
-    public DataProvider(String title, String acronym, String dcuoo_id, String uri, Date created, Date lastUpdated) {
+    public LinkType(String title, String rdfShortUri, String rdfUri, Date created, Date lastUpdated) {
         this.title = title;
-        this.acronym = acronym;
-        this.dcuoo_id = dcuoo_id;
-        this.uri = uri;
+        this.rdfShortUri = rdfShortUri;
+        this.rdfUri = rdfUri;
         this.created = created;
         this.lastUpdated = lastUpdated;
     }
 
-    @XmlAttribute(required = true)
+    @XmlAttribute
     public Integer getId() {
         return id;
     }
@@ -47,8 +46,8 @@ public class DataProvider implements Serializable {
         this.id = id;
     }
 
-    @XmlJavaTypeAdapter(value = DateAdapter.class)
     @XmlElement(name = "dateCreated")
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
     public Date getCreated() {
         return created;
     }
@@ -66,14 +65,23 @@ public class DataProvider implements Serializable {
         this.lastUpdated = lastUpdated;
     }
 
-    public String getAcronym() {
-        return acronym;
+    public String getRdfShortUri() {
+        return rdfShortUri;
     }
 
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
+    public void setRdfShortUri(String rdfShortUri) {
+        this.rdfShortUri = rdfShortUri;
     }
 
+    public String getRdfUri() {
+        return rdfUri;
+    }
+
+    public void setRdfUri(String rdfUri) {
+        this.rdfUri = rdfUri;
+    }
+
+    @XmlElement(required = true)
     public String getTitle() {
         return title;
     }
@@ -82,27 +90,8 @@ public class DataProvider implements Serializable {
         this.title = title;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getDcuoo_id() {
-        return dcuoo_id;
-    }
-
-    public void setDcuoo_id(String dcuoo_id) {
-        this.dcuoo_id = dcuoo_id;
-    }
-
     @Override
     public String toString() {
-        if (acronym != null && !acronym.isEmpty()) {
-            return title + " (" + acronym + ')';
-        }
         return title;
     }
 
@@ -114,14 +103,18 @@ public class DataProvider implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DataProvider other = (DataProvider) obj;
+        final LinkType other = (LinkType) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        return (this.acronym == null) ? other.acronym == null : this.acronym.equals(other.acronym);
+        if ((this.rdfShortUri == null) ? (other.rdfShortUri != null) : !this.rdfShortUri.equals(other.rdfShortUri)) {
+            return false;
+        }
+        return (this.rdfUri == null) ? other.rdfUri == null : this.rdfUri.equals(other.rdfUri);
+
     }
 
     @Override
@@ -129,7 +122,8 @@ public class DataProvider implements Serializable {
         int hash = 5;
         hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 29 * hash + (this.title != null ? this.title.hashCode() : 0);
-        hash = 29 * hash + (this.acronym != null ? this.acronym.hashCode() : 0);
+        hash = 29 * hash + (this.rdfShortUri != null ? this.rdfShortUri.hashCode() : 0);
+        hash = 29 * hash + (this.rdfUri != null ? this.rdfUri.hashCode() : 0);
         return hash;
     }
 }
