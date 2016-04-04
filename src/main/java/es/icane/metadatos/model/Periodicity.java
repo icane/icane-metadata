@@ -24,6 +24,18 @@ public class Periodicity implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public Periodicity(){
+
+    }
+
+    public Periodicity(String title, String cldFrequencyUri, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.cldFrequencyUri = cldFrequencyUri;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute
     public Integer getId() {
         return id;

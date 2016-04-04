@@ -20,7 +20,23 @@ public class TimePeriod implements Serializable {
 	private String timeFormat;
     private Date created;
     private Date lastUpdated;
-    
+
+	public TimePeriod(){
+
+	}
+
+	public TimePeriod(Integer startMonth, Integer endMonth, Integer startYear, Integer endYear, Integer quarterNumber, Integer semesterNumber, String timeFormat, Date created, Date lastUpdated) {
+		this.startMonth = startMonth;
+		this.endMonth = endMonth;
+		this.startYear = startYear;
+		this.endYear = endYear;
+		this.quarterNumber = quarterNumber;
+		this.semesterNumber = semesterNumber;
+		this.timeFormat = timeFormat;
+		this.created = created;
+		this.lastUpdated = lastUpdated;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -553,6 +553,54 @@ public class MetadataClient {
         }
     }
 
+    /**
+     * Update ReferenceArea data from model object
+     *
+     * @param referenceArea a ReferenceArea object with the data to update.
+     * @return a ReferenceArea object
+     */
+
+    public ReferenceArea updateReferenceArea(ReferenceArea referenceArea) {
+
+        ClientResponse cr = webResource.path("reference-area").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, referenceArea);
+        return cr.getEntity(ReferenceArea.class);
+    }
+
+    /**
+     * Create ReferenceArea data from model object
+     *
+     * @param referenceArea a ReferenceArea object with the data to create.
+     * @return a ReferenceArea object
+     */
+
+    public ReferenceArea createReferenceArea(ReferenceArea referenceArea) {
+        //TimeSeriesDTO timeSeriesDTO = new ReferenceAreaDTO(timeSeries);
+        ClientResponse cr = webResource.path("reference-area").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, referenceArea);
+        return cr.getEntity(ReferenceArea.class);
+    }
+
+    /**
+     * Delete ReferenceArea data from model object
+     *
+     * @param id the ReferenceArea's id
+     * @return a ReferenceArea object
+     */
+
+    public void deleteReferenceArea(int id) throws ReferenceAreaNotFoundException {
+
+        try {
+            webResource.path("reference-area").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(ReferenceArea.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
 	/*
 	 * Data set methods
 	 */
@@ -625,6 +673,53 @@ public class MetadataClient {
         }
     }
 
+    /**
+     * Update Periodicity data from model object
+     *
+     * @param periodicity a Periodicity object with the data to update.
+     * @return a Periodicity object
+     */
+
+    public Periodicity updatePeriodicity(Periodicity periodicity) {
+
+        ClientResponse cr = webResource.path("periodicity").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, periodicity);
+        return cr.getEntity(Periodicity.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public Periodicity createPeriodicity(Periodicity periodicity) {
+        ClientResponse cr = webResource.path("periodicity").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, periodicity);
+        return cr.getEntity(Periodicity.class);
+    }
+
+    /**
+     * Delete Periodicity data from model object
+     *
+     * @param id the Periodicity's id
+     * @return a Periodicity object
+     */
+
+    public void deletePeriodicity(Integer id) throws PeriodicityNotFoundException {
+
+        try {
+            webResource.path("periodicity").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Periodicity.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
 	/*
 	 * TimePeriod methods
 	 */
@@ -640,9 +735,85 @@ public class MetadataClient {
         return webResource.path("time-periods").accept(defaultMediaType).get(genericType);
     }
 
+    /**
+     * Retrieve a TimePeriod by its uriTag.
+     *
+     * @param uriTag the TimePeriod's uriTag
+     * @return
+     */
+    public TimePeriod getTimePeriod(int id) throws TimePeriodNotFoundException {
+        try {
+            return webResource.path("time-period").path(String.valueOf(id))
+                    .accept(defaultMediaType).get(TimePeriod.class);
+        } catch (UniformInterfaceException e) {
+            throw new TimePeriodNotFoundException();
+        }
+    }
+
+    /**
+     * Update TimePeriod data from model object
+     *
+     * @param timePeriod a TimePeriod object with the data to update.
+     * @return a TimePeriod object
+     */
+
+    public TimePeriod updateTimePeriod(TimePeriod timePeriod) {
+
+        ClientResponse cr = webResource.path("time-period").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, timePeriod);
+        return cr.getEntity(TimePeriod.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public TimePeriod createTimePeriod(TimePeriod timePeriod) {
+        ClientResponse cr = webResource.path("time-period").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, timePeriod);
+        return cr.getEntity(TimePeriod.class);
+    }
+
+    /**
+     * Delete TimePeriod data from model object
+     *
+     * @param id the TimePeriod's id
+     * @return a TimePeriod object
+     */
+
+    public void deleteTimePeriod(int id) throws TimePeriodNotFoundException {
+
+        try {
+            webResource.path("time-period").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(TimePeriod.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+
 	/*
 	 * NodeType methods
 	 */
+
+    /**
+     * Retrieve a NodeTYpe by its uriTag.
+     *
+     * @param id the NodeTYpe's uriTag
+     * @return
+     */
+    public NodeType getNodeType(String uriTag) throws NodeTypeNotFoundException {
+        try {
+            return webResource.path("node-type").path(uriTag).accept(defaultMediaType).get(NodeType.class);
+        } catch (UniformInterfaceException e) {
+            throw new NodeTypeNotFoundException();
+        }
+    }
 
     /**
      * Retrieve a list of all the sources.
@@ -654,6 +825,55 @@ public class MetadataClient {
         };
         return webResource.path("node-types").accept(defaultMediaType).get(genericType);
     }
+
+    /**
+     * Update NodeType data from model object
+     *
+     * @param nodeType a NodeType object with the data to update.
+     * @return a NodeType object
+     */
+
+    public NodeType updateNodeType(NodeType nodeType) {
+
+        ClientResponse cr = webResource.path("node-type").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, nodeType);
+        return cr.getEntity(NodeType.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public NodeType createNodeType(NodeType nodeType) {
+        //TimeSeriesDTO timeSeriesDTO = new NodeTypeDTO(timeSeries);
+        ClientResponse cr = webResource.path("node-type").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, nodeType);
+        return cr.getEntity(NodeType.class);
+    }
+
+    /**
+     * Delete NodeType data from model object
+     *
+     * @param id the NodeType's id
+     * @return a NodeType object
+     */
+
+    public void deleteNodeType(Integer id) throws NodeTypeNotFoundException {
+
+        try {
+            webResource.path("node-type").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(NodeType.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+    
 
 	/*
 	 * Data provider methods
@@ -815,6 +1035,17 @@ public class MetadataClient {
         }
     }
 
+     /**
+     * Retrieve a list of all the References.
+     *
+     * @return a List with Reference objects
+     */
+    public List<Reference> getReferences() {
+        GenericType<List<Reference>> genericType = new GenericType<List<Reference>>() {
+        };
+        return webResource.path("references").accept(defaultMediaType).get(genericType);
+    }
+
 
     /**
      * Update Reference data from model object
@@ -876,6 +1107,17 @@ public class MetadataClient {
         } catch (UniformInterfaceException e) {
             throw new LinkNotFoundException();
         }
+    }
+
+    /**
+     * Retrieve a list of all the Links.
+     *
+     * @return a List with Link objects
+     */
+    public List<Link> getLinks() {
+        GenericType<List<Link>> genericType = new GenericType<List<Link>>() {
+        };
+        return webResource.path("links").accept(defaultMediaType).get(genericType);
     }
 
 
@@ -951,6 +1193,54 @@ public class MetadataClient {
         };
         return webResource.path("link-types").accept(defaultMediaType).get(genericType);
     }
+
+    /**
+     * Update LinkType data from model object
+     *
+     * @param linkType a LinkType object with the data to update.
+     * @return a LinkType object
+     */
+
+    public LinkType updateLinkType(LinkType linkType) {
+
+        ClientResponse cr = webResource.path("link-type").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, linkType);
+        return cr.getEntity(LinkType.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public LinkType createLinkType(LinkType linkType) {
+        ClientResponse cr = webResource.path("link-type").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, linkType);
+        return cr.getEntity(LinkType.class);
+    }
+
+    /**
+     * Delete LinkType data from model object
+     *
+     * @param id the LinkType's id
+     * @return a LinkType object
+     */
+
+    public void deleteLinkType(int id) throws LinkTypeNotFoundException {
+
+        try {
+            webResource.path("node-type").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(LinkType.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+
+    }
+    
 
     /**
      * Create UnitOfMeasure data from model object

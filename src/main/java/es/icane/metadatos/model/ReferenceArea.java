@@ -22,6 +22,17 @@ public class ReferenceArea implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public ReferenceArea(){
+
+    }
+
+    public ReferenceArea(String title, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute
     public Integer getId() {
         return id;

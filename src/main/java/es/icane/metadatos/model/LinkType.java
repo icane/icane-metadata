@@ -25,6 +25,18 @@ public class LinkType implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public LinkType() {
+
+    }
+
+    public LinkType(String title, String rdfShortUri, String rdfUri, Date created, Date lastUpdated) {
+        this.title = title;
+        this.rdfShortUri = rdfShortUri;
+        this.rdfUri = rdfUri;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute
     public Integer getId() {
         return id;

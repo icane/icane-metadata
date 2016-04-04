@@ -31,6 +31,17 @@ public class NodeType implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    public NodeType() {
+
+    }
+
+    public NodeType(String title, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
+
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;

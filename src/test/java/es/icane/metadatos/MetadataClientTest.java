@@ -18,20 +18,96 @@ public class MetadataClientTest {
 
 	@BeforeClass
 	public static void setUp() {
-		String baseUrl = "http://localhost:8080/metadata/api";
+		String baseUrl = "http://marhaus.icane.es/metadata/api";
 		metadataClient = new MetadataClient(baseUrl);
 	}
 
+    @Test
+    public void getNodeTypeShouldReturnElement() {
+
+        NodeType nodeType = null;
+        try {
+            nodeType = metadataClient.getNodeType("section");
+        } catch (NodeTypeNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert nodeType != null;
+        assertEquals("section title must be Sección", "Sección", nodeType.getTitle());
+
+    }
+
 	@Test
-	public void getNodeTypesShouldReturnTenElementsList() {
+	public void getNodeTypesShouldReturnTenElementList() {
 
 		List<NodeType> nodeTypes = metadataClient.getNodeTypes();
 
 
 		// assert statements
-		assertEquals("Size must be ten", 10, nodeTypes.size());
+		assertTrue("Size must be equal or greater than ten", nodeTypes.size()>=10);
 
 	}
+
+    @Test
+    public void updateNodeTypeWithItselfShouldReturnOk() {
+        NodeType nodeType = null;
+        NodeType updatedNodeType = null;
+
+        try {
+            nodeType = metadataClient.getNodeType("subsection");
+        } catch (NodeTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateNodeType(nodeType);
+
+        try {
+            updatedNodeType = metadataClient.getNodeType("subsection");
+        } catch (NodeTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assert nodeType != null;
+        assert updatedNodeType != null;
+        assertEquals("Title should be the same ",
+                updatedNodeType.getTitle(), nodeType.getTitle());
+        assertEquals("UriTag should be the same ",
+                updatedNodeType.getUriTag(), nodeType.getUriTag());
+
+    }
+
+    @Test
+    public void createAndDeleteNodeTypeShouldReturnOk() {
+
+        NodeType createdNodeType = null;
+        NodeType retrievedNodeType = null;
+
+        NodeType nodeType = new NodeType("tipo de nodo", "tipoPrueba", new Date(), new Date());
+        createdNodeType = metadataClient.createNodeType(nodeType);
+        try {
+            retrievedNodeType = metadataClient.getNodeType(createdNodeType.getUriTag());
+        } catch (NodeTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert retrievedNodeType != null;
+        assertEquals("Title should be the same ",
+                createdNodeType.getTitle(), retrievedNodeType.getTitle());
+        assertEquals("UriTag should be the same ",
+                createdNodeType.getUriTag(), retrievedNodeType.getUriTag());
+
+
+        try {
+            metadataClient.deleteNodeType(createdNodeType.getId());
+        } catch (NodeTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 	@Test
 	public void getTimePeriodsShouldReturnList() {
@@ -44,8 +120,85 @@ public class MetadataClientTest {
 		assertEquals("First element is id 246",246, timePeriods.get(0).getId().intValue());
 	}
 
+    @Test
+    public void getTimePeriodShouldReturnElement() {
+
+        TimePeriod timePeriod = null;
+        try {
+            timePeriod = metadataClient.getTimePeriod(465);
+        } catch (TimePeriodNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert timePeriod != null;
+        assertEquals("Time period startYear must be 2010", 2010, timePeriod.getStartYear().intValue());
+        assertEquals("Time period endYear must be 2011", 2011, timePeriod.getEndYear().intValue());
+
+    }
+
+    @Test
+    public void updateTimePeriodWithItselfShouldReturnOk() {
+        TimePeriod timePeriod = null;
+        TimePeriod updatedTimePeriod = null;
+
+        try {
+            timePeriod = metadataClient.getTimePeriod(465);
+        } catch (TimePeriodNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateTimePeriod(timePeriod);
+
+        try {
+            updatedTimePeriod = metadataClient.getTimePeriod(465);
+        } catch (TimePeriodNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assert timePeriod != null;
+        assert updatedTimePeriod != null;
+        assertEquals("Start year should be the same ",
+                updatedTimePeriod.getStartYear(), timePeriod.getStartYear());
+        assertEquals("End year should be the same ",
+                updatedTimePeriod.getEndYear(), timePeriod.getEndYear());
+
+    }
+
+    @Test
+    public void createAndDeleteTimePeriodShouldReturnOk() {
+
+        TimePeriod createdTimePeriod = null;
+        TimePeriod retrievedTimePeriod = null;
+
+        TimePeriod timePeriod = new TimePeriod(1, null, 2018, null, null, null, "year", new Date(), new Date());
+        createdTimePeriod = metadataClient.createTimePeriod(timePeriod);
+        try {
+            retrievedTimePeriod = metadataClient.getTimePeriod(createdTimePeriod.getId());
+        } catch (TimePeriodNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert retrievedTimePeriod != null;
+        assertEquals("Start month should be the same ",
+                createdTimePeriod.getStartMonth(), retrievedTimePeriod.getStartMonth());
+        assertEquals("Start year should be the same ",
+                createdTimePeriod.getStartYear(), retrievedTimePeriod.getStartYear());
+
+
+        try {
+            metadataClient.deleteTimePeriod(createdTimePeriod.getId());
+        } catch (TimePeriodNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 	@Test
-	public void getDataProviderShouldReturnList() {
+	public void getDataProvidersShouldReturnList() {
 
 		List<DataProvider> dataProviders = metadataClient.getDataProviders();
 
@@ -90,6 +243,62 @@ public class MetadataClientTest {
         assert periodicity != null;
         assertEquals("Annual title must be Anual", "Anual", periodicity.getTitle());
 	}
+
+    @Test
+    public void updatePeriodicityWithItselfShouldReturnOk() {
+        Periodicity periodicity = null;
+        Periodicity updatedPeriodicity = null;
+
+        try {
+            periodicity = metadataClient.getPeriodicity("monthly");
+        } catch (PeriodicityNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updatePeriodicity(periodicity);
+
+        try {
+            updatedPeriodicity = metadataClient.getPeriodicity("monthly");
+        } catch (PeriodicityNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assert periodicity != null;
+        assert updatedPeriodicity != null;
+        assertEquals("Title should be the same ",
+                updatedPeriodicity.getTitle(), periodicity.getTitle());
+        assertEquals("UriTag should be the same ",
+                updatedPeriodicity.getUriTag(), periodicity.getUriTag());
+
+    }
+
+    @Test
+    public void createAndDeletePeriodicityShouldReturnOk() {
+
+        Periodicity createdPeriodicity = null;
+        Periodicity retrievedPeriodicity = null;
+        Periodicity periodicity = new Periodicity("periocididad de prueba", "http://purl.org/cld/freq/prueba", "prueba-period", new Date(), new Date());
+        createdPeriodicity = metadataClient.createPeriodicity(periodicity);
+        try {
+            retrievedPeriodicity = metadataClient.getPeriodicity(createdPeriodicity.getUriTag());
+        } catch (PeriodicityNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert retrievedPeriodicity != null;
+        assertEquals("Title should be the same ",
+                createdPeriodicity.getTitle(), retrievedPeriodicity.getTitle());
+        assertEquals("UriTag should be the same ",
+                createdPeriodicity.getUriTag(), retrievedPeriodicity.getUriTag());
+
+
+        try {
+            metadataClient.deletePeriodicity(createdPeriodicity.getId());
+        } catch (PeriodicityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@Test
 	public void getUriTagEsShouldReturnACorrectUriTag() {
@@ -530,6 +739,16 @@ public class MetadataClientTest {
     }
 
     @Test
+    public void getReferencesShouldReturnList() {
+
+        List<Reference> references = metadataClient.getReferences();
+
+        // assert statements
+        assertTrue("Size must be greater than 10", references.size() > 10);
+        assertEquals("1st element has title Contabilidad Trimestal de Cantabria", "Contabilidad Trimestral de Cantabria", references.get(0).getTitle());
+    }
+
+    @Test
     public void updateLinkWithItselfShouldReturnOk() {
         Link link = null;
         Link updatedLink = null;
@@ -768,7 +987,7 @@ public class MetadataClientTest {
 
 
         // assert statements
-        assertEquals("Size must be eight", 8, linkTypes.size());
+        assertTrue("Size must be equal or greater than eight", linkTypes.size() >=8);
 
     }
 
@@ -888,6 +1107,67 @@ public class MetadataClientTest {
     }
 
     @Test
+    public void updateReferenceAreaWithItselfShouldReturnOk() {
+        ReferenceArea referenceArea = null;
+        ReferenceArea updatedReferenceArea = null;
+
+        try {
+            referenceArea = metadataClient.getReferenceArea("municipal");
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateReferenceArea(referenceArea);
+
+        try {
+            updatedReferenceArea = metadataClient.getReferenceArea("municipal");
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assert referenceArea != null;
+        assert updatedReferenceArea != null;
+        assertEquals("Title should be the same ",
+                updatedReferenceArea.getTitle(), referenceArea.getTitle());
+        assertEquals("UriTag should be the same ",
+                updatedReferenceArea.getUriTag(), referenceArea.getUriTag());
+        assertTrue("Reference Area municipal links should be greated than 1", updatedReferenceArea.getLinks().size() > 1);
+
+    }
+
+    @Test
+    public void createAndDeleteReferenceAreaShouldReturnOk() {
+
+        ReferenceArea createdReferenceArea = null;
+        ReferenceArea retrievedReferenceArea = null;
+        ReferenceArea referenceArea = new ReferenceArea("ámbito territorial", "territorial-prueba", new Date(), new Date());
+
+        
+        createdReferenceArea = metadataClient.createReferenceArea(referenceArea);
+        try {
+            retrievedReferenceArea = metadataClient.getReferenceArea(createdReferenceArea.getUriTag());
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert retrievedReferenceArea != null;
+        assertEquals("Title should be the same ",
+                createdReferenceArea.getTitle(), retrievedReferenceArea.getTitle());
+        assertEquals("UriTag should be the same ",
+                createdReferenceArea.getUriTag(), retrievedReferenceArea.getUriTag());
+
+
+        try {
+            metadataClient.deleteReferenceArea(createdReferenceArea.getId());
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Test
     public void getDataSetShouldReturnElement() {
 
         DataSet dataSet = null;
@@ -901,6 +1181,23 @@ public class MetadataClientTest {
         // assert statements
         assert dataSet != null;
         assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
+
+    }
+
+    @Test
+    public void getDataProviderShouldReturnElement() {
+
+        DataProvider dataProvider = null;
+        try {
+            dataProvider = metadataClient.getDataProvider(1);
+        } catch (DataProviderNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert dataProvider != null;
+        assertEquals("musical-arts acronym must be INE", "INE", dataProvider.getAcronym());
 
     }
 
@@ -956,6 +1253,17 @@ public class MetadataClientTest {
     }
 
     @Test
+    public void getLinksShouldReturnList() {
+
+        List<Link> links = metadataClient.getLinks();
+
+
+        // assert statements
+        assertTrue("Size must be greater than 50", links.size() > 50);
+        assertEquals("First element title is DBpedia","DBpedia", links.get(0).getTitle());
+    }
+
+    @Test
     public void getLinkTypeShouldReturnElement() {
 
         LinkType linkType = null;
@@ -969,6 +1277,62 @@ public class MetadataClientTest {
         // assert statements
         assert linkType != null;
         assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
+
+    }
+
+    @Test
+    public void updateLinkTypeWithItselfShouldReturnOk() {
+        LinkType linkType = null;
+        LinkType updatedLinkType = null;
+
+        try {
+            linkType = metadataClient.getLinkType(1);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        metadataClient.updateLinkType(linkType);
+
+        try {
+            updatedLinkType = metadataClient.getLinkType(1);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+
+        assert linkType != null;
+        assert updatedLinkType != null;
+        assertEquals("Title should be the same ",
+                updatedLinkType.getTitle(), linkType.getTitle());
+
+    }
+
+    @Test
+    public void createAndDeleteLinkTypeShouldReturnOk() {
+
+        LinkType createdLinkType = null;
+        LinkType retrievedLinkType = null;
+        LinkType linkType = new LinkType("enlace FTP", null, null, new Date(), new Date());
+        createdLinkType = metadataClient.createLinkType(linkType);
+        try {
+            retrievedLinkType = metadataClient.getLinkType(createdLinkType.getId());
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert retrievedLinkType != null;
+        assertEquals("Title should be the same ",
+                createdLinkType.getTitle(), retrievedLinkType.getTitle());
+        assertEquals("UriTag should be the same ",
+                createdLinkType.getId(), retrievedLinkType.getId());
+
+
+        try {
+            metadataClient.deleteLinkType(createdLinkType.getId());
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -1013,7 +1377,6 @@ public class MetadataClientTest {
 
         // assert statements
         assertTrue("Size must be greater than 2", sections.size() > 2);
-        assertEquals("Maximum size must be 5", 5, sections.size());
         assertEquals("First element has title Población", "Población", sections.get(0).getTitle());
     }
 
@@ -1034,7 +1397,6 @@ public class MetadataClientTest {
 
         // assert statements
         assertTrue("Size must be greater than 5", referenceAreas.size() > 5);
-        assertEquals("Maximum size must be 6", 6, referenceAreas.size());
         assertEquals("Second element has title Regional", "Regional", referenceAreas.get(1).getTitle());
     }
 
@@ -1173,6 +1535,35 @@ public class MetadataClientTest {
     }
 
     @Test
+    public void createAndDeleteSectionShouldReturnOk() {
+
+        Section createdSection;
+        Section retrievedSection = null;
+
+        Section section = new Section("Sección de prueba", "PRUEBA", "prueba", "tema, prueba, subsección", "código", new Date(), new Date());
+        createdSection = metadataClient.createSection(section);
+
+        try {
+            retrievedSection = metadataClient.getSection(createdSection.getUriTag());
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //assert statements
+        assert retrievedSection != null;
+        assertEquals("Title should be the same ",
+                createdSection.getTitle(), retrievedSection.getTitle());
+        assertEquals("Code should be the same ",
+                createdSection.getCode(), retrievedSection.getCode());
+
+        try {
+            metadataClient.deleteSection(createdSection.getId());
+        } catch (SectionNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void updateSectionWithItselfShouldReturnOk() {
         Section section = null;
         Section updatedSection = null;
@@ -1211,7 +1602,7 @@ public class MetadataClientTest {
         createdDataSet = metadataClient.createDataSet(dataSet);
 
         try {
-            retrievedDataSet = metadataClient.getDataSet(createdDataSet.getTitle());
+            retrievedDataSet = metadataClient.getDataSet(createdDataSet.getUriTag());
         } catch (DataSetNotFoundException e) {
             e.printStackTrace();
         }
