@@ -17,7 +17,7 @@ public class MetadataClientTest {
 
     @BeforeClass
     public static void setUp() {
-        String baseUrl = "http://localhost:8080/metadata/api";
+        String baseUrl = "http://marhaus.icane.es/metadata/api";
         metadataClient = new MetadataClient(baseUrl);
     }
 
