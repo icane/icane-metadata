@@ -5,10 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.icane</groupId>
     <artifactId>icane-metadata</artifactId>
+    <packaging>jar</packaging>
     <version>1.0</version>
 
     <build>
-        <finalName>${project.artifactId} - ${project.version}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

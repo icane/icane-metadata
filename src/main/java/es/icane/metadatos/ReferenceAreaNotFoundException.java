@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-class ReferenceAreaNotFoundException extends Exception {
+public class ReferenceAreaNotFoundException extends Exception {
 
     public ReferenceAreaNotFoundException(Throwable cause) {
         super(cause);
