@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-class CategoryNotFoundException extends Exception {
+public class CategoryNotFoundException extends Exception {
 
     public CategoryNotFoundException(Throwable cause) {
         super(cause);

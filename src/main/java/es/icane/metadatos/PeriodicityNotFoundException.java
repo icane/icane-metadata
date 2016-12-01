@@ -5,7 +5,7 @@ package es.icane.metadatos;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 
-class PeriodicityNotFoundException extends Exception {
+public class PeriodicityNotFoundException extends Exception {
 
 	public PeriodicityNotFoundException(Throwable cause) {
 		super(cause);
