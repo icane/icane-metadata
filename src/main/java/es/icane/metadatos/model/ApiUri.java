@@ -9,10 +9,15 @@ import javax.xml.bind.annotation.XmlValue;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
+
 @XmlType
 public class ApiUri implements Serializable {
     private String format;
     private String uri;
+
+    public ApiUri() {
+
+    }
 
     @XmlAttribute
     public String getFormat() {

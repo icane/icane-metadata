@@ -3,9 +3,11 @@ package es.icane.metadatos.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
+@XmlRootElement(name="timePeriod")
 public class TimePeriod implements Serializable {
 	
 	private Integer id;
@@ -18,7 +20,23 @@ public class TimePeriod implements Serializable {
 	private String timeFormat;
     private Date created;
     private Date lastUpdated;
-    
+
+	public TimePeriod(){
+
+	}
+
+	public TimePeriod(Integer startMonth, Integer endMonth, Integer startYear, Integer endYear, Integer quarterNumber, Integer semesterNumber, String timeFormat, Date created, Date lastUpdated) {
+		this.startMonth = startMonth;
+		this.endMonth = endMonth;
+		this.startYear = startYear;
+		this.endYear = endYear;
+		this.quarterNumber = quarterNumber;
+		this.semesterNumber = semesterNumber;
+		this.timeFormat = timeFormat;
+		this.created = created;
+		this.lastUpdated = lastUpdated;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -95,11 +113,8 @@ public class TimePeriod implements Serializable {
 	        if ((this.startMonth == null) ? (other.startMonth != null) : !this.startMonth.equals(other.startMonth)) {
 	            return false;
 	        }
-	        if ((this.timeFormat == null) ? (other.timeFormat != null) : !this.timeFormat.equals(other.timeFormat)) {
-	            return false;
-	        }
-	        return true;
-	    }
+		 return (this.timeFormat == null) ? other.timeFormat == null : this.timeFormat.equals(other.timeFormat);
+	 }
 
 	    @Override
 	    public int hashCode() {

@@ -4,10 +4,7 @@ import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -15,6 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="subsection")
 public class Subsection implements Serializable {
 
     private Integer id;
@@ -23,11 +21,32 @@ public class Subsection implements Serializable {
     private String uriTag;
     private String uri;
     private String topics;
+    private String automatizedTopics;
+
     private String code;
     private Section section;
     private List<Link> links;
     private Date created;
     private Date lastUpdated;
+
+    public Subsection () {
+
+    }
+
+    public Subsection (String title, String acronym, String uriTag, String topics, String code, Section section, Date created, Date lastUpdated) {
+
+        this.title = title;
+        this.acronym = acronym;
+        this.uriTag = uriTag;
+
+        this.topics = topics;
+
+        this.code = code;
+        this.section = section;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+
+    }
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -124,6 +143,14 @@ public class Subsection implements Serializable {
         this.uri = uri;
     }
 
+    public String getAutomatizedTopics() {
+        return automatizedTopics;
+    }
+
+    public void setAutomatizedTopics(String automatizedTopics) {
+        this.automatizedTopics = automatizedTopics;
+    }
+
     @Override
     public String toString() {
         return title;
@@ -144,10 +171,7 @@ public class Subsection implements Serializable {
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

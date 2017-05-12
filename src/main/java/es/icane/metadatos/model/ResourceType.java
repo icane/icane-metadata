@@ -1,5 +1,10 @@
 package es.icane.metadatos.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
+@XmlRootElement(name="resourceType")
 public enum ResourceType {
 	//TODO : pasar las descripciones de las enumeraciones a un archivo de properties
 		PUBLICATION("Publicación"),
@@ -12,7 +17,7 @@ public enum ResourceType {
 		MUNICIPAL("Datos municipales"),
 		GROUPING("Datos agrupaciones municipales");
 
-		String description;
+		final String description;
 		
 		ResourceType(String description) {
 			this.description = description;

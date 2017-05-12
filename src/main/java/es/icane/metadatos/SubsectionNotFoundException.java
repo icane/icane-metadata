@@ -4,7 +4,7 @@ package es.icane.metadatos;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class SubsectionNotFoundException extends Exception {
+class SubsectionNotFoundException extends Exception {
 
     public SubsectionNotFoundException(Throwable cause) {
         super(cause);

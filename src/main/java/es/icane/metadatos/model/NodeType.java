@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -13,6 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="nodeType")
 public class NodeType implements Serializable {
     //
 
@@ -28,6 +30,17 @@ public class NodeType implements Serializable {
     private String uriTag;
     private Date created;
     private Date lastUpdated;
+
+    public NodeType() {
+
+    }
+
+    public NodeType(String title, String uriTag, Date created, Date lastUpdated) {
+        this.title = title;
+        this.uriTag = uriTag;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -112,10 +125,7 @@ public class NodeType implements Serializable {
             return false;
         }
         final NodeType other = (NodeType) obj;
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override

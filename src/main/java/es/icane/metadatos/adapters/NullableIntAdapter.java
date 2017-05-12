@@ -1,4 +1,4 @@
-package es.icane.metadatos;
+package es.icane.metadatos.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  *
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
-public class NullableIntAdapter extends XmlAdapter<String, Integer> {
+class NullableIntAdapter extends XmlAdapter<String, Integer> {
 
     @Override
     public Integer unmarshal(String v) throws Exception {
