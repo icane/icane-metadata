@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class MetadataClientTest {
 
 		// assert statements
 		assertTrue("Size must be greater than 100", timePeriods.size() > 100);
-		assertEquals("First element is id 246",246, timePeriods.get(0).getId().intValue());
+		assertEquals("First element is id 246", 246, timePeriods.get(0).getId().intValue());
 	}
 
 	@Test
@@ -109,7 +110,7 @@ public class MetadataClientTest {
 		assertEquals("UritagEs must be correct", "defunciones-edad-media", timeSeries.getUriTagEs());
 
 	}
-	
+
 	@Test
 	public void getTimeSeriesReferencesShouldReturnAList() {
 
@@ -124,9 +125,9 @@ public class MetadataClientTest {
 		// assert statements
 		assertTrue("References must not be empty", timeSeries.getReferences().size() >= 1);
 		assertEquals("Resource type of reference is publication", "Publicación", timeSeries.getReferences().get(0).getResourceType().toString());
-		
+
 	}
-	
+
 	@Test
 	public void getTimeSeriesBaseShouldReturnStringValue() {
 
@@ -140,7 +141,7 @@ public class MetadataClientTest {
 
 		// assert statement
 		assertEquals("Base must be 2010", "2010", timeSeries.getBase());
-		
+
 	}
 
 	@Test
@@ -160,6 +161,31 @@ public class MetadataClientTest {
 		// assert statement
 		assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
 		assertEquals("Initial time period id must be 575", 575, (int) timeSeries2.getFinalPeriodComposite().getId());
+
+	}
+
+	@Test
+	public void getAncestorsShouldReturnAncestorList() {
+
+		TimeSeries timeSeries = null;
+		List<TimeSeries> ancestors = null;
+
+		try {
+			timeSeries = metadataClient.getTimeSeries("budgets-settlement-group-local-entities-municipality-commonwealth-income");
+			ancestors = metadataClient.getAncestors(timeSeries);
+		} catch (SeriesNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		ancestors.remove(0);
+
+		for (ListIterator<TimeSeries> it = ancestors.listIterator(ancestors.size()); it.hasPrevious(); ) {
+			TimeSeries ancestor = it.previous();
+
+		}
+
+		//TODO: finalize test
+
 
 	}
 
