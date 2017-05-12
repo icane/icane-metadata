@@ -616,7 +616,4 @@ public class MetadataClient {
 	}
 
 
-    public void updateTimeSeries(String jsonData) {
-        webResource.path("time-series").accept(defaultMediaType).put(TimeSeries.class, jsonData);
-    }
 }
