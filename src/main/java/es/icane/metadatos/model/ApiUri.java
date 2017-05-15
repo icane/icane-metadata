@@ -14,6 +14,10 @@ public class ApiUri implements Serializable {
     private String format;
     private String uri;
 
+    public ApiUri() {
+
+    }
+
     @XmlAttribute
     public String getFormat() {
         return format;

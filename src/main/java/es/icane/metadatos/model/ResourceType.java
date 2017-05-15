@@ -11,7 +11,10 @@ public enum ResourceType {
 		STATISTICAL_OPERATION("Operación estadística"),
 		OPENDATA("Correspondencia en portal de datos abiertos"),
 		APPLICATION("Aplicación o sistema software asociado"),
-		GENERIC("Recurso de información genérico");
+		ANNEXES("Anexos"),
+		REGIONAL("Datos regionales"),
+		MUNICIPAL("Datos municipales"),
+		GROUPING("Datos agrupaciones municipales");;
 
 		String description;
 		

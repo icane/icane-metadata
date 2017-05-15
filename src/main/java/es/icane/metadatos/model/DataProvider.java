@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -13,10 +14,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="dataProvider")
 public class DataProvider implements Serializable {
 
     private Integer id;
     private String title;
+    private String dcuoo_id;
     private String acronym;
     private String uri;
     private Date created;
@@ -110,5 +113,13 @@ public class DataProvider implements Serializable {
         hash = 29 * hash + (this.title != null ? this.title.hashCode() : 0);
         hash = 29 * hash + (this.acronym != null ? this.acronym.hashCode() : 0);
         return hash;
+    }
+
+    public String getDcuoo_id() {
+        return dcuoo_id;
+    }
+
+    public void setDcuoo_id(String dcuoo_id) {
+        this.dcuoo_id = dcuoo_id;
     }
 }

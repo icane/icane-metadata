@@ -3,9 +3,11 @@ package es.icane.metadatos.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
+@XmlRootElement(name="timePeriod")
 public class TimePeriod implements Serializable {
 	
 	private Integer id;

@@ -417,10 +417,10 @@ public class MetadataClient {
      * @param section the section's uriTag
      * @return a list of its subsections
      */
-    public List<Subsection> getSubsections(String subSection) {
+    public List<Subsection> getSubsections(String section) {
         GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
         };
-        return webResource.path("section").path(subSection).path("subsections").accept(defaultMediaType).get(genericType);
+        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -668,6 +668,20 @@ public class MetadataClient {
         GenericType<List<DataProvider>> genericType = new GenericType<List<DataProvider>>() {
         };
         return webResource.path("data-providers").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a DataProvider by  id.
+     *
+     * @param id of the data provider
+     * @return
+     */
+    public DataProvider getDataProvider(int id) throws DataProviderNotFoundException {
+        try {
+            return webResource.path("data-provider").path(String.valueOf(id)).accept(defaultMediaType).get(DataProvider.class);
+        } catch (UniformInterfaceException e) {
+            throw new DataProviderNotFoundException();
+        }
     }
 
     /**
@@ -1029,6 +1043,57 @@ public class MetadataClient {
         ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
                 put(ClientResponse.class, subsection);
         return cr.getEntity(Subsection.class);
+    }
+
+    /**
+     * Retrieve a NodeTYpe by its uriTag.
+     *
+     * @param uriTag the NodeTYpe's uriTag
+     * @return
+     */
+    public NodeType getNodeType(String uriTag) throws NodeTypeNotFoundException {
+        try {
+            return webResource.path("node-type").path(uriTag).accept(defaultMediaType).get(NodeType.class);
+        } catch (UniformInterfaceException e) {
+            throw new NodeTypeNotFoundException();
+        }
+    }
+
+    /**
+     * Retrieve a TimePeriod by its id.
+     *
+     * @param id the TimePeriod's id
+     * @return
+     */
+    public TimePeriod getTimePeriod(int id) throws TimePeriodNotFoundException {
+        try {
+            return webResource.path("time-period").path(String.valueOf(id))
+                    .accept(defaultMediaType).get(TimePeriod.class);
+        } catch (UniformInterfaceException e) {
+            throw new TimePeriodNotFoundException();
+        }
+    }
+
+    /**
+     * Retrieve a list of all the References.
+     *
+     * @return a List with Reference objects
+     */
+    public List<Reference> getReferences() {
+        GenericType<List<Reference>> genericType = new GenericType<List<Reference>>() {
+        };
+        return webResource.path("references").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a list of all the Links.
+     *
+     * @return a List with Link objects
+     */
+    public List<Link> getLinks() {
+        GenericType<List<Link>> genericType = new GenericType<List<Link>>() {
+        };
+        return webResource.path("links").accept(defaultMediaType).get(genericType);
     }
 
 }

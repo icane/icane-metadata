@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -13,12 +14,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Alejandro Villar <contacto@alejandro-villar.es>
  */
 @XmlType
+@XmlRootElement(name="category")
 public class Category implements Serializable {
 
     private Integer id;
     private String title;
     private String acronym;
-    private Character code;
+    private String code;
     private String uriTag;
     private Date created;
     private Date lastUpdated;
@@ -76,11 +78,11 @@ public class Category implements Serializable {
         this.acronym = acronym;
     }
 
-    public Character getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Character code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -104,10 +106,7 @@ public class Category implements Serializable {
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.uriTag == null) ? (other.uriTag != null) : !this.uriTag.equals(other.uriTag)) {
-            return false;
-        }
-        return true;
+        return (this.uriTag == null) ? other.uriTag == null : this.uriTag.equals(other.uriTag);
     }
 
     @Override
