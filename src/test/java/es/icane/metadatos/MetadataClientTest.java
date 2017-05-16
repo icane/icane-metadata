@@ -20,7 +20,7 @@ public class MetadataClientTest {
 
     @BeforeClass
     public static void setUp() {
-        String baseUrl = "http://www.icane.es.es/metadata/api";
+        String baseUrl = "http://www.icane.es/metadata/api";
         metadataClient = new MetadataClient(baseUrl);
     }
 
