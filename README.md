@@ -40,6 +40,7 @@ TimeSeries acts as a wildcard object for any node in the dataset/folder/series t
 * "folder": A folder (branch node) in the series tree.
 * "data-set": Another type of branch node which serves as an ancestor for a group of sub-folders and time series belonging to the same statistical collection.
 * "document": A static document.
+* "url": Power BI url.
 * "non-olap-native": A time series that was automatically migrated from a legacy database.
 * "theme": Another type of branch node that groups data-sets or folders.
 

@@ -39,6 +39,7 @@ TimeSeries actúa como un objeto comodín para cualquier nodo en el árbol de es
 * "folder": Una carpeta (nodo rama) en el árbol de series.
 * "data-set": Otro tipo de nodo rama que sirve como ancestro común para un grupo de subcarpetas y series temporales que pertenecen a la misma colección estadística.
 * "document": Un documento estático.
+* "url": Power BI url.
 * "non-olap-native": Una serie temporal automáticamente migrada de una base de datos antigua (legacy).
 * "theme": Otro tipo de nodo rama que agrupa estadísticas, carpetas y series.
 

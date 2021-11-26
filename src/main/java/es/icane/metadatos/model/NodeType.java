@@ -24,6 +24,7 @@ public class NodeType implements Serializable {
     private static final String DATA_SET = "data-set";
     private static final String DOCUMENT = "document";
     private static final String NON_OLAP_NATIVE = "non-olap-native";
+    private static final String URL = "url";
     //
     private Integer id;
     private String title;
@@ -91,6 +92,10 @@ public class NodeType implements Serializable {
 
     public boolean isDocument() {
         return DOCUMENT.equals(uriTag);
+    }
+
+    public boolean isUrl() {
+        return URL.equals(uriTag);
     }
 
     public boolean isFolder() {
