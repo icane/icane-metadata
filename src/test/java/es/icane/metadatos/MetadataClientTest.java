@@ -203,7 +203,7 @@ public class MetadataClientTest {
         assert timeSeries1 != null;
         assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
         assert timeSeries2 != null;
-        assertEquals("Initial time period id must be 649", 649, (int) timeSeries2.getFinalPeriodComposite().getId());
+        assertEquals("Initial time period id must be 649", 783, (int) timeSeries2.getFinalPeriodComposite().getId());
 
     }
 

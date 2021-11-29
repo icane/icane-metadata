@@ -10,6 +10,11 @@ The repository can be opened using NetBeans 7 (and up). It can also be built usi
 ant dist
 ```
 
+Also jar can be generated with maven
+```
+mvn package -f pom.xml
+```
+
 The resulting JAR will be created inside a ```dist``` directory, which will also contain a ```lib``` subdirectory with additional, required JAR libraries.
 
 Javadoc can also be compiled by running:
