@@ -1,16 +1,16 @@
 package es.icane.metadatos;
 
-import static java.util.Arrays.asList;
+// import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Date;
+// import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
 import es.icane.metadatos.model.*;
-import org.junit.After;
+// import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class MetadataClientTest {
 
     @BeforeClass
     public static void setUp() {
-        String baseUrl = "http://www.icane.es/metadata/api";
+        String baseUrl = "http://www.icane.es/proyectoweb-metadata/api";
         metadataClient = new MetadataClient(baseUrl);
     }
 
@@ -100,7 +100,7 @@ public class MetadataClientTest {
 
         // assert statements
         assertTrue("Size must be greater than 100", dataSets.size() > 100);
-        assertEquals("20th element has acronym CGN", "CGN", dataSets.get(19).getAcronym());
+        assertEquals("20th element has acronym CGPJ", "CGPJ", dataSets.get(19).getAcronym());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class MetadataClientTest {
 
         // assert statements
         assertTrue("Size must be greater than 10", periodicities.size() > 10);
-        assertEquals("10th element has uriTag decennial", "decennial", periodicities.get(9).getUriTag());
+        assertEquals("10th element has uriTag decenal", "decenal", periodicities.get(9).getUriTag());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class MetadataClientTest {
 
         Periodicity periodicity = null;
         try {
-            periodicity = metadataClient.getPeriodicity("annual");
+            periodicity = metadataClient.getPeriodicity("anual");
         } catch (PeriodicityNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -203,7 +203,7 @@ public class MetadataClientTest {
         assert timeSeries1 != null;
         assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
         assert timeSeries2 != null;
-        assertEquals("Initial time period id must be 649", 783, (int) timeSeries2.getFinalPeriodComposite().getId());
+        assertEquals("Initial time period id must be 822", 822, (int) timeSeries2.getFinalPeriodComposite().getId());
 
     }
 
@@ -259,7 +259,7 @@ public class MetadataClientTest {
 
         Category category = null;
         try {
-            category = metadataClient.getCategory("regional-data");
+            category = metadataClient.getCategory("datos-regionales");
         } catch (CategoryNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -284,7 +284,7 @@ public class MetadataClientTest {
 
         // assert statements
         assert subsection != null;
-        assertEquals("id = 1 title must be Cifras de población", "Cifras de población", subsection.getTitle());
+        assertEquals("id = 1 title must be Análisis demográficos", "Análisis demográficos", subsection.getTitle());
 
     }
 
@@ -311,7 +311,7 @@ public class MetadataClientTest {
 
         DataSet dataSet = null;
         try {
-            dataSet = metadataClient.getDataSet("musical-arts");
+            dataSet = metadataClient.getDataSet("artes-musicales");
         } catch (DataSetNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -442,7 +442,7 @@ public class MetadataClientTest {
 
         Section section = null;
         try {
-            section = metadataClient.getSection("economy");
+            section = metadataClient.getSection("economia");
         } catch (SectionNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -487,10 +487,10 @@ public class MetadataClientTest {
     @Test
     public void getSubsectionsShouldReturnList() {
 
-        List<Subsection> subsections = metadataClient.getSubsections("economy");
+        List<Subsection> subsections = metadataClient.getSubsections("economia");
 
         // assert statements
-        assertTrue("Size must be greater than 100", subsections.size() > 10);
+        assertTrue("Size must be equal to 5", subsections.size() == 5);
         assertEquals("First element has title Cuentas Económicas", "Cuentas Económicas", subsections.get(0).getTitle());
         assertEquals("First element has id = 6", 6, subsections.get(0).getId().intValue());
 
@@ -518,7 +518,7 @@ public class MetadataClientTest {
             TimeSeries ancestor = it.previous();
             ancestorLinks.add(new Hyperlink(ancestor.getTitle(), ancestor.getUri()));
         }
-        assertTrue("Size of ancestorLinks must be 4", ancestorLinks.size() == 4);
+        assertTrue("Size of ancestorLinks must be 1", ancestorLinks.size() == 1);
 
     }
 
