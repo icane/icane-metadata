@@ -4,7 +4,7 @@ import es.icane.metadatos.adapters.DateAdapter;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+// import java.util.List;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -21,6 +21,8 @@ public class DataSet implements Serializable {
     private String title;
     private String acronym;
     private String uriTag;
+    private String pressNote;
+    private boolean historical;
    
 	
     private Date created;
@@ -78,8 +80,22 @@ public class DataSet implements Serializable {
     public void setAcronym(String acronym) {
         this.acronym = acronym;
     }
+
+    public String getPressNote() {
+        return pressNote;
+    }
     
+    public void setPressNote(String pressNote) {
+        this.pressNote = pressNote;
+    }
    
+    public boolean isHistorical() {
+        return historical;
+    }
+
+    public void setHistorical(boolean historical) {
+        this.historical = historical;
+    }
 
     @Override
     public String toString() {
