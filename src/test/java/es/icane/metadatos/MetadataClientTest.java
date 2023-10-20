@@ -31,7 +31,6 @@ public class MetadataClientTest {
         try {
             nodeType = metadataClient.getNodeType("section");
         } catch (NodeTypeNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -46,7 +45,6 @@ public class MetadataClientTest {
 
         List<NodeType> nodeTypes = metadataClient.getNodeTypes();
 
-
         // assert statements
         assertTrue("Size must be equal or greater than ten", nodeTypes.size() >= 10);
 
@@ -57,7 +55,6 @@ public class MetadataClientTest {
     public void getTimePeriodsShouldReturnList() {
 
         List<TimePeriod> timePeriods = metadataClient.getTimePeriods();
-
 
         // assert statements
         assertTrue("Size must be greater than 100", timePeriods.size() > 100);
@@ -71,7 +68,6 @@ public class MetadataClientTest {
         try {
             timePeriod = metadataClient.getTimePeriod(465);
         } catch (TimePeriodNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -121,7 +117,6 @@ public class MetadataClientTest {
         try {
             periodicity = metadataClient.getPeriodicity("anual");
         } catch (PeriodicityNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -138,10 +133,8 @@ public class MetadataClientTest {
         try {
             timeSeries = metadataClient.getTimeSeries("deaths-age-average");
         } catch (SeriesNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
 
         // assert statements
         assert timeSeries != null;
@@ -156,7 +149,6 @@ public class MetadataClientTest {
         try {
             timeSeries = metadataClient.getTimeSeries("quarterly-accounting-cantabria-base-2010-current-prices");
         } catch (SeriesNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -175,7 +167,6 @@ public class MetadataClientTest {
         try {
             timeSeries = metadataClient.getTimeSeries("quarterly-accounting-cantabria-base-2010-current-prices");
         } catch (SeriesNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -195,7 +186,6 @@ public class MetadataClientTest {
             timeSeries1 = metadataClient.getTimeSeries("real-economic-destination-index-base-2010");
             timeSeries2 = metadataClient.getTimeSeries("primary-care-social-services");
         } catch (SeriesNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -203,7 +193,7 @@ public class MetadataClientTest {
         assert timeSeries1 != null;
         assertEquals("Initial time period id must be 259", 259, (int) timeSeries1.getInitialPeriodComposite().getId());
         assert timeSeries2 != null;
-        assertEquals("Initial time period id must be 822", 822, (int) timeSeries2.getFinalPeriodComposite().getId());
+        assertEquals("Final time period id must be 822", 822, (int) timeSeries2.getFinalPeriodComposite().getId());
 
     }
 
@@ -216,6 +206,7 @@ public class MetadataClientTest {
         // assert statements
         assertTrue("Size must be greater than 10", references.size() > 10);
         assertEquals("1st element has uri http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", "http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", references.get(0).getUri());
+    
     }
 
 
@@ -224,7 +215,6 @@ public class MetadataClientTest {
     public void getLinkTypesShouldReturnEightElementsList() {
 
         List<LinkType> linkTypes = metadataClient.getLinkTypes();
-
 
         // assert statements
         assertTrue("Size must be equal or greater than eight", linkTypes.size() >= 8);
@@ -237,7 +227,6 @@ public class MetadataClientTest {
     public void getUnitsOfMeasureShouldReturnList() {
 
         List<UnitOfMeasure> unitsOfMeasure = metadataClient.getUnitsOfMeasure();
-
 
         // assert statements
         assertTrue("Size must be greater than 100", unitsOfMeasure.size() > 100);
@@ -252,6 +241,7 @@ public class MetadataClientTest {
         // assert statements
         assertTrue("Size must be greater than 100", measures.size() > 100);
         assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
+    
     }
 
     @Test
@@ -261,14 +251,14 @@ public class MetadataClientTest {
         try {
             category = metadataClient.getCategory("datos-regionales");
         } catch (CategoryNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         // assert statements
         assert category != null;
         assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
-
+        assert category.getAutomatizedTopics() != null;
+    
     }
 
     @Test
@@ -278,7 +268,6 @@ public class MetadataClientTest {
         try {
             subsection = metadataClient.getSubsection(1);
         } catch (SubsectionNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -295,7 +284,6 @@ public class MetadataClientTest {
         try {
             referenceArea = metadataClient.getReferenceArea("regional");
         } catch (ReferenceAreaNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -313,7 +301,6 @@ public class MetadataClientTest {
         try {
             dataSet = metadataClient.getDataSet("artes-musicales");
         } catch (DataSetNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -330,7 +317,6 @@ public class MetadataClientTest {
         try {
             dataProvider = metadataClient.getDataProvider(1);
         } catch (DataProviderNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -347,7 +333,6 @@ public class MetadataClientTest {
         try {
             measure = metadataClient.getMeasure(777);
         } catch (MeasureNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -364,7 +349,6 @@ public class MetadataClientTest {
         try {
             unitOfMeasure = metadataClient.getUnitOfMeasure(125);
         } catch (UnitOfMeasureNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -381,7 +365,6 @@ public class MetadataClientTest {
         try {
             link = metadataClient.getLink(473);
         } catch (LinkNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -409,7 +392,6 @@ public class MetadataClientTest {
         try {
             linkType = metadataClient.getLinkType(1);
         } catch (LinkTypeNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -427,7 +409,6 @@ public class MetadataClientTest {
         try {
             reference = metadataClient.getReference(136);
         } catch (ReferenceNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -444,7 +425,6 @@ public class MetadataClientTest {
         try {
             section = metadataClient.getSection("economia");
         } catch (SectionNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -518,11 +498,9 @@ public class MetadataClientTest {
             TimeSeries ancestor = it.previous();
             ancestorLinks.add(new Hyperlink(ancestor.getTitle(), ancestor.getUri()));
         }
-        assertTrue("Size of ancestorLinks must be 1", ancestorLinks.size() == 1);
+        assertTrue("Size of ancestors must be 1", ancestors.size() == 1);
+        assertEquals("First element has title Sector público", "Sector público", ancestorLinks.get(0).getTitle());
 
     }
 
-
 }
-
-
