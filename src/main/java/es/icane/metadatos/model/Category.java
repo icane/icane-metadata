@@ -20,8 +20,10 @@ public class Category implements Serializable {
     private Integer id;
     private String title;
     private String acronym;
-    private String code;
+    // private String code;
     private String uriTag;
+    private String automatizedTopics;
+    private String topics;
     private Date created;
     private Date lastUpdated;
 
@@ -78,6 +80,23 @@ public class Category implements Serializable {
         this.acronym = acronym;
     }
 
+    public String getAutomatizedTopics() {
+        return automatizedTopics;
+    }
+
+    public void setAutomatizedTopics(String automatizedTopics) {
+        this.automatizedTopics = automatizedTopics;
+    }
+
+    public String getTopics() {
+        return topics;
+    }
+
+    public void setTopics(String topics) {
+        this.topics = topics;
+    }
+
+    /* 
     public String getCode() {
         return code;
     }
@@ -85,6 +104,7 @@ public class Category implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+    */
 
     @Override
     public String toString() {
