@@ -197,7 +197,6 @@ public class MetadataClientTest {
 
     }
 
-
     @Test
     public void getReferencesShouldReturnList() {
 
@@ -209,8 +208,6 @@ public class MetadataClientTest {
     
     }
 
-
-
     @Test
     public void getLinkTypesShouldReturnEightElementsList() {
 
@@ -220,8 +217,6 @@ public class MetadataClientTest {
         assertTrue("Size must be equal or greater than eight", linkTypes.size() >= 8);
 
     }
-
-
 
     @Test
     public void getUnitsOfMeasureShouldReturnList() {
@@ -476,6 +471,22 @@ public class MetadataClientTest {
 
     }
 
+    @Test
+    public void getMethodologyShouldReturnElement() {
+
+        Methodology methodology = null;
+        try {
+            methodology = metadataClient.getMethodology(2);
+        } catch (MethodologyNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert methodology != null;
+        assertEquals("Title must be Metodología. Base 2000 CNAE 93", "Metodología. Base 2000 CNAE 93", methodology.getTitle());
+        assert methodology.getUri() != null;
+    
+    }
 
     @Test
     public void getAncestorsShouldReturnAncestorList() {

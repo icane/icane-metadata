@@ -89,10 +89,466 @@ public class MetadataClient {
         return this;
     }
 
-	/*
-     * Time Series methods
-	 */
+    /* Category methods */
+    /**
+     * Retrieves a List of all the categories.
+     *
+     * @return a List of all the available categories
+     */
+    public List<Category> getCategories() {
+        GenericType<List<Category>> genericType = new GenericType<List<Category>>() {
+        };
+        return webResource.path("categories").accept(defaultMediaType).get(genericType);
+    }
 
+    /**
+     * Get a Map of all the categories, keyed by uriTag.
+     *
+     * @return a Map with all the sections
+     */
+    public Map<String, Category> getCategoryMap() {
+        List<Category> categories = getCategories();
+        Map<String, Category> categoryMap = new LinkedHashMap<String, Category>();
+        for (Category s : categories) {
+            categoryMap.put(s.getUriTag(), s);
+        }
+        return categoryMap;
+    }
+
+    /**
+     * Retrieve a category by its uriTag.
+     *
+     * @param uriTag the uriTag of the Category
+     * @return
+     */
+    public Category getCategory(String uriTag) throws CategoryNotFoundException {
+        try {
+            return webResource.path("category").path(uriTag).accept(defaultMediaType).get(Category.class);
+        } catch (UniformInterfaceException e) {
+            throw new CategoryNotFoundException();
+        }
+    }
+    /* End Category methods */
+
+    /* Data provider methods */
+    /**
+     * Retrieve a list of all the data providers.
+     *
+     * @return a List with DataProvider objects
+     */
+    public List<DataProvider> getDataProviders() {
+        GenericType<List<DataProvider>> genericType = new GenericType<List<DataProvider>>() {
+        };
+        return webResource.path("data-providers").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a DataProvider by  id.
+     *
+     * @param id of the data provider
+     * @return
+     */
+    public DataProvider getDataProvider(int id) throws DataProviderNotFoundException {
+        try {
+            return webResource.path("data-provider").path(String.valueOf(id)).accept(defaultMediaType).get(DataProvider.class);
+        } catch (UniformInterfaceException e) {
+            throw new DataProviderNotFoundException();
+        }
+    }
+    /* End data provider methods */
+
+    /* Data set methods */
+    /**
+     * Retrieve a list of all the data sets.
+     *
+     * @return a List with DataSet objects
+     */
+    public List<DataSet> getDataSets() {
+        GenericType<List<DataSet>> genericType = new GenericType<List<DataSet>>() {
+        };
+        return webResource.path("data-sets").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a map of all the data sets, keyed by uriTag.
+     *
+     * @return a Map of DataSet objects, keyed by their uriTag
+     */
+    public Map<String, DataSet> getDataSetMap() {
+        List<DataSet> dataSets = getDataSets();
+        Map<String, DataSet> dataSetMap = new LinkedHashMap<String, DataSet>();
+        for (DataSet r : dataSets) {
+            dataSetMap.put(r.getUriTag(), r);
+        }
+        return dataSetMap;
+    }
+
+    /**
+     * Retrieve a DataSet by its uriTag.
+     *
+     * @param uriTag the DataSet's uriTag
+     * @return
+     */
+    public DataSet getDataSet(String uriTag) throws DataSetNotFoundException {
+        try {
+            return webResource.path("data-set").path(uriTag).accept(defaultMediaType).get(DataSet.class);
+        } catch (UniformInterfaceException e) {
+            throw new DataSetNotFoundException();
+        }
+    }
+    /* End Data set methods */
+
+    /* Link methods */
+    /**
+     * Retrieve a Link by its id.
+     *
+     * @param id the Link's id
+     * @return
+     */
+    public Link getLink(int id) throws LinkNotFoundException {
+        try {
+            return webResource.path("link").path(String.valueOf(id)).accept(defaultMediaType).get(Link.class);
+        } catch (UniformInterfaceException e) {
+            throw new LinkNotFoundException();
+        }
+    }
+
+    /**
+     * Update Link data from model object
+     *
+     * @param link a Link object with the data to update.
+     * @return a Link object
+     */
+    public Link updateLink(Link link) {
+
+        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, link);
+        return cr.getEntity(Link.class);
+    }
+
+    /**
+     * Create Link data from model object
+     *
+     * @param link a Link object with the data to create.
+     * @return a Link object
+     */
+    public Link createLink(Link link) {
+        //TimeSeriesDTO timeSeriesDTO = new LinkDTO(timeSeries);
+        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, link);
+        return cr.getEntity(Link.class);
+    }
+
+    /**
+     * Delete Link data from model object
+     *
+     * @param id the Link's id
+     * @return a Link object
+     */
+    public void deleteLink(int id) throws LinkNotFoundException {
+
+        try {
+            webResource.path("link").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Link.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+    }
+
+    /**
+     * Retrieve a list of all the Links.
+     *
+     * @return a List with Link objects
+     */
+    public List<Link> getLinks() {
+        GenericType<List<Link>> genericType = new GenericType<List<Link>>() {
+        };
+        return webResource.path("links").accept(defaultMediaType).get(genericType);
+    }
+    /* End Link methods */
+
+    /* LinkType methods */
+    /**
+     * Retrieve a LinkType by its id.
+     *
+     * @param id the LinkType's id
+     * @return
+     */
+    public LinkType getLinkType(int id) throws LinkTypeNotFoundException {
+        try {
+            return webResource.path("link-type").path(String.valueOf(id)).accept(defaultMediaType).get(LinkType.class);
+        } catch (UniformInterfaceException e) {
+            throw new LinkTypeNotFoundException();
+        }
+    }
+
+    /**
+     * Retrieve a list of all the Link Types.
+     *
+     * @return a List with LinkType objects
+     */
+    public List<LinkType> getLinkTypes() {
+        GenericType<List<LinkType>> genericType = new GenericType<List<LinkType>>() {
+        };
+        return webResource.path("link-types").accept(defaultMediaType).get(genericType);
+    }
+    /* End LinkType methods */
+
+    /* Measure methods */
+    /**
+     * Retrieve a Measure by its id.
+     *
+     * @param id the Measure's id
+     * @return
+     */
+    public Measure getMeasure(int id) throws MeasureNotFoundException {
+        try {
+            return webResource.path("measure").path(String.valueOf(id)).accept(defaultMediaType).get(Measure.class);
+        } catch (UniformInterfaceException e) {
+            throw new MeasureNotFoundException();
+        }
+    }
+
+    /**
+     * Retrieve a list of all the measures.
+     *
+     * @return a List with Measure objects
+     */
+    public List<Measure> getMeasures() {
+        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
+        };
+        return webResource.path("measures").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Update Measure data from model object
+     *
+     * @param measure a Measure object with the data to update.
+     * @return a Measure object
+     */
+
+    public Measure updateMeasure(Measure measure) {
+
+        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, measure);
+        return cr.getEntity(Measure.class);
+    }
+
+    /**
+     * Create Measure data from model object
+     *
+     * @param measure a Measure object with the data to create.
+     * @return a Measure object
+     */
+
+    public Measure createMeasure(Measure measure) {
+        //TimeSeriesDTO timeSeriesDTO = new MeasureDTO(timeSeries);
+        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, measure);
+        return cr.getEntity(Measure.class);
+    }
+
+    /**
+     * Delete Measure data from model object
+     *
+     * @param id the Measure's id
+     * @return a Measure object
+     */
+
+    public void deleteMeasure(int id) throws MeasureNotFoundException {
+
+        try {
+           webResource.path("measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Measure.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+    }
+    /* End Measure methods */
+
+    /* Methodology methods */
+    /**
+     * Retrieves a List of all the Methodologies.
+     *
+     * @return a List of all the available Methodologies
+     */
+    public List<Methodology> getMethodologies() {
+        GenericType<List<Methodology>> genericType = new GenericType<List<Methodology>>() {
+        };
+        return webResource.path("methodologies").accept(defaultMediaType).get(genericType);
+    }
+    /* End Methodology methods */
+
+    /* NodeType methods */
+    /**
+     * Retrieve a list of all the sources.
+     *
+     * @return a List with Source objects
+     */
+    public List<NodeType> getNodeTypes() {
+        GenericType<List<NodeType>> genericType = new GenericType<List<NodeType>>() {
+        };
+        return webResource.path("node-types").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a NodeType by its uriTag.
+     *
+     * @param uriTag the NodeType's uriTag
+     * @return
+     */
+    public NodeType getNodeType(String uriTag) throws NodeTypeNotFoundException {
+        try {
+            return webResource.path("node-type").path(uriTag).accept(defaultMediaType).get(NodeType.class);
+        } catch (UniformInterfaceException e) {
+            throw new NodeTypeNotFoundException();
+        }
+    }
+    /* End NodeType methods */
+
+    /* Periodicity methods */
+    /**
+     * Retrieve a list of all the periodicities.
+     *
+     * @return a List with Periodicity objects
+     */
+    public List<Periodicity> getPeriodicities() {
+        GenericType<List<Periodicity>> genericType = new GenericType<List<Periodicity>>() {
+        };
+        return webResource.path("periodicities").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a Periodicity by its uriTag.
+     *
+     * @param uriTag the DataSet's uriTag
+     * @return
+     */
+    public Periodicity getPeriodicity(String uriTag) throws PeriodicityNotFoundException {
+        try {
+            return webResource.path("periodicity").path(uriTag).accept(defaultMediaType).get(Periodicity.class);
+        } catch (UniformInterfaceException e) {
+            throw new PeriodicityNotFoundException();
+        }
+    }
+    /* End Periodicity methods */
+
+    /* Reference methods */
+        /**
+     * Retrieve a list of all the References.
+     *
+     * @return a List with Reference objects
+     */
+    public List<Reference> getReferences() {
+        GenericType<List<Reference>> genericType = new GenericType<List<Reference>>() {
+        };
+        return webResource.path("references").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a Reference by its id.
+     *
+     * @param id the Reference's id
+     * @return
+     */
+    public Reference getReference(int id) throws ReferenceNotFoundException {
+        try {
+            return webResource.path("reference").path(String.valueOf(id)).accept(defaultMediaType).get(Reference.class);
+        } catch (UniformInterfaceException e) {
+            throw new ReferenceNotFoundException();
+        }
+    }
+
+    /**
+     * Update Reference data from model object
+     *
+     * @param reference a Reference object with the data to update.
+     * @return a Reference object
+     */
+    public Reference updateReference(Reference reference) {
+
+        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, reference);
+        return cr.getEntity(Reference.class);
+    }
+
+    /**
+     * Create Reference data from model object
+     *
+     * @param reference a Reference object with the data to create.
+     * @return a Reference object
+     */
+    public Reference createReference(Reference reference) {
+        //TimeSeriesDTO timeSeriesDTO = new ReferenceDTO(timeSeries);
+        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, reference);
+        return cr.getEntity(Reference.class);
+    }
+
+    /**
+     * Delete Reference data from model object
+     *
+     * @param id the Reference's id
+     * @return a Reference object
+     */
+    public void deleteReference(int id) throws ReferenceNotFoundException {
+
+        try {
+            webResource.path("reference").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Reference.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+    }
+    /* End Reference methods */
+    
+    /* Reference area methods */
+    /**
+     * Retrieve a list of all the reference areas.
+     *
+     * @return a List with ReferenceArea objects
+     */
+    public List<ReferenceArea> getReferenceAreas() {
+        GenericType<List<ReferenceArea>> genericType = new GenericType<List<ReferenceArea>>() {
+        };
+        return webResource.path("reference-areas").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a map of all the reference areas, keyed by uriTag.
+     *
+     * @return a Map of ReferenceArea objects, keyed by their uriTag
+     */
+    public Map<String, ReferenceArea> getReferenceAreaMap() {
+        List<ReferenceArea> referenceAreas = getReferenceAreas();
+        Map<String, ReferenceArea> referenceAreaMap = new LinkedHashMap<String, ReferenceArea>();
+        for (ReferenceArea r : referenceAreas) {
+            referenceAreaMap.put(r.getUriTag(), r);
+        }
+        return referenceAreaMap;
+    }
+
+    /**
+     * Retrieve a ReferenceArea by its uriTag.
+     *
+     * @param uriTag the ReferenceArea's uriTag
+     * @return
+     */
+    public ReferenceArea getReferenceArea(String uriTag) throws ReferenceAreaNotFoundException {
+        try {
+            return webResource.path("reference-area").path(uriTag)
+                    .accept(defaultMediaType).get(ReferenceArea.class);
+        } catch (UniformInterfaceException e) {
+            throw new ReferenceAreaNotFoundException();
+        }
+    }
+    /* End Reference area methods */
+
+
+	/* Time Series methods */
     /**
      * Retrieve a TimeSeries object by its section, subsection and category.
      *
@@ -451,49 +907,7 @@ public class MetadataClient {
         return subsectionMap;
     }
 
-	/*
-	 * Category methods
-	 */
-
-    /**
-     * Retrieves a List of all the categories.
-     *
-     * @return a List of all the available categories
-     */
-    public List<Category> getCategories() {
-        GenericType<List<Category>> genericType = new GenericType<List<Category>>() {
-        };
-        return webResource.path("categories").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Get a Map of all the categories, keyed by uriTag.
-     *
-     * @return a Map with all the sections
-     */
-    public Map<String, Category> getCategoryMap() {
-        List<Category> categories = getCategories();
-        Map<String, Category> categoryMap = new LinkedHashMap<String, Category>();
-        for (Category s : categories) {
-            categoryMap.put(s.getUriTag(), s);
-        }
-        return categoryMap;
-    }
-
-    /**
-     * Retrieve a category by its uriTag.
-     *
-     * @param uriTag the uriTag of the Category
-     * @return
-     */
-    public Category getCategory(String uriTag) throws CategoryNotFoundException {
-        try {
-            return webResource.path("category").path(uriTag).accept(defaultMediaType).get(Category.class);
-        } catch (UniformInterfaceException e) {
-            throw new CategoryNotFoundException();
-        }
-    }
-
+	
     /**
      * Retrieve a subsection by its numeric id.
      *
@@ -506,122 +920,6 @@ public class MetadataClient {
                     .accept(defaultMediaType).get(Subsection.class);
         } catch (UniformInterfaceException e) {
             throw new SubsectionNotFoundException();
-        }
-    }
-
-	/*
-	 * Reference area methods
-	 */
-
-    /**
-     * Retrieve a list of all the reference areas.
-     *
-     * @return a List with ReferenceArea objects
-     */
-    public List<ReferenceArea> getReferenceAreas() {
-        GenericType<List<ReferenceArea>> genericType = new GenericType<List<ReferenceArea>>() {
-        };
-        return webResource.path("reference-areas").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Retrieve a map of all the reference areas, keyed by uriTag.
-     *
-     * @return a Map of ReferenceArea objects, keyed by their uriTag
-     */
-    public Map<String, ReferenceArea> getReferenceAreaMap() {
-        List<ReferenceArea> referenceAreas = getReferenceAreas();
-        Map<String, ReferenceArea> referenceAreaMap = new LinkedHashMap<String, ReferenceArea>();
-        for (ReferenceArea r : referenceAreas) {
-            referenceAreaMap.put(r.getUriTag(), r);
-        }
-        return referenceAreaMap;
-    }
-
-    /**
-     * Retrieve a ReferenceArea by its uriTag.
-     *
-     * @param uriTag the ReferenceArea's uriTag
-     * @return
-     */
-    public ReferenceArea getReferenceArea(String uriTag) throws ReferenceAreaNotFoundException {
-        try {
-            return webResource.path("reference-area").path(uriTag)
-                    .accept(defaultMediaType).get(ReferenceArea.class);
-        } catch (UniformInterfaceException e) {
-            throw new ReferenceAreaNotFoundException();
-        }
-    }
-
-	/*
-	 * Data set methods
-	 */
-
-    /**
-     * Retrieve a list of all the data sets.
-     *
-     * @return a List with DataSet objects
-     */
-    public List<DataSet> getDataSets() {
-        GenericType<List<DataSet>> genericType = new GenericType<List<DataSet>>() {
-        };
-        return webResource.path("data-sets").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Retrieve a map of all the data sets, keyed by uriTag.
-     *
-     * @return a Map of DataSet objects, keyed by their uriTag
-     */
-    public Map<String, DataSet> getDataSetMap() {
-        List<DataSet> dataSets = getDataSets();
-        Map<String, DataSet> dataSetMap = new LinkedHashMap<String, DataSet>();
-        for (DataSet r : dataSets) {
-            dataSetMap.put(r.getUriTag(), r);
-        }
-        return dataSetMap;
-    }
-
-    /**
-     * Retrieve a DataSet by its uriTag.
-     *
-     * @param uriTag the DataSet's uriTag
-     * @return
-     */
-    public DataSet getDataSet(String uriTag) throws DataSetNotFoundException {
-        try {
-            return webResource.path("data-set").path(uriTag).accept(defaultMediaType).get(DataSet.class);
-        } catch (UniformInterfaceException e) {
-            throw new DataSetNotFoundException();
-        }
-    }
-
-	/*
-	 * Periodicity methods
-	 */
-
-    /**
-     * Retrieve a list of all the data sets.
-     *
-     * @return a List with DataSet objects
-     */
-    public List<Periodicity> getPeriodicities() {
-        GenericType<List<Periodicity>> genericType = new GenericType<List<Periodicity>>() {
-        };
-        return webResource.path("periodicities").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Retrieve a Periodicity by its uriTag.
-     *
-     * @param uriTag the DataSet's uriTag
-     * @return
-     */
-    public Periodicity getPeriodicity(String uriTag) throws PeriodicityNotFoundException {
-        try {
-            return webResource.path("periodicity").path(uriTag).accept(defaultMediaType).get(Periodicity.class);
-        } catch (UniformInterfaceException e) {
-            throw new PeriodicityNotFoundException();
         }
     }
 
@@ -640,50 +938,6 @@ public class MetadataClient {
         return webResource.path("time-periods").accept(defaultMediaType).get(genericType);
     }
 
-	/*
-	 * NodeType methods
-	 */
-
-    /**
-     * Retrieve a list of all the sources.
-     *
-     * @return a List with Source objects
-     */
-    public List<NodeType> getNodeTypes() {
-        GenericType<List<NodeType>> genericType = new GenericType<List<NodeType>>() {
-        };
-        return webResource.path("node-types").accept(defaultMediaType).get(genericType);
-    }
-
-	/*
-	 * Data provider methods
-	 */
-
-    /**
-     * Retrieve a list of all the data providers.
-     *
-     * @return a List with DataProvider objects
-     */
-    public List<DataProvider> getDataProviders() {
-        GenericType<List<DataProvider>> genericType = new GenericType<List<DataProvider>>() {
-        };
-        return webResource.path("data-providers").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Retrieve a DataProvider by  id.
-     *
-     * @param id of the data provider
-     * @return
-     */
-    public DataProvider getDataProvider(int id) throws DataProviderNotFoundException {
-        try {
-            return webResource.path("data-provider").path(String.valueOf(id)).accept(defaultMediaType).get(DataProvider.class);
-        } catch (UniformInterfaceException e) {
-            throw new DataProviderNotFoundException();
-        }
-    }
-
     /**
      * Update TimeSeries data from model object
      *
@@ -695,79 +949,6 @@ public class MetadataClient {
         ClientResponse cr = webResource.path("time-series").type(defaultMediaType).accept(defaultMediaType).
                 put(ClientResponse.class, timeSeriesDTO);
         return cr.getEntity(TimeSeries.class);
-    }
-
-    /**
-     * Retrieve a Measure by its id.
-     *
-     * @param id the Measure's id
-     * @return
-     */
-    public Measure getMeasure(int id) throws MeasureNotFoundException {
-        try {
-            return webResource.path("measure").path(String.valueOf(id)).accept(defaultMediaType).get(Measure.class);
-        } catch (UniformInterfaceException e) {
-            throw new MeasureNotFoundException();
-        }
-    }
-
-    /**
-     * Retrieve a list of all the measures.
-     *
-     * @return a List with Measure objects
-     */
-    public List<Measure> getMeasures() {
-        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
-        };
-        return webResource.path("measures").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Update Measure data from model object
-     *
-     * @param measure a Measure object with the data to update.
-     * @return a Measure object
-     */
-
-    public Measure updateMeasure(Measure measure) {
-
-        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, measure);
-        return cr.getEntity(Measure.class);
-    }
-
-    /**
-     * Create Measure data from model object
-     *
-     * @param measure a Measure object with the data to create.
-     * @return a Measure object
-     */
-
-    public Measure createMeasure(Measure measure) {
-        //TimeSeriesDTO timeSeriesDTO = new MeasureDTO(timeSeries);
-        ClientResponse cr = webResource.path("measure").type(defaultMediaType).accept(defaultMediaType).
-                post(ClientResponse.class, measure);
-        return cr.getEntity(Measure.class);
-    }
-
-    /**
-     * Delete Measure data from model object
-     *
-     * @param id the Measure's id
-     * @return a Measure object
-     */
-
-    public void deleteMeasure(int id) throws MeasureNotFoundException {
-
-        try {
-           webResource.path("measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
-                    delete(Measure.class);
-        }
-        catch (UniformInterfaceException e ) {
-            System.out.println(e.getResponse());
-        }
-
-
     }
 
     /**
@@ -798,158 +979,6 @@ public class MetadataClient {
         GenericType<List<UnitOfMeasure>> genericType = new GenericType<List<UnitOfMeasure>>() {
         };
         return webResource.path("units-of-measure").accept(defaultMediaType).get(genericType);
-    }
-
-
-    /**
-     * Retrieve a Reference by its id.
-     *
-     * @param id the Reference's id
-     * @return
-     */
-    public Reference getReference(int id) throws ReferenceNotFoundException {
-        try {
-            return webResource.path("reference").path(String.valueOf(id)).accept(defaultMediaType).get(Reference.class);
-        } catch (UniformInterfaceException e) {
-            throw new ReferenceNotFoundException();
-        }
-    }
-
-
-    /**
-     * Update Reference data from model object
-     *
-     * @param reference a Reference object with the data to update.
-     * @return a Reference object
-     */
-
-    public Reference updateReference(Reference reference) {
-
-        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, reference);
-        return cr.getEntity(Reference.class);
-    }
-
-    /**
-     * Create Reference data from model object
-     *
-     * @param reference a Reference object with the data to create.
-     * @return a Reference object
-     */
-
-    public Reference createReference(Reference reference) {
-        //TimeSeriesDTO timeSeriesDTO = new ReferenceDTO(timeSeries);
-        ClientResponse cr = webResource.path("reference").type(defaultMediaType).accept(defaultMediaType).
-                post(ClientResponse.class, reference);
-        return cr.getEntity(Reference.class);
-    }
-
-    /**
-     * Delete Reference data from model object
-     *
-     * @param id the Reference's id
-     * @return a Reference object
-     */
-
-    public void deleteReference(int id) throws ReferenceNotFoundException {
-
-        try {
-            webResource.path("reference").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
-                    delete(Reference.class);
-        }
-        catch (UniformInterfaceException e ) {
-            System.out.println(e.getResponse());
-        }
-
-
-    }
-
-    /**
-     * Retrieve a Link by its id.
-     *
-     * @param id the Link's id
-     * @return
-     */
-    public Link getLink(int id) throws LinkNotFoundException {
-        try {
-            return webResource.path("link").path(String.valueOf(id)).accept(defaultMediaType).get(Link.class);
-        } catch (UniformInterfaceException e) {
-            throw new LinkNotFoundException();
-        }
-    }
-
-
-    /**
-     * Update Link data from model object
-     *
-     * @param link a Link object with the data to update.
-     * @return a Link object
-     */
-
-    public Link updateLink(Link link) {
-
-        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, link);
-        return cr.getEntity(Link.class);
-    }
-
-    /**
-     * Create Link data from model object
-     *
-     * @param link a Link object with the data to create.
-     * @return a Link object
-     */
-
-    public Link createLink(Link link) {
-        //TimeSeriesDTO timeSeriesDTO = new LinkDTO(timeSeries);
-        ClientResponse cr = webResource.path("link").type(defaultMediaType).accept(defaultMediaType).
-                post(ClientResponse.class, link);
-        return cr.getEntity(Link.class);
-    }
-
-    /**
-     * Delete Link data from model object
-     *
-     * @param id the Link's id
-     * @return a Link object
-     */
-
-    public void deleteLink(int id) throws LinkNotFoundException {
-
-        try {
-            webResource.path("link").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
-                    delete(Link.class);
-        }
-        catch (UniformInterfaceException e ) {
-            System.out.println(e.getResponse());
-        }
-
-
-    }
-
-    /**
-     * Retrieve a LinkType by its id.
-     *
-     * @param id the LinkType's id
-     * @return
-     */
-    public LinkType getLinkType(int id) throws LinkTypeNotFoundException {
-        try {
-            return webResource.path("link-type").path(String.valueOf(id)).accept(defaultMediaType).get(LinkType.class);
-        } catch (UniformInterfaceException e) {
-            throw new LinkTypeNotFoundException();
-        }
-    }
-
-    /**
-     * Retrieve a list of all the Link Types.
-     *
-     * @return a List with LinkType objects
-     */
-    public List<LinkType> getLinkTypes() {
-        GenericType<List<LinkType>> genericType = new GenericType<List<LinkType>>() {
-        };
-        return webResource.path("link-types").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -1046,20 +1075,6 @@ public class MetadataClient {
     }
 
     /**
-     * Retrieve a NodeTYpe by its uriTag.
-     *
-     * @param uriTag the NodeTYpe's uriTag
-     * @return
-     */
-    public NodeType getNodeType(String uriTag) throws NodeTypeNotFoundException {
-        try {
-            return webResource.path("node-type").path(uriTag).accept(defaultMediaType).get(NodeType.class);
-        } catch (UniformInterfaceException e) {
-            throw new NodeTypeNotFoundException();
-        }
-    }
-
-    /**
      * Retrieve a TimePeriod by its id.
      *
      * @param id the TimePeriod's id
@@ -1072,28 +1087,6 @@ public class MetadataClient {
         } catch (UniformInterfaceException e) {
             throw new TimePeriodNotFoundException();
         }
-    }
-
-    /**
-     * Retrieve a list of all the References.
-     *
-     * @return a List with Reference objects
-     */
-    public List<Reference> getReferences() {
-        GenericType<List<Reference>> genericType = new GenericType<List<Reference>>() {
-        };
-        return webResource.path("references").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Retrieve a list of all the Links.
-     *
-     * @return a List with Link objects
-     */
-    public List<Link> getLinks() {
-        GenericType<List<Link>> genericType = new GenericType<List<Link>>() {
-        };
-        return webResource.path("links").accept(defaultMediaType).get(genericType);
     }
 
 }

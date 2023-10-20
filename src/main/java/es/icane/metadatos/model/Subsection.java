@@ -68,6 +68,7 @@ public class Subsection implements Serializable {
         this.created = created;
     }
 
+    @XmlElement(required = true)
     public String getTitle() {
         return title;
     }
