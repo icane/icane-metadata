@@ -297,6 +297,17 @@ public class MetadataClient {
 
     /* Measure methods */
     /**
+     * Retrieve a list of all the measures.
+     *
+     * @return a List with Measure objects
+     */
+    public List<Measure> getMeasures() {
+        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
+        };
+        return webResource.path("measures").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
      * Retrieve a Measure by its id.
      *
      * @param id the Measure's id
@@ -308,17 +319,6 @@ public class MetadataClient {
         } catch (UniformInterfaceException e) {
             throw new MeasureNotFoundException();
         }
-    }
-
-    /**
-     * Retrieve a list of all the measures.
-     *
-     * @return a List with Measure objects
-     */
-    public List<Measure> getMeasures() {
-        GenericType<List<Measure>> genericType = new GenericType<List<Measure>>() {
-        };
-        return webResource.path("measures").accept(defaultMediaType).get(genericType);
     }
 
     /**
@@ -378,6 +378,20 @@ public class MetadataClient {
         GenericType<List<Methodology>> genericType = new GenericType<List<Methodology>>() {
         };
         return webResource.path("methodologies").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a Methodology by its id.
+     *
+     * @param id the Methodology's id
+     * @return
+     */
+    public Methodology getMethodology(int id) throws MethodologyNotFoundException {
+        try {
+            return webResource.path("methodology").path(String.valueOf(id)).accept(defaultMediaType).get(Methodology.class);
+        } catch (UniformInterfaceException e) {
+            throw new MethodologyNotFoundException();
+        }
     }
     /* End Methodology methods */
 
@@ -547,6 +561,274 @@ public class MetadataClient {
     }
     /* End Reference area methods */
 
+    /* RelatedLink methods */
+    /**
+     * Retrieve a list of all the related links.
+     *
+     * @return a List with RelatedLink objects
+     */
+    public List<RelatedLink> getRelatedLinks() {
+        GenericType<List<RelatedLink>> genericType = new GenericType<List<RelatedLink>>() {
+        };
+        return webResource.path("related-links").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a RelatedLink by its id.
+     *
+     * @param id the RelatedLink's id
+     * @return
+     */
+    public RelatedLink getRelatedLink(int id) throws RelatedLinkNotFoundException {
+        try {
+            return webResource.path("related-link").path(String.valueOf(id)).accept(defaultMediaType).get(RelatedLink.class);
+        } catch (UniformInterfaceException e) {
+            throw new RelatedLinkNotFoundException();
+        }
+    }
+    /* End RelatedLink methods */
+
+    /* Section methods */
+    /**
+     * Retrieves a List of all the Sections.
+     *
+     * @return a List of all the available Sections
+     */
+    public List<Section> getSections() {
+        GenericType<List<Section>> genericType = new GenericType<List<Section>>() {
+        };
+        return webResource.path("sections").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Get a Map of all the sections, keyed by uriTag.
+     *
+     * @return a Map with all the sections
+     */
+    public Map<String, Section> getSectionMap() {
+        List<Section> sections = getSections();
+        Map<String, Section> sectionMap = new LinkedHashMap<String, Section>();
+        for (Section s : sections) {
+            sectionMap.put(s.getUriTag(), s);
+        }
+        return sectionMap;
+    }
+
+    /**
+     * Retrieves a Section by its URI tag.
+     *
+     * @param uriTag the Section's URI tag to search for
+     * @return the corresponding Section
+     * @throws SectionNotFoundException
+     */
+    public Section getSection(String uriTag) throws SectionNotFoundException {
+        try {
+            return webResource.path("section").path(uriTag).accept(defaultMediaType).get(Section.class);
+        } catch (UniformInterfaceException e) {
+            throw new SectionNotFoundException();
+        }
+    }
+    /* End Section methods */
+
+    /* Subsection methods */
+    /**
+     * Get a list of all the subsections of a given section.
+     *
+     * @param section the section's uriTag
+     * @return a list of its subsections
+     */
+    public List<Subsection> getSubsections(String section) {
+        GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
+        };
+        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Get a list of all the subsections of a given section.
+     *
+     * @param section the section
+     * @return a list of its subsections
+     */
+    public List<Subsection> getSubsections(Section section) {
+        GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
+        };
+        return webResource.path("section").path(section.getUriTag()).path("subsections")
+                .accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Get a map with all the subsections of a given section, keyed by uriTag.
+     *
+     * @param section the section's uriTag
+     * @return a Map containing all its subsections
+     */
+    public Map<String, Subsection> getSubsectionMap(String section) {
+        List<Subsection> subsections = getSubsections(section);
+        Map<String, Subsection> subsectionMap = new LinkedHashMap<String, Subsection>();
+        for (Subsection s : subsections) {
+            subsectionMap.put(s.getUriTag(), s);
+        }
+        return subsectionMap;
+    }
+	
+    /**
+     * Retrieve a subsection by its numeric id.
+     *
+     * @param subsectionId the numeric id of the subsection
+     * @return
+     */
+    public Subsection getSubsection(int subsectionId) throws SubsectionNotFoundException {
+        try {
+            return webResource.path("subsection").path(String.valueOf(subsectionId))
+                    .accept(defaultMediaType).get(Subsection.class);
+        } catch (UniformInterfaceException e) {
+            throw new SubsectionNotFoundException();
+        }
+    }
+
+    /**
+     * Create Subsection data from model object
+     *
+     * @param subsection a Subsection object with the data to create.
+     * @return a Subsection object
+     */
+
+     public Subsection createSubsection(Subsection subsection) {
+        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, subsection);
+        return cr.getEntity(Subsection.class);
+    }
+
+    /**
+     * Delete Subsection data from model object
+     *
+     * @param id the Subsection's id
+     * @return a Subsection object
+     */
+    public void deleteSubsection(int id) throws SubsectionNotFoundException {
+
+        try {
+            webResource.path("subsection").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(Subsection.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Update Subsection data from model object
+     *
+     * @param subsection a Subsection object with the data to update.
+     * @return a Subsection object
+     */
+    public Subsection updateSubsection(Subsection subsection) {
+
+        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, subsection);
+        return cr.getEntity(Subsection.class);
+    }
+    /* End Subsection methods */
+
+    /* TimePeriod methods */
+    /**
+     * Retrieve a list of all the time periods.
+     *
+     * @return a List with TimePeriod objects
+     */
+    public List<TimePeriod> getTimePeriods() {
+        GenericType<List<TimePeriod>> genericType = new GenericType<List<TimePeriod>>() {
+        };
+        return webResource.path("time-periods").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a TimePeriod by its id.
+     *
+     * @param id the TimePeriod's id
+     * @return
+     */
+    public TimePeriod getTimePeriod(int id) throws TimePeriodNotFoundException {
+        try {
+            return webResource.path("time-period").path(String.valueOf(id))
+                    .accept(defaultMediaType).get(TimePeriod.class);
+        } catch (UniformInterfaceException e) {
+            throw new TimePeriodNotFoundException();
+        }
+    }
+    /* End TimePeriod methods */
+
+    /* UnitOfMeasure methods */
+    /**
+     * Retrieve a list of all the Units of measure.
+     *
+     * @return a List with UnitOfMeasure objects
+     */
+    public List<UnitOfMeasure> getUnitsOfMeasure() {
+        GenericType<List<UnitOfMeasure>> genericType = new GenericType<List<UnitOfMeasure>>() {
+        };
+        return webResource.path("units-of-measure").accept(defaultMediaType).get(genericType);
+    }
+
+    /**
+     * Retrieve a UnitOfMeasure by its id.
+     *
+     * @param id the UnitOfMeasure's id
+     * @return
+     */
+    public UnitOfMeasure getUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
+        try {
+            return webResource.path("unit-of-measure").path(String.valueOf(id)).accept(defaultMediaType).get(UnitOfMeasure.class);
+        } catch (UniformInterfaceException e) {
+            throw new UnitOfMeasureNotFoundException();
+        }
+    }
+
+    /**
+     * Create UnitOfMeasure data from model object
+     *
+     * @param unitOfMeasure a UnitOfMeasure object with the data to create.
+     * @return a UnitOfMeasure object
+     */
+    public UnitOfMeasure createUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        //TimeSeriesDTO timeSeriesDTO = new UnitOfMeasureDTO(timeSeries);
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
+                post(ClientResponse.class, unitOfMeasure);
+        return cr.getEntity(UnitOfMeasure.class);
+    }
+
+    /**
+     * Delete UnitOfMeasure data from model object
+     *
+     * @param id the UnitOfMeasure's id
+     * @return a UnitOfMeasure object
+     */
+    public void deleteUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
+
+        try {
+            webResource.path("unit-of-measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
+                    delete(UnitOfMeasure.class);
+        }
+        catch (UniformInterfaceException e ) {
+            System.out.println(e.getResponse());
+        }
+
+    }
+
+    /**
+     * Update UnitOfMeasure data from model object
+     *
+     * @param unitOfMeasure a UnitOfMeasure object with the data to update.
+     * @return a UnitOfMeasure object
+     */
+    public UnitOfMeasure updateUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+
+        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
+                put(ClientResponse.class, unitOfMeasure);
+        return cr.getEntity(UnitOfMeasure.class);
+    }
+    /* End UnitOfMeasure methods */
 
 	/* Time Series methods */
     /**
@@ -821,123 +1103,6 @@ public class MetadataClient {
         }
     }
 
-    // Section methods
-
-    /**
-     * Retrieves a List of all the Sections.
-     *
-     * @return a List of all the available Sections
-     */
-    public List<Section> getSections() {
-        GenericType<List<Section>> genericType = new GenericType<List<Section>>() {
-        };
-        return webResource.path("sections").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Get a Map of all the sections, keyed by uriTag.
-     *
-     * @return a Map with all the sections
-     */
-    public Map<String, Section> getSectionMap() {
-        List<Section> sections = getSections();
-        Map<String, Section> sectionMap = new LinkedHashMap<String, Section>();
-        for (Section s : sections) {
-            sectionMap.put(s.getUriTag(), s);
-        }
-        return sectionMap;
-    }
-
-    /**
-     * Retrieves a Section by its URI tag.
-     *
-     * @param uriTag the Section's URI tag to search for
-     * @return the corresponding Section
-     * @throws SectionNotFoundException
-     */
-    public Section getSection(String uriTag) throws SectionNotFoundException {
-        try {
-            return webResource.path("section").path(uriTag).accept(defaultMediaType).get(Section.class);
-        } catch (UniformInterfaceException e) {
-            throw new SectionNotFoundException();
-        }
-    }
-
-	/*
-	 * Subsection methods
-	 */
-
-    /**
-     * Get a list of all the subsections of a given section.
-     *
-     * @param section the section's uriTag
-     * @return a list of its subsections
-     */
-    public List<Subsection> getSubsections(String section) {
-        GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
-        };
-        return webResource.path("section").path(section).path("subsections").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Get a list of all the subsections of a given section.
-     *
-     * @param section the section
-     * @return a list of its subsections
-     */
-    public List<Subsection> getSubsections(Section section) {
-        GenericType<List<Subsection>> genericType = new GenericType<List<Subsection>>() {
-        };
-        return webResource.path("section").path(section.getUriTag()).path("subsections")
-                .accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Get a map with all the subsections of a given section, keyed by uriTag.
-     *
-     * @param section the section's uriTag
-     * @return a Map containing all its subsections
-     */
-    public Map<String, Subsection> getSubsectionMap(String section) {
-        List<Subsection> subsections = getSubsections(section);
-        Map<String, Subsection> subsectionMap = new LinkedHashMap<String, Subsection>();
-        for (Subsection s : subsections) {
-            subsectionMap.put(s.getUriTag(), s);
-        }
-        return subsectionMap;
-    }
-
-	
-    /**
-     * Retrieve a subsection by its numeric id.
-     *
-     * @param subsectionId the numeric id of the subsection
-     * @return
-     */
-    public Subsection getSubsection(int subsectionId) throws SubsectionNotFoundException {
-        try {
-            return webResource.path("subsection").path(String.valueOf(subsectionId))
-                    .accept(defaultMediaType).get(Subsection.class);
-        } catch (UniformInterfaceException e) {
-            throw new SubsectionNotFoundException();
-        }
-    }
-
-	/*
-	 * TimePeriod methods
-	 */
-
-    /**
-     * Retrieve a list of all the sources.
-     *
-     * @return a List with Source objects
-     */
-    public List<TimePeriod> getTimePeriods() {
-        GenericType<List<TimePeriod>> genericType = new GenericType<List<TimePeriod>>() {
-        };
-        return webResource.path("time-periods").accept(defaultMediaType).get(genericType);
-    }
-
     /**
      * Update TimeSeries data from model object
      *
@@ -950,143 +1115,6 @@ public class MetadataClient {
                 put(ClientResponse.class, timeSeriesDTO);
         return cr.getEntity(TimeSeries.class);
     }
-
-    /**
-     * Retrieve a UnitOfMeasure by its id.
-     *
-     * @param id the UnitOfMeasure's id
-     * @return
-     */
-    public UnitOfMeasure getUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
-        try {
-            return webResource.path("unit-of-measure").path(String.valueOf(id)).accept(defaultMediaType).get(UnitOfMeasure.class);
-        } catch (UniformInterfaceException e) {
-            throw new UnitOfMeasureNotFoundException();
-        }
-    }
-    
-    
-    /*
-	 * Unit of measure methods
-	 */
-
-    /**
-     * Retrieve a list of all the Units of measure.
-     *
-     * @return a List with UnitOfMeasure objects
-     */
-    public List<UnitOfMeasure> getUnitsOfMeasure() {
-        GenericType<List<UnitOfMeasure>> genericType = new GenericType<List<UnitOfMeasure>>() {
-        };
-        return webResource.path("units-of-measure").accept(defaultMediaType).get(genericType);
-    }
-
-    /**
-     * Create UnitOfMeasure data from model object
-     *
-     * @param unitOfMeasure a UnitOfMeasure object with the data to create.
-     * @return a UnitOfMeasure object
-     */
-
-    public UnitOfMeasure createUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
-        //TimeSeriesDTO timeSeriesDTO = new UnitOfMeasureDTO(timeSeries);
-        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
-                post(ClientResponse.class, unitOfMeasure);
-        return cr.getEntity(UnitOfMeasure.class);
-    }
-
-    /**
-     * Delete UnitOfMeasure data from model object
-     *
-     * @param id the UnitOfMeasure's id
-     * @return a UnitOfMeasure object
-     */
-
-    public void deleteUnitOfMeasure(int id) throws UnitOfMeasureNotFoundException {
-
-        try {
-            webResource.path("unit-of-measure").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
-                    delete(UnitOfMeasure.class);
-        }
-        catch (UniformInterfaceException e ) {
-            System.out.println(e.getResponse());
-        }
-
-    }
-
-    /**
-     * Update UnitOfMeasure data from model object
-     *
-     * @param unitOfMeasure a UnitOfMeasure object with the data to update.
-     * @return a UnitOfMeasure object
-     */
-
-    public UnitOfMeasure updateUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
-
-        ClientResponse cr = webResource.path("unit-of-measure").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, unitOfMeasure);
-        return cr.getEntity(UnitOfMeasure.class);
-    }
-
-    /**
-     * Create Subsection data from model object
-     *
-     * @param subsection a Subsection object with the data to create.
-     * @return a Subsection object
-     */
-
-    public Subsection createSubsection(Subsection subsection) {
-        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
-                post(ClientResponse.class, subsection);
-        return cr.getEntity(Subsection.class);
-    }
-
-    /**
-     * Delete Subsection data from model object
-     *
-     * @param id the Subsection's id
-     * @return a Subsection object
-     */
-
-    public void deleteSubsection(int id) throws SubsectionNotFoundException {
-
-        try {
-            webResource.path("subsection").path(String.valueOf(id)).type(defaultMediaType).accept(defaultMediaType).
-                    delete(Subsection.class);
-        }
-        catch (UniformInterfaceException e ) {
-            System.out.println(e.getResponse());
-        }
-
-    }
-
-    /**
-     * Update Subsection data from model object
-     *
-     * @param subsection a Subsection object with the data to update.
-     * @return a Subsection object
-     */
-
-    public Subsection updateSubsection(Subsection subsection) {
-
-        ClientResponse cr = webResource.path("subsection").type(defaultMediaType).accept(defaultMediaType).
-                put(ClientResponse.class, subsection);
-        return cr.getEntity(Subsection.class);
-    }
-
-    /**
-     * Retrieve a TimePeriod by its id.
-     *
-     * @param id the TimePeriod's id
-     * @return
-     */
-    public TimePeriod getTimePeriod(int id) throws TimePeriodNotFoundException {
-        try {
-            return webResource.path("time-period").path(String.valueOf(id))
-                    .accept(defaultMediaType).get(TimePeriod.class);
-        } catch (UniformInterfaceException e) {
-            throw new TimePeriodNotFoundException();
-        }
-    }
+    /* End Time Series methods */
 
 }
