@@ -36,7 +36,7 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    @XmlElement(name = "dateCreated")
+    @XmlElement(name = "dateCreated", required = true)
     @XmlJavaTypeAdapter(value = DateAdapter.class)
     public Date getCreated() {
         return created;
@@ -46,6 +46,7 @@ public class Category implements Serializable {
         this.created = created;
     }
 
+    @XmlElement(required = true)
     public String getTitle() {
         return title;
     }

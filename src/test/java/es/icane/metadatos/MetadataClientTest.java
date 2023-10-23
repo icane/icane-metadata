@@ -24,6 +24,35 @@ public class MetadataClientTest {
         metadataClient = new MetadataClient(baseUrl);
     }
 
+    /* Category tests */
+    @Test
+    public void getCategoryShouldReturnElement() {
+
+        Category category = null;
+        try {
+            category = metadataClient.getCategory("datos-regionales");
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert category != null;
+        assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
+        assert category.getAutomatizedTopics() != null;
+    
+    }
+
+    @Test
+    public void getCategoriesShouldReturnList() {
+
+        List<Category> categories = metadataClient.getCategories();
+
+        // assert statements
+        assertEquals("Size must be 5", 5, categories.size());
+        assertEquals("First element has title Datos regionales", "Datos regionales", categories.get(0).getTitle());
+    }
+    /* End Category tests */
+
     @Test
     public void getNodeTypeShouldReturnElement() {
 
@@ -240,23 +269,6 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getCategoryShouldReturnElement() {
-
-        Category category = null;
-        try {
-            category = metadataClient.getCategory("datos-regionales");
-        } catch (CategoryNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert category != null;
-        assertEquals("regional-data title must be Datos regionales", "Datos regionales", category.getTitle());
-        assert category.getAutomatizedTopics() != null;
-    
-    }
-
-    @Test
     public void getSubsectionShouldReturnElement() {
 
         Subsection subsection = null;
@@ -437,16 +449,6 @@ public class MetadataClientTest {
         // assert statements
         assertTrue("Size must be greater than 2", sections.size() > 2);
         assertEquals("First element has title Población", "Población", sections.get(0).getTitle());
-    }
-
-    @Test
-    public void getCategoriesShouldReturnList() {
-
-        List<Category> categories = metadataClient.getCategories();
-
-        // assert statements
-        assertEquals("Size must be 5", 5, categories.size());
-        assertEquals("First element has title Datos regionales", "Datos regionales", categories.get(0).getTitle());
     }
 
     @Test
