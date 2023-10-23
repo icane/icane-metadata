@@ -61,6 +61,7 @@ public class DataProvider implements Serializable {
         this.acronym = acronym;
     }
 
+    @XmlAttribute(required = true)
     public String getTitle() {
         return title;
     }

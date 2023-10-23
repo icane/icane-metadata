@@ -53,6 +53,33 @@ public class MetadataClientTest {
     }
     /* End Category tests */
 
+    /* DataProvider tests */
+    @Test
+    public void getDataProvidersShouldReturnList() {
+
+        List<DataProvider> dataProviders = metadataClient.getDataProviders();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", dataProviders.size() > 100);
+        assertEquals("First element has acronym INE", "INE", dataProviders.get(0).getAcronym());
+    }
+
+    @Test
+    public void getDataProviderShouldReturnElement() {
+
+        DataProvider dataProvider = null;
+        try {
+            dataProvider = metadataClient.getDataProvider(1);
+        } catch (DataProviderNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert dataProvider != null;
+        assertEquals("musical-arts acronym must be INE", "INE", dataProvider.getAcronym());
+    }
+    /* End DataProvider tests */
+
     @Test
     public void getNodeTypeShouldReturnElement() {
 
@@ -105,17 +132,6 @@ public class MetadataClientTest {
         assertEquals("Time period startYear must be 2010", 2010, timePeriod.getStartYear().intValue());
         assertEquals("Time period endYear must be 2011", 2011, timePeriod.getEndYear().intValue());
 
-    }
-
-
-    @Test
-    public void getDataProvidersShouldReturnList() {
-
-        List<DataProvider> dataProviders = metadataClient.getDataProviders();
-
-        // assert statements
-        assertTrue("Size must be greater than 100", dataProviders.size() > 100);
-        assertEquals("First element has acronym INE", "INE", dataProviders.get(0).getAcronym());
     }
 
     @Test
@@ -314,22 +330,6 @@ public class MetadataClientTest {
         // assert statements
         assert dataSet != null;
         assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
-
-    }
-
-    @Test
-    public void getDataProviderShouldReturnElement() {
-
-        DataProvider dataProvider = null;
-        try {
-            dataProvider = metadataClient.getDataProvider(1);
-        } catch (DataProviderNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert dataProvider != null;
-        assertEquals("musical-arts acronym must be INE", "INE", dataProvider.getAcronym());
 
     }
 
