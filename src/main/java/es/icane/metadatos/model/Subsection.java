@@ -95,6 +95,7 @@ public class Subsection implements Serializable {
         this.uriTag = uriTag;
     }
 
+    @XmlElement(required = true)
     public String getAcronym() {
         return acronym;
     }

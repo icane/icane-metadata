@@ -4,7 +4,7 @@ import es.icane.metadatos.adapters.DateAdapter;
 
 import java.io.Serializable;
 import java.util.Date;
-// import java.util.List;
+import java.util.List;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -21,12 +21,31 @@ public class DataSet implements Serializable {
     private String title;
     private String acronym;
     private String uriTag;
-    private String pressNote;
+    private String press_note;
     private boolean historical;
-   
-	
+    private Subsection subsection;
+    private List<Methodology> methodologies;
+    private List<RelatedLink> relatedLinks;
     private Date created;
     private Date lastUpdated;
+
+    public DataSet () {
+
+    }
+
+    public DataSet (Integer id, String title, String acronym, String uriTag,
+                    String press_note, boolean historical, Subsection subsection,
+                    Date created, Date lastUpdated) {
+        this.id = id;
+        this.title = title;
+        this.acronym = acronym;
+        this.uriTag = uriTag;
+        this.press_note = press_note;
+        this.historical = historical;
+        this.subsection = subsection;
+        this.created = created;
+        this.lastUpdated = lastUpdated;
+    }
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -47,6 +66,7 @@ public class DataSet implements Serializable {
         this.created = created;
     }
 
+    @XmlElement(required = true)
     public String getTitle() {
         return title;
     }
@@ -73,6 +93,7 @@ public class DataSet implements Serializable {
         this.uriTag = uriTag;
     }
 
+    @XmlElement(required = true)
     public String getAcronym() {
         return acronym;
     }
@@ -81,12 +102,12 @@ public class DataSet implements Serializable {
         this.acronym = acronym;
     }
 
-    public String getPressNote() {
-        return pressNote;
+    public String getPress_note() {
+        return press_note;
     }
     
-    public void setPressNote(String pressNote) {
-        this.pressNote = pressNote;
+    public void setPress_note(String press_note) {
+        this.press_note = press_note;
     }
    
     public boolean isHistorical() {
@@ -95,6 +116,34 @@ public class DataSet implements Serializable {
 
     public void setHistorical(boolean historical) {
         this.historical = historical;
+    }
+
+    public Subsection getSubsection() {
+        return subsection;
+    }
+
+    public void setSubsection(Subsection subsection) {
+        this.subsection = subsection;
+    }
+
+    @XmlElementWrapper(name = "methodologies")
+    @XmlElement(name = "methodology")
+    public List<Methodology> getMethodologies() {
+        return methodologies;
+    }
+
+    public void setMethodologies(List<Methodology> methodologies) {
+        this.methodologies = methodologies;
+    }
+
+    @XmlElementWrapper(name = "relatedLinks")
+    @XmlElement(name = "relatedLink")
+    public List<RelatedLink> getRelatedLinks() {
+        return relatedLinks;
+    }
+
+    public void setRelatedLinks(List<RelatedLink> relatedLinks) {
+        this.relatedLinks = relatedLinks;
     }
 
     @Override

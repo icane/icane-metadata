@@ -80,6 +80,42 @@ public class MetadataClientTest {
     }
     /* End DataProvider tests */
 
+    /* Dataset tests */
+    @Test
+    public void getDataSetsShouldReturnList() {
+
+        List<DataSet> dataSets = metadataClient.getDataSets();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", dataSets.size() > 100);
+        assertEquals("20th element has acronym CGPJ", "CGPJ", dataSets.get(19).getAcronym());
+    }
+
+    @Test
+    public void getDataSetShouldReturnElement() {
+
+        DataSet dataSet = null;
+        String subsectionUriTag = null;
+        List<Methodology> methodologies = null;
+        List<RelatedLink> relatedLinks = null;
+        try {
+            dataSet = metadataClient.getDataSet("actividades-id");
+            subsectionUriTag = dataSet.getSubsection().getUriTag().toString();
+            methodologies = dataSet.getMethodologies();
+            relatedLinks = dataSet.getRelatedLinks();
+        } catch (DataSetNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert dataSet != null;
+        assertEquals("actividades-id acronym must be ID", "ID", dataSet.getAcronym());
+        assertEquals("id-innovacion-tic-empresas", subsectionUriTag);
+        assertTrue("number of methodologies must be greater than 2", methodologies.size() > 2);
+        assertTrue("number of related links must be 1", relatedLinks.size() == 1);
+    }
+    /* End Dataset tests */
+
     @Test
     public void getNodeTypeShouldReturnElement() {
 
@@ -132,16 +168,6 @@ public class MetadataClientTest {
         assertEquals("Time period startYear must be 2010", 2010, timePeriod.getStartYear().intValue());
         assertEquals("Time period endYear must be 2011", 2011, timePeriod.getEndYear().intValue());
 
-    }
-
-    @Test
-    public void getDataSetsShouldReturnList() {
-
-        List<DataSet> dataSets = metadataClient.getDataSets();
-
-        // assert statements
-        assertTrue("Size must be greater than 100", dataSets.size() > 100);
-        assertEquals("20th element has acronym CGPJ", "CGPJ", dataSets.get(19).getAcronym());
     }
 
     @Test
@@ -313,23 +339,6 @@ public class MetadataClientTest {
         // assert statements
         assert referenceArea != null;
         assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
-
-    }
-
-
-    @Test
-    public void getDataSetShouldReturnElement() {
-
-        DataSet dataSet = null;
-        try {
-            dataSet = metadataClient.getDataSet("artes-musicales");
-        } catch (DataSetNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert dataSet != null;
-        assertEquals("musical-arts acronym must be AAMM", "AAMM", dataSet.getAcronym());
 
     }
 
