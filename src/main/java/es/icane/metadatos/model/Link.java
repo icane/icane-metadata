@@ -23,15 +23,15 @@ public class Link implements Serializable {
     private String rdfShortUri;
     private String rdfUri;
     private LinkType linkType;
-    private TimeSeries node;
+    private String node;
     private String nodeUriTag;
-    private Section section;
+    private String section;
     private String sectionUriTag;
-    private Subsection subsection;
+    private String subsection;
     private String subsectionUriTag;
-    private DataSet dataSet;
+    private String dataSet;
     private String dataSetUriTag;
-    private ReferenceArea referenceArea;
+    private String referenceArea;
     private String referenceAreaUriTag;
     private Date created;
     private Date lastUpdated;
@@ -46,7 +46,6 @@ public class Link implements Serializable {
         this.linkType = linkType;
         this.lastUpdated = lastUpdated;
         this.created = created;
-        this.node = node;
         this.nodeUriTag = node.getUriTag();
     }
 
@@ -56,7 +55,6 @@ public class Link implements Serializable {
         this.linkType = linkType;
         this.lastUpdated = lastUpdated;
         this.created = created;
-        this.section = section;
         this.sectionUriTag = section.getUriTag();
     }
 
@@ -66,7 +64,6 @@ public class Link implements Serializable {
         this.linkType = linkType;
         this.lastUpdated = lastUpdated;
         this.created = created;
-        this.subsection = subsection;
         this.subsectionUriTag = subsection.getUriTag();
     }
 
@@ -76,7 +73,6 @@ public class Link implements Serializable {
         this.linkType = linkType;
         this.lastUpdated = lastUpdated;
         this.created = created;
-        this.dataSet = dataSet;
         this.dataSetUriTag = dataSet.getUriTag();
     }
 
@@ -86,7 +82,6 @@ public class Link implements Serializable {
         this.linkType = linkType;
         this.lastUpdated = lastUpdated;
         this.created = created;
-        this.referenceArea = referenceArea;
         this.referenceAreaUriTag = referenceArea.getUriTag();
     }
 
@@ -162,11 +157,11 @@ public class Link implements Serializable {
         this.linkType = linkType;
     }
 
-    public TimeSeries getNode() {
+    public String getNode() {
         return node;
     }
 
-    public void setNode(TimeSeries node) {
+    public void setNode(String node) {
         this.node = node;
     }
 
@@ -178,11 +173,11 @@ public class Link implements Serializable {
         this.nodeUriTag = nodeUriTag;
     }
 
-    public Section getSection() {
+    public String getSection() {
         return section;
     }
 
-    public void setSection(Section section) {
+    public void setSection(String section) {
         this.section = section;
     }
 
@@ -194,11 +189,11 @@ public class Link implements Serializable {
         this.sectionUriTag = sectionUriTag;
     }
 
-    public Subsection getSubsection() {
+    public String getSubsection() {
         return subsection;
     }
 
-    public void setSubsection(Subsection subsection) {
+    public void setSubsection(String subsection) {
         this.subsection = subsection;
     }
 
@@ -210,11 +205,11 @@ public class Link implements Serializable {
         this.subsectionUriTag = subsectionUriTag;
     }
 
-    public DataSet getDataSet() {
+    public String getDataSet() {
         return dataSet;
     }
 
-    public void setDataSet(DataSet dataSet) {
+    public void setDataSet(String dataSet) {
         this.dataSet = dataSet;
     }
 
@@ -226,11 +221,11 @@ public class Link implements Serializable {
         this.dataSetUriTag = dataSetUriTag;
     }
 
-    public ReferenceArea getReferenceArea() {
+    public String getReferenceArea() {
         return referenceArea;
     }
 
-    public void setReferenceArea(ReferenceArea referenceArea) {
+    public void setReferenceArea(String referenceArea) {
         this.referenceArea = referenceArea;
     }
 

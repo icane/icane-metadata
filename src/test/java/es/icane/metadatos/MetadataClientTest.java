@@ -141,6 +141,7 @@ public class MetadataClientTest {
         // assert statements
         assert link != null;
         assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
+    
     }
     /* End Link tests */
 
@@ -154,7 +155,7 @@ public class MetadataClientTest {
         assertTrue("Size must be equal or greater than eight", linkTypes.size() >= 8);
 
     }
-    
+
     @Test
     public void getLinkTypeShouldReturnElement() {
 
@@ -171,6 +172,35 @@ public class MetadataClientTest {
 
     }
     /* End LinkType tests */
+
+    /* Measure tests */
+    @Test
+    public void getMeasuresShouldReturnList() {
+
+        List<Measure> measures = metadataClient.getMeasures();
+
+        // assert statements
+        assertTrue("Size must be greater than 100", measures.size() > 100);
+        assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
+    
+    }
+
+    @Test
+    public void getMeasureShouldReturnElement() {
+
+        Measure measure = null;
+        try {
+            measure = metadataClient.getMeasure(777);
+        } catch (MeasureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert measure != null;
+        assertEquals("id = 777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
+
+    }
+    /* End Measure tests */
 
     @Test
     public void getNodeTypeShouldReturnElement() {
@@ -346,17 +376,6 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getMeasuresShouldReturnList() {
-
-        List<Measure> measures = metadataClient.getMeasures();
-
-        // assert statements
-        assertTrue("Size must be greater than 100", measures.size() > 100);
-        assertEquals("First element has title Parados", "Parados", measures.get(0).getTitle());
-    
-    }
-
-    @Test
     public void getSubsectionShouldReturnElement() {
 
         Subsection subsection = null;
@@ -385,22 +404,6 @@ public class MetadataClientTest {
         // assert statements
         assert referenceArea != null;
         assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
-
-    }
-
-    @Test
-    public void getMeasureShouldReturnElement() {
-
-        Measure measure = null;
-        try {
-            measure = metadataClient.getMeasure(777);
-        } catch (MeasureNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert measure != null;
-        assertEquals("id = 777 title must be Tasa de variación mensual", "Tasa de variación mensual", measure.getTitle());
 
     }
 
