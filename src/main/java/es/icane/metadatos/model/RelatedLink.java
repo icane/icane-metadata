@@ -3,8 +3,11 @@ package es.icane.metadatos.model;
 import es.icane.metadatos.adapters.DateAdapter;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.xml.bind.annotation.*;
+// import java.util.List;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -24,6 +27,7 @@ public class RelatedLink implements Serializable {
     private Date created;
     private Date lastUpdated;
 
+    /* 
     public RelatedLink() {
 
     }
@@ -38,7 +42,8 @@ public class RelatedLink implements Serializable {
         this.created = created;
         this.lastUpdated = lastUpdated;
     }
-
+    */
+    
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;

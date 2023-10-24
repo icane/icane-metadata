@@ -259,6 +259,121 @@ public class MetadataClientTest {
     }
     /* End NodeType tests */
 
+    /* Periodicity tests */
+    @Test
+    public void getPeriodicitiesShouldReturnList() {
+
+        List<Periodicity> periodicities = metadataClient.getPeriodicities();
+
+        // assert statements
+        assertTrue("Size must be greater than 10", periodicities.size() > 10);
+        assertEquals("10th element has uriTag decenal", "decenal", periodicities.get(9).getUriTag());
+    }
+
+    @Test
+    public void getPeriodicityShouldReturnElement() {
+
+        Periodicity periodicity = null;
+        try {
+            periodicity = metadataClient.getPeriodicity("anual");
+        } catch (PeriodicityNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert periodicity != null;
+        assertEquals("Annual title must be Anual", "Anual", periodicity.getTitle());
+    }
+    /* End Periodicity tests */
+
+    /* Reference tests */
+    @Test
+    public void getReferencesShouldReturnList() {
+
+        List<Reference> references = metadataClient.getReferences();
+
+        // assert statements
+        assertTrue("Size must be greater than 10", references.size() > 10);
+        assertEquals("1st element has uri http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", "http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", references.get(0).getUri());
+    
+    }
+
+    @Test
+    public void getReferenceShouldReturnElement() {
+
+        Reference reference = null;
+        try {
+            reference = metadataClient.getReference(136);
+        } catch (ReferenceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert reference != null;
+        assertEquals("id = 136 uri must be http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", "http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", reference.getUri());
+
+    }
+    /* End Reference tests */
+
+    /* ReferenceArea tests */
+    @Test
+    public void getReferenceAreasShouldReturnList() {
+
+        List<ReferenceArea> referenceAreas = metadataClient.getReferenceAreas();
+
+        // assert statements
+        assertTrue("Size must be greater than 5", referenceAreas.size() > 5);
+        assertEquals("Second element has title Regional", "Regional", referenceAreas.get(1).getTitle());
+    }
+
+    @Test
+    public void getReferenceAreaShouldReturnElement() {
+
+        ReferenceArea referenceArea = null;
+        try {
+            referenceArea = metadataClient.getReferenceArea("regional");
+        } catch (ReferenceAreaNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert referenceArea != null;
+        assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
+
+    }
+    /* End ReferenceArea tests */
+
+    /* RelatedLink tests */
+    /* 
+    @Test
+    public void getRelatedLinksShouldReturnList() {
+
+        List<RelatedLink> relatedLinks = metadataClient.getRelatedLinks();
+
+
+        // assert statements
+        assertTrue("Size must be greater than 300", relatedLinks.size() > 300);
+        assertEquals("First element title is Contabilidad regional de España. Gasto Consumo final de los hogares", "Contabilidad regional de España. Gasto Consumo final de los hogares", relatedLinks.get(0).getTitle());
+    }
+
+    @Test
+    public void getRelatedLinkShouldReturnElement() {
+
+        RelatedLink relatedLink = null;
+        try {
+            relatedLink = metadataClient.getRelatedLink(430);
+        } catch (RelatedLinkNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert relatedLink != null;
+        assertEquals("id = 430 title must be Estadística de Afiliación a la Seguridad Social. Plan Estadístico 2021-2024", "Estadística de Afiliación a la Seguridad Social. Plan Estadístico 2021-2024", relatedLink.getTitle());
+    
+    }
+    */
+    /* End RelatedLink tests */
+
     @Test
     public void getTimePeriodsShouldReturnList() {
 
@@ -285,33 +400,6 @@ public class MetadataClientTest {
         assertEquals("Time period endYear must be 2011", 2011, timePeriod.getEndYear().intValue());
 
     }
-
-    @Test
-    public void getPeriodicitiesShouldReturnList() {
-
-        List<Periodicity> periodicities = metadataClient.getPeriodicities();
-
-        // assert statements
-        assertTrue("Size must be greater than 10", periodicities.size() > 10);
-        assertEquals("10th element has uriTag decenal", "decenal", periodicities.get(9).getUriTag());
-    }
-
-    @Test
-    public void getPeriodicityShouldReturnElement() {
-
-
-        Periodicity periodicity = null;
-        try {
-            periodicity = metadataClient.getPeriodicity("anual");
-        } catch (PeriodicityNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert periodicity != null;
-        assertEquals("Annual title must be Anual", "Anual", periodicity.getTitle());
-    }
-
 
     @Test
     public void getUriTagEsShouldReturnACorrectUriTag() {
@@ -385,17 +473,6 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getReferencesShouldReturnList() {
-
-        List<Reference> references = metadataClient.getReferences();
-
-        // assert statements
-        assertTrue("Size must be greater than 10", references.size() > 10);
-        assertEquals("1st element has uri http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", "http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", references.get(0).getUri());
-    
-    }
-
-    @Test
     public void getUnitsOfMeasureShouldReturnList() {
 
         List<UnitOfMeasure> unitsOfMeasure = metadataClient.getUnitsOfMeasure();
@@ -422,22 +499,6 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getReferenceAreaShouldReturnElement() {
-
-        ReferenceArea referenceArea = null;
-        try {
-            referenceArea = metadataClient.getReferenceArea("regional");
-        } catch (ReferenceAreaNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert referenceArea != null;
-        assertEquals("regional title must be Regional", "Regional", referenceArea.getTitle());
-
-    }
-
-    @Test
     public void getUnitOfMeasureShouldReturnElement() {
 
         UnitOfMeasure unitOfMeasure = null;
@@ -450,22 +511,6 @@ public class MetadataClientTest {
         // assert statements
         assert unitOfMeasure != null;
         assertEquals("id = 125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
-
-    }
-
-    @Test
-    public void getReferenceShouldReturnElement() {
-
-        Reference reference = null;
-        try {
-            reference = metadataClient.getReference(136);
-        } catch (ReferenceNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert reference != null;
-        assertEquals("id = 136 uri must be http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", "http://www.icane.es/publications#quarterly-accounting-base-2008-nace09", reference.getUri());
 
     }
 
@@ -493,16 +538,6 @@ public class MetadataClientTest {
         // assert statements
         assertTrue("Size must be greater than 2", sections.size() > 2);
         assertEquals("First element has title Población", "Población", sections.get(0).getTitle());
-    }
-
-    @Test
-    public void getReferenceAreasShouldReturnList() {
-
-        List<ReferenceArea> referenceAreas = metadataClient.getReferenceAreas();
-
-        // assert statements
-        assertTrue("Size must be greater than 5", referenceAreas.size() > 5);
-        assertEquals("Second element has title Regional", "Regional", referenceAreas.get(1).getTitle());
     }
 
     @Test
