@@ -18,14 +18,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class NodeType implements Serializable {
     //
 
-    private static final String SERIES = "time-series";
-    private static final String THEME = "theme";
-    private static final String FOLDER = "folder";
+    private static final String SECTION = "section";
+    private static final String SUBSECTION = "subsection";
     private static final String DATA_SET = "data-set";
+    private static final String THEME = "theme";
+    private static final String SERIES = "time-series";
     private static final String DOCUMENT = "document";
-    private static final String NON_OLAP_NATIVE = "non-olap-native";
+    private static final String DATA_BANK = "data-bank";
+    private static final String CATEGORY = "category";
+    private static final String FOLDER = "folder";
+    private static final String POWERBI = "powerbi";
     private static final String URL = "url";
-    //
+    // private static final String NON_OLAP_NATIVE = "non-olap-native";
+    
     private Integer id;
     private String title;
     private String uriTag;
@@ -82,6 +87,26 @@ public class NodeType implements Serializable {
         return uriTag;
     }
 
+    public boolean isSection() {
+        return SECTION.equals(uriTag);
+    }
+
+    public boolean isSubsection() {
+        return SUBSECTION.equals(uriTag);
+    }
+
+    public boolean isDataBank() {
+        return DATA_BANK.equals(uriTag);
+    }
+
+    public boolean isCategory() {
+        return CATEGORY.equals(uriTag);
+    }
+
+    public boolean isPowerbi() {
+        return POWERBI.equals(uriTag);
+    }
+
     public boolean isSeries() {
         return SERIES.equals(uriTag);
     }
@@ -106,9 +131,11 @@ public class NodeType implements Serializable {
         return DATA_SET.equals(uriTag);
     }
 
+    /* 
     public boolean isNonOlapNative() {
         return NON_OLAP_NATIVE.equals(uriTag);
     }
+    */
 
     @Override
     public boolean equals(Object obj) {

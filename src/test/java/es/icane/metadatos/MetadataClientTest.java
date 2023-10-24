@@ -202,22 +202,36 @@ public class MetadataClientTest {
     }
     /* End Measure tests */
 
-    @Test
-    public void getNodeTypeShouldReturnElement() {
+    /* Methodology tests */
+    public void getMethodologiesShouldReturnList() {
 
-        NodeType nodeType = null;
+        List<Methodology> methodologies = metadataClient.getMethodologies();
+
+        // assert statements
+        assertTrue("Size must be greater than 60", methodologies.size() > 60);
+        assertEquals("First element has title Metodología. Base 2000 CNAE 93", "Metodología. Base 2000 CNAE 93", methodologies.get(0).getTitle());
+    
+    }
+
+    @Test
+    public void getMethodologyShouldReturnElement() {
+
+        Methodology methodology = null;
         try {
-            nodeType = metadataClient.getNodeType("section");
-        } catch (NodeTypeNotFoundException e) {
+            methodology = metadataClient.getMethodology(20);
+        } catch (MethodologyNotFoundException e) {
             e.printStackTrace();
         }
 
         // assert statements
-        assert nodeType != null;
-        assertEquals("section title must be Sección", "Sección", nodeType.getTitle());
-
+        assert methodology != null;
+        assertEquals("Title must be Estadística de Variaciones Residenciales", "Estadística de Variaciones Residenciales", methodology.getTitle());
+        assert methodology.getUri() != null;
+    
     }
+    /* End Methodology tests */
 
+    /* NodeType tests */
     @Test
     public void getNodeTypesShouldReturnTenElementList() {
 
@@ -228,6 +242,22 @@ public class MetadataClientTest {
 
     }
 
+    @Test
+    public void getNodeTypeShouldReturnElement() {
+
+        NodeType nodeType = null;
+        try {
+            nodeType = metadataClient.getNodeType("subsection");
+        } catch (NodeTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert nodeType != null;
+        assertEquals("subsection title must be Subsección", "Subsección", nodeType.getTitle());
+
+    }
+    /* End NodeType tests */
 
     @Test
     public void getTimePeriodsShouldReturnList() {
@@ -485,23 +515,6 @@ public class MetadataClientTest {
         assertEquals("First element has title Cuentas Económicas", "Cuentas Económicas", subsections.get(0).getTitle());
         assertEquals("First element has id = 6", 6, subsections.get(0).getId().intValue());
 
-    }
-
-    @Test
-    public void getMethodologyShouldReturnElement() {
-
-        Methodology methodology = null;
-        try {
-            methodology = metadataClient.getMethodology(2);
-        } catch (MethodologyNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert methodology != null;
-        assertEquals("Title must be Metodología. Base 2000 CNAE 93", "Metodología. Base 2000 CNAE 93", methodology.getTitle());
-        assert methodology.getUri() != null;
-    
     }
 
     @Test
