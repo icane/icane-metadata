@@ -116,6 +116,62 @@ public class MetadataClientTest {
     }
     /* End Dataset tests */
 
+    /* Link tests */
+    @Test
+    public void getLinksShouldReturnList() {
+
+        List<Link> links = metadataClient.getLinks();
+
+
+        // assert statements
+        assertTrue("Size must be greater than 50", links.size() > 50);
+        assertEquals("First element title is DBpedia", "DBpedia", links.get(0).getTitle());
+    }
+
+    @Test
+    public void getLinkShouldReturnElement() {
+
+        Link link = null;
+        try {
+            link = metadataClient.getLink(473);
+        } catch (LinkNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert link != null;
+        assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
+    }
+    /* End Link tests */
+
+    /* LinkType tests */
+    @Test
+    public void getLinkTypesShouldReturnEightElementsList() {
+
+        List<LinkType> linkTypes = metadataClient.getLinkTypes();
+
+        // assert statements
+        assertTrue("Size must be equal or greater than eight", linkTypes.size() >= 8);
+
+    }
+    
+    @Test
+    public void getLinkTypeShouldReturnElement() {
+
+        LinkType linkType = null;
+        try {
+            linkType = metadataClient.getLinkType(1);
+        } catch (LinkTypeNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // assert statements
+        assert linkType != null;
+        assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
+
+    }
+    /* End LinkType tests */
+
     @Test
     public void getNodeTypeShouldReturnElement() {
 
@@ -280,16 +336,6 @@ public class MetadataClientTest {
     }
 
     @Test
-    public void getLinkTypesShouldReturnEightElementsList() {
-
-        List<LinkType> linkTypes = metadataClient.getLinkTypes();
-
-        // assert statements
-        assertTrue("Size must be equal or greater than eight", linkTypes.size() >= 8);
-
-    }
-
-    @Test
     public void getUnitsOfMeasureShouldReturnList() {
 
         List<UnitOfMeasure> unitsOfMeasure = metadataClient.getUnitsOfMeasure();
@@ -373,50 +419,6 @@ public class MetadataClientTest {
         assertEquals("id = 125 title must be Número de días", "Número de días", unitOfMeasure.getTitle());
 
     }
-
-    @Test
-    public void getLinkShouldReturnElement() {
-
-        Link link = null;
-        try {
-            link = metadataClient.getLink(473);
-        } catch (LinkNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert link != null;
-        assertEquals("id = 473 title must be DBpedia ES", "DBpedia ES", link.getTitle());
-
-    }
-
-    @Test
-    public void getLinksShouldReturnList() {
-
-        List<Link> links = metadataClient.getLinks();
-
-
-        // assert statements
-        assertTrue("Size must be greater than 50", links.size() > 50);
-        assertEquals("First element title is DBpedia", "DBpedia", links.get(0).getTitle());
-    }
-
-    @Test
-    public void getLinkTypeShouldReturnElement() {
-
-        LinkType linkType = null;
-        try {
-            linkType = metadataClient.getLinkType(1);
-        } catch (LinkTypeNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // assert statements
-        assert linkType != null;
-        assertEquals("id = 1 title must be HTTP", "HTTP", linkType.getTitle());
-
-    }
-
 
     @Test
     public void getReferenceShouldReturnElement() {
