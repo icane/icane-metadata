@@ -18,60 +18,57 @@ import es.icane.metadatos.adapters.DateAdapter;
 public class TimeSeries implements Serializable {
 
     private Integer id;
-    private String code;
-    private String uriTag;
-    private String uriTagEs;
+    private String group;
+    private String subgroup;
     private String title;
-    private int lft, rgt, depth;
+    private int lft;
+    private int rgt;
+    private Integer parentId;
+    private int depth;
     private boolean active;
-    private String uri;
-    private String metadataUri;
-    private Date dataUpdate;
     private String documentation;
     private String methodology;
     private String mapScope;
     private String topics;
     private String automatizedTopics;
+    private String uriTag;
+    private String uriTagEs;
     private String description;
     private String theme;
     private String language;
     private String publisher;
     private String license;
     private Date nextUpdate;
-    private Date dateCreated;
-    private Date lastUpdated;
     private boolean deprecated;
     private boolean municipalGrouping;
     private String base;
+    private boolean lastBase;
+    private String sourceData;
+    private String sourceUri;
+    private String dataCompilation;
+    private String sources;
+    private TimePeriod initialPeriodComposite;
+    private TimePeriod finalPeriodComposite;
+    private String initialPeriod;
+    private String finalPeriod;
+    private String uri;
+    private String metadataUri;
+    private Date dataUpdate;
+    private Date dateCreated;
+    private Date lastUpdated;
     private Subsection subsection;
     private Category category;
     private DataSet dataSet;
     private DataProvider dataProvider;
-    private String sourceUri;
-    private String dataCompilation;
-    private String sourceData;
     private Periodicity periodicity;
-    private String initialPeriod, finalPeriod;
-    private String sources;
-    private ReferenceArea referenceArea;
-    private TimePeriod initialPeriodComposite;
-    private TimePeriod finalPeriodComposite;
-    private Integer parentId;
     private NodeType nodeType;
+    private ReferenceArea referenceArea;
+        
     private List<TimeSeries> children;
     private List<ApiUri> apiUris;
     private List<Measure> measures;
     private List<Link> links;
     private List<Reference> references;
-    
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String codigo) {
-        this.code = codigo;
-    }
 
     @XmlAttribute(required = true)
     public Integer getId() {
@@ -80,6 +77,30 @@ public class TimeSeries implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getSubgroup() {
+        return subgroup;
+    }
+
+    public void setSubgroup(String subgroup) {
+        this.subgroup = subgroup;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @XmlElement(required = true)
@@ -100,45 +121,20 @@ public class TimeSeries implements Serializable {
         this.rgt = rgt;
     }
 
-    @XmlJavaTypeAdapter(value = DateAdapter.class)
-    public Date getDataUpdate() {
-        return dataUpdate;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setDataUpdate(Date dataUpdate) {
-        this.dataUpdate = dataUpdate;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
-    @XmlElement(required = true)
-    public Subsection getSubsection() {
-        return subsection;
+    public int getDepth() {
+        return depth;
     }
 
-    public void setSubsection(Subsection subsection) {
-        this.subsection = subsection;
-    }
-
-    public DataSet getDataSet() {
-        return dataSet;
-    }
-
-    public void setDataSet(DataSet dataSet) {
-        this.dataSet = dataSet;
-    }
-
-    public Periodicity getPeriodicity() {
-        return periodicity;
-    }
-
-    public void setPeriodicity(Periodicity periodicity) {
-        this.periodicity = periodicity;
-    }
-    public ReferenceArea getReferenceArea() {
-        return referenceArea;
-    }
-
-    public void setReferenceArea(ReferenceArea referenceArea) {
-        this.referenceArea = referenceArea;
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     public boolean isActive() {
@@ -149,14 +145,6 @@ public class TimeSeries implements Serializable {
         this.active = active;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDocumentation() {
         return documentation;
     }
@@ -165,12 +153,36 @@ public class TimeSeries implements Serializable {
         this.documentation = documentation;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public String getMethodology() {
+        return methodology;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setMethodology(String methodology) {
+        this.methodology = methodology;
+    }
+
+    public String getMapScope() {
+        return mapScope;
+    }
+
+    public void setMapScope(String mapScope) {
+        this.mapScope = mapScope;
+    }
+
+    public String getTopics() {
+        return topics;
+    }
+
+    public void setTopics(String topics) {
+        this.topics = topics;
+    }
+
+    public String getAutomatizedTopics() {
+        return automatizedTopics;
+    }
+
+    public void setAutomatizedTopics(String automatizedTopics) {
+        this.automatizedTopics = automatizedTopics;
     }
 
     @XmlElement(required = true)
@@ -183,6 +195,216 @@ public class TimeSeries implements Serializable {
     }
 
     @XmlElement(required = true)
+    public String getUriTagEs() {
+        return uriTagEs;
+    }
+
+    public void setUriTagEs(String uriTagEs) {
+        this.uriTagEs = uriTagEs;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
+	public Date getNextUpdate() {
+		return nextUpdate;
+	}
+
+	public void setNextUpdate(Date nextUpdate) {
+		this.nextUpdate = nextUpdate;
+	}
+
+    public boolean isDeprecated() {
+		return deprecated;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		this.deprecated = deprecated;
+	}
+
+    public boolean isMunicipalGrouping() {
+		return municipalGrouping;
+	}
+
+	public void setMunicipalGrouping(boolean municipalGrouping) {
+		this.municipalGrouping = municipalGrouping;
+	}
+
+    public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+
+    public boolean isLastBase() {
+		return lastBase;
+	}
+
+	public void setLastBase(boolean lastBase) {
+		this.lastBase = lastBase;
+	}
+
+    public String getSourceData() {
+        return sourceData;
+    }
+
+    public void setSourceData(String sourceData) {
+        this.sourceData = sourceData;
+    }
+
+    public String getSourceUri() {
+        return sourceUri;
+    }
+
+    public void setSourceUri(String sourceUri) {
+        this.sourceUri = sourceUri;
+    }
+
+    public String getDataCompilation() {
+        return dataCompilation;
+    }
+
+    public void setDataCompilation(String dataCompilation) {
+        this.dataCompilation = dataCompilation;
+    }
+
+    public String getSources() {
+        return sources;
+    }
+
+    public void setSources(String sources) {
+        this.sources = sources;
+    }
+
+    @XmlElement(name = "initialPeriod")
+	public TimePeriod getInitialPeriodComposite() {
+		return initialPeriodComposite;
+	}
+		
+	public void setInitialPeriodComposite(TimePeriod initialPeriodComposite) {
+		this.initialPeriodComposite = initialPeriodComposite;
+	}
+
+	@XmlElement(name = "finalPeriod")
+	public TimePeriod getFinalPeriodComposite() {
+		return finalPeriodComposite;
+	}
+
+	public void setFinalPeriodComposite(TimePeriod finalPeriodComposite) {
+		this.finalPeriodComposite = finalPeriodComposite;
+	}
+
+    @XmlElement(name = "initialPeriodDescription")
+    public String getInitialPeriod() {
+        return initialPeriod;
+    }
+
+    public void setInitialPeriod(String initialPeriod) {
+        this.initialPeriod = initialPeriod;
+    }
+
+    @XmlElement(name = "finalPeriodDescription")
+    public String getFinalPeriod() {
+        return finalPeriod;
+    }
+
+    public void setFinalPeriod(String finalPeriod) {
+        this.finalPeriod = finalPeriod;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getMetadataUri() {
+        return metadataUri;
+    }
+
+    public void setMetadataUri(String metadataUri) {
+        this.metadataUri = metadataUri;
+    }
+
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
+    public Date getDataUpdate() {
+        return dataUpdate;
+    }
+
+    public void setDataUpdate(Date dataUpdate) {
+        this.dataUpdate = dataUpdate;
+    }
+
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    @XmlJavaTypeAdapter(value = DateAdapter.class)
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    @XmlElement(required = true)
+    public Subsection getSubsection() {
+        return subsection;
+    }
+
+    public void setSubsection(Subsection subsection) {
+        this.subsection = subsection;
+    }
+
+    @XmlElement(required = true)
     public Category getCategory() {
         return category;
     }
@@ -192,12 +414,45 @@ public class TimeSeries implements Serializable {
     }
 
     @XmlElement(required = true)
+    public DataSet getDataSet() {
+        return dataSet;
+    }
+
+    public void setDataSet(DataSet dataSet) {
+        this.dataSet = dataSet;
+    }
+
+    public DataProvider getDataProvider() {
+        return dataProvider;
+    }
+
+    public void setDataProvider(DataProvider dataProvider) {
+        this.dataProvider = dataProvider;
+    }
+
+    public Periodicity getPeriodicity() {
+        return periodicity;
+    }
+
+    public void setPeriodicity(Periodicity periodicity) {
+        this.periodicity = periodicity;
+    }
+
+    @XmlElement(required = true)
     public NodeType getNodeType() {
         return nodeType;
     }
 
     public void setNodeType(NodeType nodeType) {
         this.nodeType = nodeType;
+    }
+
+    public ReferenceArea getReferenceArea() {
+        return referenceArea;
+    }
+
+    public void setReferenceArea(ReferenceArea referenceArea) {
+        this.referenceArea = referenceArea;
     }
 
     @Override
@@ -256,82 +511,7 @@ public class TimeSeries implements Serializable {
         return hash;
     }
 
-    /**
-     * @return the description
-     */
-    @XmlElement
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the theme
-     */
-    @XmlElement
-    public String getTheme() {
-        return theme;
-    }
-
-    /**
-     * @param theme the theme to set
-     */
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    /**
-     * @return the language
-     */
-    @XmlElement
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     * @param language the language to set
-     */
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    /**
-     * @return the publisher
-     */
-    @XmlElement
-    public String getPublisher() {
-        return publisher;
-    }
-
-    /**
-     * @param publisher the publisher to set
-     */
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    /**
-     * @return the license
-     */
-    @XmlElement
-    public String getLicense() {
-        return license;
-    }
-
-    /**
-     * @param license the license to set
-     */
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
-    /**
+     /**
      * @return the measures
      */
     @XmlElementWrapper(name = "measures")
@@ -343,234 +523,25 @@ public class TimeSeries implements Serializable {
     public void setMeasures(List<Measure> measures) {
         this.measures = measures;
     }
-
-    @XmlElement
-    public String getMapScope() {
-        return mapScope;
-    }
-
-    public void setMapScope(String mapScope) {
-        this.mapScope = mapScope;
-    }
-
-    @XmlJavaTypeAdapter(value = DateAdapter.class)
-	public Date getNextUpdate() {
-		return nextUpdate;
-	}
-
-	public void setNextUpdate(Date nextUpdate) {
-		this.nextUpdate = nextUpdate;
-	}
-
-	@XmlElement
-	public boolean isDeprecated() {
-		return deprecated;
-	}
-
-	public void setDeprecated(boolean deprecated) {
-		this.deprecated = deprecated;
-	}
-
-	@XmlElement
-	public boolean isMunicipalGrouping() {
-		return municipalGrouping;
-	}
-
-	public void setMunicipalGrouping(boolean municipalGrouping) {
-		this.municipalGrouping = municipalGrouping;
-	}
 	
-	@XmlElement
-	public String getBase() {
-		return base;
-	}
+	@XmlElementWrapper(name = "links")
+    @XmlElement(name = "link")
+    public List<Link> getLinks() {
+        return links;
+    }
 
-	public void setBase(String base) {
-		this.base = base;
-	}
-	
-	 @XmlElementWrapper(name = "links")
-	    @XmlElement(name = "link")
-	    public List<Link> getLinks() {
-	        return links;
-	    }
-
-	    public void setLinks(List<Link> links) {
-	        this.links = links;
-	    }
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
 	    
-	    public String getTopics() {
-	        return topics;
-	    }
-
-	    public void setTopics(String topics) {
-	        this.topics = topics;
-	    }
-	    
-	    /**
-	     * @return the methodology
-	     */
-	    @XmlElement
-	    public String getMethodology() {
-	        return methodology;
-	    }
-
-	    /**
-	     * @param methodology the methodology to set
-	     */
-	    public void setMethodology(String methodology) {
-	        this.methodology = methodology;
-	    }
-	    
-	    /**
-	     * @return the references
-	     */
-	    @XmlElementWrapper(name = "references")
-	    @XmlElement(name = "reference")
-		public List<Reference> getReferences() {
-			return references;
-		}
-
-		public void setReferences(List<Reference> references) {
-			this.references = references;
-		}
-
-		public String getAutomatizedTopics() {
-			return automatizedTopics;
-		}
-
-		public void setAutomatizedTopics(String automatizedTopics) {
-			this.automatizedTopics = automatizedTopics;
-		}
-
-		public DataProvider getDataProvider() {
-			return dataProvider;
-		}
-
-		public void setDataProvider(DataProvider dataProvider) {
-			this.dataProvider = dataProvider;
-		}
-
-		public String getSourceUri() {
-			return sourceUri;
-		}
-
-		public void setSourceUri(String sourceUri) {
-			this.sourceUri = sourceUri;
-		}
-
-		public String getDataCompilation() {
-			return dataCompilation;
-		}
-
-		public void setDataCompilation(String dataCompilation) {
-			this.dataCompilation = dataCompilation;
-		}
-
-		public String getSourceData() {
-			return sourceData;
-		}
-
-		public void setSourceData(String sourceData) {
-			this.sourceData = sourceData;
-		}
-
-
-
-		public String getUriTagEs() {
-			return uriTagEs;
-		}
-
-		public void setUriTagEs(String uriTagEs) {
-			this.uriTagEs = uriTagEs;
-		}
-
-		public int getDepth() {
-			return depth;
-		}
-
-		public void setDepth(int depth) {
-			this.depth = depth;
-		}
-
-		@XmlElement(name = "initialPeriod")
-		public TimePeriod getInitialPeriodComposite() {
-			return initialPeriodComposite;
-		}
-		
-
-		public void setInitialPeriodComposite(TimePeriod initialPeriodComposite) {
-			this.initialPeriodComposite = initialPeriodComposite;
-		}
-
-		@XmlElement(name = "finalPeriod")
-		public TimePeriod getFinalPeriodComposite() {
-			return finalPeriodComposite;
-		}
-
-		public void setFinalPeriodComposite(TimePeriod finalPeriodComposite) {
-			this.finalPeriodComposite = finalPeriodComposite;
-		}
-
-
-    public Date getDateCreated() {
-        return dateCreated;
+    @XmlElementWrapper(name = "references")
+    @XmlElement(name = "reference")
+    public List<Reference> getReferences() {
+        return references;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    /**
-     * @return the metadataUri
-     */
-    @XmlElement
-
-    public String getMetadataUri() {
-        return metadataUri;
-    }
-
-    /**
-     * @param metadataUri the metadataUri to set
-     */
-    public void setMetadataUri(String metadataUri) {
-        this.metadataUri = metadataUri;
-    }
-
-    @XmlElement(name = "finalPeriodDescription")
-
-    public String getFinalPeriod() {
-        return finalPeriod;
-    }
-
-    public void setFinalPeriod(String finalPeriod) {
-        this.finalPeriod = finalPeriod;
-    }
-
-    @XmlElement(name = "initialPeriodDescription")
-    public String getInitialPeriod() {
-        return initialPeriod;
-    }
-
-    public void setInitialPeriod(String initialPeriod) {
-        this.initialPeriod = initialPeriod;
+    public void setReferences(List<Reference> references) {
+        this.references = references;
     }
 
     @XmlElementWrapper(name = "apiUris")
@@ -582,15 +553,6 @@ public class TimeSeries implements Serializable {
 
     public void setApiUris(List<ApiUri> apiUris) {
         this.apiUris = apiUris;
-    }
-
-
-    public String getSources() {
-        return sources;
-    }
-
-    public void setSources(String sources) {
-        this.sources = sources;
     }
 
     @XmlElementWrapper(name = "children")
