@@ -344,7 +344,6 @@ public class MetadataClientTest {
     /* End ReferenceArea tests */
 
     /* RelatedLink tests */
-    /* 
     @Test
     public void getRelatedLinksShouldReturnList() {
 
@@ -371,8 +370,7 @@ public class MetadataClientTest {
         assertEquals("id = 430 title must be Estadística de Afiliación a la Seguridad Social. Plan Estadístico 2021-2024", "Estadística de Afiliación a la Seguridad Social. Plan Estadístico 2021-2024", relatedLink.getTitle());
     
     }
-    */
-    /* End RelatedLink tests */
+     /* End RelatedLink tests */
 
     @Test
     public void getTimePeriodsShouldReturnList() {

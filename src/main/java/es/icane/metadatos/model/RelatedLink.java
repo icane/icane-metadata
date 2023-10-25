@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Servicio de Informática y Banco de Datos <sibd@cantabria.es>
  */
 @XmlType
-@XmlRootElement(name="relatedLink")
+@XmlRootElement(name="related-link")
 public class RelatedLink implements Serializable {
 
     private Integer id;
@@ -27,23 +27,6 @@ public class RelatedLink implements Serializable {
     private Date created;
     private Date lastUpdated;
 
-    /* 
-    public RelatedLink() {
-
-    }
-
-    public RelatedLink (Integer id, String title, String uri, String group,
-                        DataSet dataSet, Date created, Date lastUpdated) {
-        this.id = id;
-        this.title = title;
-        this.uri = uri;
-        this.group = group;
-        this.dataSet = dataSet;
-        this.created = created;
-        this.lastUpdated = lastUpdated;
-    }
-    */
-    
     @XmlAttribute(required = true)
     public Integer getId() {
         return id;
